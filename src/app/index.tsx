@@ -1,5 +1,5 @@
-import { AuthenticationTemplate } from '@/ui/templates/authentication-template'
+import { CreateAccountTemplate } from '@/ui/templates/create-account-template'
 
-export default function AuthenticationPage() {
-	return <AuthenticationTemplate />
+export default function HomePage() {
+	return <CreateAccountTemplate />
 }

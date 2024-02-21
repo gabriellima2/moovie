@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from 'react-native'
+import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import { Slot } from 'expo-router'
 import {
 	useFonts,
@@ -8,6 +8,8 @@ import {
 	Inter_600SemiBold,
 	Inter_700Bold,
 } from '@expo-google-fonts/inter'
+
+import { STATUS_BAR_HEIGHT } from '@/constants/status-bar-height'
 
 export default function Layout() {
 	const [fontsLoaded] = useFonts({
@@ -26,5 +28,12 @@ export default function Layout() {
 		)
 	}
 
-	return <Slot />
+	return (
+		<SafeAreaView
+			className="flex-1"
+			style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
+		>
+			<Slot />
+		</SafeAreaView>
+	)
 }

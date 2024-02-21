@@ -1,47 +1,21 @@
+import { useRef } from 'react'
 import { TextInput, View } from 'react-native'
-import colors from 'tailwindcss/colors'
 import { Feather } from '@expo/vector-icons'
+import colors from 'tailwindcss/colors'
 
-import { TogglePasswordVisibilityButton } from '../components/toggle-password-visibility-button'
-import { TextButton } from '../components/text-button'
-import { Typography } from '../atoms/typography'
-import { Button } from '../components/button'
-import { Field } from '../components/field'
+import { TogglePasswordVisibilityButton } from '../../components/toggle-password-visibility-button'
+import { TextButton } from '../../components/text-button'
+import { Typography } from '../../atoms/typography'
+import { Button } from '../../components/button'
+import { Field } from '../../components/field'
 
+import { useCreateAccountForm } from './hooks/use-create-account-form'
 import { useToggle } from '@/hooks/use-toggle'
-import { useForm } from 'react-hook-form'
-import { useEffect, useRef } from 'react'
 
 export function CreateAccountTemplate() {
-	const {
-		register,
-		setValue,
-		handleSubmit,
-		clearErrors,
-		formState: { isSubmitting, errors },
-	} = useForm<{ email: string; password: string }>()
+	const { errors, isSubmitting, onSubmit, setValue } = useCreateAccountForm()
 	const { isActive, toggle } = useToggle({ initialValue: true })
 	const passwordFieldRef = useRef<TextInput | null>(null)
-
-	function handleCreateAccount(credentials: {
-		email: string
-		password: string
-	}) {
-		console.log(credentials)
-	}
-
-	function handleChange(field: 'email' | 'password', value: string) {
-		const hasError = !!errors[field]?.message
-		if (hasError) {
-			clearErrors(field)
-		}
-		setValue(field, value)
-	}
-
-	useEffect(() => {
-		register('email')
-		register('password')
-	}, [register])
 
 	return (
 		<View className="bg-white flex-1 p-5 gap-11">
@@ -57,7 +31,7 @@ export function CreateAccountTemplate() {
 						placeholder="Insert your better email"
 						returnKeyType="next"
 						keyboardType="email-address"
-						onChangeText={(text) => handleChange('email', text)}
+						onChangeText={(text) => setValue('email', text)}
 						onSubmitEditing={() => passwordFieldRef.current?.focus()}
 					/>
 					<Field.Error message={errors.email?.message} />
@@ -72,8 +46,8 @@ export function CreateAccountTemplate() {
 							autoCapitalize="none"
 							placeholder="Insert a strong password"
 							returnKeyType="send"
-							onChangeText={(text) => handleChange('password', text)}
-							onSubmitEditing={handleSubmit(handleCreateAccount)}
+							onChangeText={(text) => setValue('password', text)}
+							onSubmitEditing={onSubmit}
 						/>
 						<TogglePasswordVisibilityButton
 							isVisible={isActive}
@@ -83,7 +57,7 @@ export function CreateAccountTemplate() {
 					<Field.Error message={errors.password?.message} />
 				</Field.Root>
 				<Button.Root
-					onPress={handleSubmit(handleCreateAccount)}
+					onPress={onSubmit}
 					accessibilityLabel="Sign In"
 					className="justify-between"
 				>

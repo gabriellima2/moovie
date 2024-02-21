@@ -12,7 +12,7 @@ import { cn } from '@/helpers/cn'
 
 export type InputProps = TextInputProps & { id?: string }
 export type LabelProps = Omit<TextProps, 'nativeID'>
-export type ErrorProps = Omit<TextProps, 'children'> & { message: string }
+export type ErrorProps = Omit<TextProps, 'children'> & { message?: string }
 
 function Root(props: ViewProps) {
 	const { className, ...rest } = props

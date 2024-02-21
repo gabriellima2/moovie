@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+
 import { useForm } from '@/hooks/use-form'
+import { authenticationSchema } from '@/schemas/authentication.schema'
 
 export type UseCreateAccountFormFields = {
 	email: string
@@ -12,7 +15,9 @@ export function useCreateAccountForm() {
 		setValue,
 		handleSubmit,
 		formState: { isSubmitting, errors },
-	} = useForm<UseCreateAccountFormFields>()
+	} = useForm<UseCreateAccountFormFields>({
+		resolver: zodResolver(authenticationSchema),
+	})
 
 	function handleCreateAccount(credentials: UseCreateAccountFormFields) {
 		console.log(credentials)

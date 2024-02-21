@@ -1,7 +1,9 @@
 import { forwardRef } from 'react'
-import { Text, TextProps, TouchableOpacity } from 'react-native'
+import { TextProps, TouchableOpacity } from 'react-native'
 
+import { Typography } from '../atoms/typography'
 import { Button, ButtonProps } from './button'
+
 import { cn } from '@/helpers/cn'
 
 const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
@@ -19,13 +21,7 @@ const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
 })
 
 function Label(props: TextProps) {
-	const { className, ...rest } = props
-	return (
-		<Text
-			{...rest}
-			className={cn(className, 'font-subtitle text-base text-black')}
-		/>
-	)
+	return <Typography.Label {...props} />
 }
 
 Root.displayName = 'Root'

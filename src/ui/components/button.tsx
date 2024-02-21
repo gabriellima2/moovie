@@ -2,7 +2,6 @@ import { forwardRef } from 'react'
 import {
 	ActivityIndicator,
 	TouchableOpacity,
-	Text,
 	View,
 	ViewProps,
 	TextProps,
@@ -10,6 +9,7 @@ import {
 } from 'react-native'
 import colors from 'tailwindcss/colors'
 
+import { Typography } from '../atoms/typography'
 import { cn } from '@/helpers/cn'
 
 export type ButtonProps = TouchableOpacityProps
@@ -37,12 +37,7 @@ function Loading() {
 
 function Label(props: TextProps) {
 	const { className, ...rest } = props
-	return (
-		<Text
-			{...rest}
-			className={cn(className, 'font-subtitle text-base text-white')}
-		/>
-	)
+	return <Typography.Label {...rest} className={cn(className, 'text-white')} />
 }
 
 function Aside(props: ViewProps) {

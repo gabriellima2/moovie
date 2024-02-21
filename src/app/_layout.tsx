@@ -9,9 +9,11 @@ import {
 	Inter_700Bold,
 } from '@expo-google-fonts/inter'
 
+import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 import { STATUS_BAR_HEIGHT } from '@/constants/status-bar-height'
 
 export default function Layout() {
+	const { authStateHasBeenChecked } = useAuthenticationStore()
 	const [fontsLoaded] = useFonts({
 		Inter_600SemiBold,
 		Inter_500Medium,
@@ -20,7 +22,7 @@ export default function Layout() {
 		Inter_700Bold,
 	})
 
-	if (!fontsLoaded) {
+	if (!fontsLoaded && !authStateHasBeenChecked) {
 		return (
 			<View className="flex-1 items-center justify-center">
 				<ActivityIndicator />

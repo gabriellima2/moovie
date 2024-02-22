@@ -4,6 +4,7 @@ import {
 	signInAnonymously,
 	sendEmailVerification,
 	signInWithEmailAndPassword,
+	sendPasswordResetEmail,
 } from 'firebase/auth'
 import { create } from 'zustand'
 
@@ -38,6 +39,9 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 			const { user } = get()
 			if (!user) throw new Error('No user currently authenticated')
 			await sendEmailVerification(user)
+		},
+		sendPasswordReset: async (email: string) => {
+			await sendPasswordResetEmail(auth, email)
 		},
 		checkAuthState: () => {
 			return onAuthStateChanged(auth, (user) => {

@@ -11,5 +11,6 @@ export interface AuthenticationStoreProperties {
 	signIn: (credentials: SignInDTO) => Promise<void>
 	anonymously: () => Promise<void>
 	sendEmailVerification: () => Promise<void>
+	sendPasswordReset: (email: string) => Promise<void>
 	checkAuthState: () => Unsubscribe
 }

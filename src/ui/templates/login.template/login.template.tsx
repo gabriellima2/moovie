@@ -61,14 +61,17 @@ export function LoginTemplate() {
 					<Field.Error message={errors.password?.message} />
 				</Field.Root>
 				<View className="w-full items-end">
-					<Button.Root text>
-						<Button.Label
-							className="text-black mb-6 text-sm"
-							accessibilityLabel="Redefine the password"
-						>
-							Forgot Password
-						</Button.Label>
-					</Button.Root>
+					<Link asChild href="/reset-password-mailer">
+						<Button.Root text>
+							<Button.Label
+								className="text-black mb-6 text-sm"
+								accessibilityLabel="Redefine the password"
+							>
+								Forgot Password
+							</Button.Label>
+						</Button.Root>
+					</Link>
+
 					<Button.Root onPress={onSubmit} accessibilityLabel="Sign In">
 						{isSubmitting ? (
 							<Button.Loading />

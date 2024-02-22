@@ -18,7 +18,7 @@ export function useGuestAuthentication() {
 		try {
 			await anonymously()
 			unsubscribe = checkAuthState()
-			replace('/home')
+			replace('/(tabs)/')
 		} catch (err) {
 			toast.show({
 				type: 'error',

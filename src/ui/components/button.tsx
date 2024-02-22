@@ -12,10 +12,13 @@ import colors from 'tailwindcss/colors'
 import { Typography } from '../atoms/typography'
 import { cn } from '@/helpers/cn'
 
-export type ButtonProps = TouchableOpacityProps
+export type ButtonProps = TouchableOpacityProps & {
+	outline?: boolean
+	text?: boolean
+}
 
 const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
-	const { className, disabled, ...rest } = props
+	const { className, disabled, outline, text, ...rest } = props
 	return (
 		<TouchableOpacity
 			ref={ref}
@@ -23,8 +26,11 @@ const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
 			activeOpacity={0.7}
 			className={cn(
 				className,
-				'w-full p-5 flex-row items-center justify-center rounded-2xl bg-black',
-				disabled && 'opacity-60'
+				'w-full p-4 flex-row items-center border-2 border-transparent justify-center rounded-2xl bg-black',
+				disabled && 'opacity-60',
+				outline && 'bg-transparent border-black',
+				text &&
+					'w-auto p-0 items-center justify-center rounded-none bg-transparent'
 			)}
 			{...rest}
 		/>

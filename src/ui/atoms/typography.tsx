@@ -13,7 +13,12 @@ function Subtitle(props: TextProps) {
 
 function Paragraph(props: TextProps) {
 	const { className, ...rest } = props
-	return <Text className={cn(className, 'font-body text-base')} {...rest} />
+	return (
+		<Text
+			className={cn(className, 'font-body text-zinc-600 text-base')}
+			{...rest}
+		/>
+	)
 }
 
 function Label(props: TextProps) {
@@ -23,7 +28,12 @@ function Label(props: TextProps) {
 
 function Small(props: TextProps) {
 	const { className, ...rest } = props
-	return <Text className={cn(className, 'font-body text-sm')} {...rest} />
+	return (
+		<Text
+			className={cn(className, 'font-body text-zinc-600 text-sm')}
+			{...rest}
+		/>
+	)
 }
 
 export const Typography = {

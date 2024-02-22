@@ -1,13 +1,13 @@
 import { useRef } from 'react'
 import { TextInput, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
-import colors from 'tailwindcss/colors'
+import { Link } from 'expo-router'
 
 import { TogglePasswordVisibilityButton } from '../../components/toggle-password-visibility-button'
-import { TextButton } from '../../components/text-button'
 import { Typography } from '../../atoms/typography'
 import { Button } from '../../components/button'
 import { Field } from '../../components/field'
+import { Line } from '@/ui/atoms/line'
 
 import { useCreateAccountForm } from './hooks/use-create-account-form'
 import { useToggle } from '@/hooks/use-toggle'
@@ -16,19 +16,24 @@ export function CreateAccountTemplate() {
 	const { errors, isSubmitting, onSubmit, setValue } = useCreateAccountForm()
 	const { isActive, toggle } = useToggle({ initialValue: true })
 	const passwordFieldRef = useRef<TextInput | null>(null)
-
 	return (
-		<View className="bg-white flex-1 p-5 gap-11">
-			<Typography.Title className="text-4xl w-[370px]">
-				Share and recommend your favorite movies
-			</Typography.Title>
-			<View className="flex-col items-center gap-y-6">
+		<View className="bg-white flex-1 p-5 gap-y-6">
+			<View>
+				<Typography.Title>Create an account</Typography.Title>
+				<View className="flex flex-row items-center gap-x-1 mt-1">
+					<Typography.Paragraph>Already have an account?</Typography.Paragraph>
+					<Link href="/" className="underline text-black">
+						Login
+					</Link>
+				</View>
+			</View>
+			<View className="flex-col items-center gap-y-3">
 				<Field.Root>
 					<Field.Label id="email">Email</Field.Label>
 					<Field.Input
 						id="email"
 						autoCapitalize="none"
-						placeholder="Insert your better email"
+						placeholder="Enter your better email"
 						returnKeyType="next"
 						keyboardType="email-address"
 						onChangeText={(text) => setValue('email', text)}
@@ -44,7 +49,7 @@ export function CreateAccountTemplate() {
 							id="password"
 							secureTextEntry={isActive}
 							autoCapitalize="none"
-							placeholder="Insert a strong password"
+							placeholder="Enter a strong password"
 							returnKeyType="send"
 							onChangeText={(text) => setValue('password', text)}
 							onSubmitEditing={onSubmit}
@@ -56,22 +61,25 @@ export function CreateAccountTemplate() {
 					</View>
 					<Field.Error message={errors.password?.message} />
 				</Field.Root>
-				<Button.Root
-					onPress={onSubmit}
-					accessibilityLabel="Sign In"
-					className="justify-between"
-				>
-					<Button.Label>Create Account</Button.Label>
+				<Button.Root onPress={onSubmit} accessibilityLabel="Sign In">
 					{isSubmitting ? (
 						<Button.Loading />
 					) : (
-						<Feather name="arrow-right" color={colors.white} size={24} />
+						<Button.Label>Sign In</Button.Label>
 					)}
 				</Button.Root>
-				<TextButton.Root accessibilityLabel="Continue as Guest">
-					<TextButton.Label>Continue as Guest</TextButton.Label>
-				</TextButton.Root>
 			</View>
+			<View className="flex-row items-center gap-x-3">
+				<Line />
+				<Typography.Small>OR</Typography.Small>
+				<Line />
+			</View>
+			<Button.Root outline accessibilityLabel="Continue as Guest">
+				<Feather name="user" size={20} />
+				<Button.Label className="text-black ml-3">
+					Continue as Guest
+				</Button.Label>
+			</Button.Root>
 		</View>
 	)
 }

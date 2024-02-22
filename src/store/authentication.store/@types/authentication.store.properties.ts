@@ -7,5 +7,6 @@ export interface AuthenticationStoreProperties {
 	user: UserEntity | null
 	authStateHasBeenChecked: boolean
 	signUp: (credentials: SignUpDTO) => Promise<void>
+	anonymously: () => Promise<void>
 	checkAuthState: () => Unsubscribe
 }

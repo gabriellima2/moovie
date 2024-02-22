@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { TextInput, View } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { Link } from 'expo-router'
+import colors from 'tailwindcss/colors'
 
 import { TogglePasswordVisibilityButton } from '../../components/toggle-password-visibility-button'
 import { Typography } from '../../atoms/typography'
@@ -9,6 +10,7 @@ import { Button } from '../../components/button'
 import { Field } from '../../components/field'
 import { Line } from '@/ui/atoms/line'
 
+import { useGuestAuthentication } from './hooks/use-guest-authentication'
 import { useCreateAccountForm } from './hooks/use-create-account-form'
 import { useToggle } from '@/hooks/use-toggle'
 
@@ -16,6 +18,9 @@ export function CreateAccountTemplate() {
 	const { errors, isSubmitting, onSubmit, setValue } = useCreateAccountForm()
 	const { isActive, toggle } = useToggle({ initialValue: true })
 	const passwordFieldRef = useRef<TextInput | null>(null)
+	const { isAuthenticating, handleGuestAuthentication } =
+		useGuestAuthentication()
+
 	return (
 		<View className="bg-white flex-1 p-5 gap-y-6">
 			<View>
@@ -74,8 +79,16 @@ export function CreateAccountTemplate() {
 				<Typography.Small>OR</Typography.Small>
 				<Line />
 			</View>
-			<Button.Root outline accessibilityLabel="Continue as Guest">
-				<Feather name="user" size={20} />
+			<Button.Root
+				onPress={handleGuestAuthentication}
+				outline
+				accessibilityLabel="Continue as Guest"
+			>
+				{isAuthenticating ? (
+					<Button.Loading color={colors.black} />
+				) : (
+					<Feather name="user" size={20} />
+				)}
 				<Button.Label className="text-black ml-3">
 					Continue as Guest
 				</Button.Label>

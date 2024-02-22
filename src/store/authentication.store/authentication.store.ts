@@ -1,6 +1,7 @@
 import {
 	onAuthStateChanged,
 	createUserWithEmailAndPassword,
+	signInAnonymously,
 } from 'firebase/auth'
 import { create } from 'zustand'
 
@@ -19,6 +20,9 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 				credentials.email,
 				credentials.password
 			)
+		},
+		anonymously: async () => {
+			await signInAnonymously(auth)
 		},
 		checkAuthState: () => {
 			return onAuthStateChanged(auth, (user) => {

@@ -6,6 +6,7 @@ import {
 	ViewProps,
 	TextProps,
 	TouchableOpacityProps,
+	ColorValue,
 } from 'react-native'
 import colors from 'tailwindcss/colors'
 
@@ -16,6 +17,8 @@ export type ButtonProps = TouchableOpacityProps & {
 	outline?: boolean
 	text?: boolean
 }
+
+export type LoadingProps = { color?: ColorValue }
 
 const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
 	const { className, disabled, outline, text, ...rest } = props
@@ -37,8 +40,9 @@ const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
 	)
 })
 
-function Loading() {
-	return <ActivityIndicator color={colors.white} size={24} />
+function Loading(props: LoadingProps) {
+	const { color = colors.white } = props
+	return <ActivityIndicator color={color} size={24} />
 }
 
 function Label(props: TextProps) {

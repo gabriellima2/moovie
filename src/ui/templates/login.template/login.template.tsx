@@ -21,7 +21,11 @@ export function LoginTemplate() {
 				<Typography.Title>Welcome back</Typography.Title>
 				<View className="flex flex-row items-center gap-x-1 mt-2">
 					<Typography.Paragraph>Don`t have an account?</Typography.Paragraph>
-					<Link href="/login" className="underline text-black">
+					<Link
+						href="/create-account"
+						accessibilityLabel="Sign Up"
+						className="underline text-black"
+					>
 						Sign Up
 					</Link>
 				</View>
@@ -72,7 +76,11 @@ export function LoginTemplate() {
 						</Button.Root>
 					</Link>
 
-					<Button.Root onPress={onSubmit} accessibilityLabel="Sign In">
+					<Button.Root
+						onPress={onSubmit}
+						accessibilityLabel="Sign In"
+						disabled={isSubmitting}
+					>
 						{isSubmitting ? (
 							<Button.Loading />
 						) : (

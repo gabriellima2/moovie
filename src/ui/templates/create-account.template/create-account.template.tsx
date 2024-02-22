@@ -28,7 +28,11 @@ export function CreateAccountTemplate() {
 				<Typography.Title>Create an account</Typography.Title>
 				<View className="flex flex-row items-center gap-x-1 mt-2">
 					<Typography.Paragraph>Already have an account?</Typography.Paragraph>
-					<Link href="/login" className="underline text-black">
+					<Link
+						href="/login"
+						accessibilityLabel="Sign In"
+						className="underline text-black"
+					>
 						Sign In
 					</Link>
 				</View>
@@ -67,7 +71,11 @@ export function CreateAccountTemplate() {
 					</View>
 					<Field.Error message={errors.password?.message} />
 				</Field.Root>
-				<Button.Root onPress={onSubmit} accessibilityLabel="Sign Up">
+				<Button.Root
+					onPress={onSubmit}
+					disabled={isSubmitting}
+					accessibilityLabel="Sign Up"
+				>
 					{isSubmitting ? (
 						<Button.Loading />
 					) : (
@@ -83,6 +91,7 @@ export function CreateAccountTemplate() {
 			<Button.Root
 				onPress={handleGuestAuthentication}
 				outline
+				disabled={isAuthenticating}
 				accessibilityLabel="Continue as Guest"
 			>
 				{isAuthenticating ? (

@@ -30,7 +30,7 @@ const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
 			className={cn(
 				className,
 				'w-full p-4 flex-row items-center border-2 border-transparent justify-center rounded-2xl bg-black',
-				disabled && 'opacity-60',
+				disabled && 'opacity-70',
 				outline && 'bg-transparent border-black',
 				text &&
 					'w-auto p-0 items-center justify-center rounded-none bg-transparent'

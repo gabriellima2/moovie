@@ -39,6 +39,7 @@ export function ResetPasswordMailerTemplate() {
 					onPress={onSubmit}
 					accessibilityLabel="Send password reset email"
 					className="justify-between"
+					disabled={isSubmitting}
 				>
 					<Button.Label>Send Link</Button.Label>
 					{isSubmitting ? (

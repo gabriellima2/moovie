@@ -1,6 +1,6 @@
 import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import Toast from 'react-native-toast-message'
-import { Slot } from 'expo-router'
+import { Stack } from 'expo-router'
 import {
 	useFonts,
 	Inter_300Light,
@@ -37,7 +37,7 @@ export default function Layout() {
 				className="flex-1"
 				style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
 			>
-				<Slot />
+				<Stack screenOptions={{ headerShown: false }} />
 			</SafeAreaView>
 			<Toast />
 		</>

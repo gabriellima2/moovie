@@ -19,21 +19,24 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 		user: null,
 		authStateHasBeenChecked: false,
 		signUp: async (credentials: SignUpDTO) => {
-			await createUserWithEmailAndPassword(
+			const { user } = await createUserWithEmailAndPassword(
 				auth,
 				credentials.email,
 				credentials.password
 			)
+			set((state) => ({ ...state, user, authStateHasBeenChecked: true }))
 		},
 		signIn: async (credentials: SignInDTO) => {
-			await signInWithEmailAndPassword(
+			const { user } = await signInWithEmailAndPassword(
 				auth,
 				credentials.email,
 				credentials.password
 			)
+			set((state) => ({ ...state, user, authStateHasBeenChecked: true }))
 		},
 		anonymously: async () => {
-			await signInAnonymously(auth)
+			const { user } = await signInAnonymously(auth)
+			set((state) => ({ ...state, user, authStateHasBeenChecked: true }))
 		},
 		sendEmailVerification: async () => {
 			const { user } = get()

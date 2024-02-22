@@ -1,15 +1,16 @@
-import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
-import { SignInDTO } from '@/dtos/sign-in.dto'
-import { authenticationSchema } from '@/schemas/authentication.schema'
-import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'expo-router'
-import { Unsubscribe } from 'firebase/auth'
 import { useEffect } from 'react'
+import { useRouter } from 'expo-router'
 import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+
+import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
+
+import { authenticationSchema } from '@/schemas/authentication.schema'
+import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
+
+import { SignInDTO } from '@/dtos/sign-in.dto'
 
 const toast = makeToastAdapter()
-let unsubscribe: Unsubscribe
 
 export function useLoginForm() {
 	const {
@@ -20,13 +21,12 @@ export function useLoginForm() {
 	} = useForm<SignInDTO>({
 		resolver: zodResolver(authenticationSchema),
 	})
-	const { signIn, checkAuthState } = useAuthenticationStore()
+	const { signIn } = useAuthenticationStore()
 	const { replace } = useRouter()
 
 	async function handleLogin(credentials: SignInDTO) {
 		try {
 			await signIn(credentials)
-			unsubscribe = checkAuthState()
 			replace('/(tabs)/')
 		} catch (err) {
 			toast.show({
@@ -41,10 +41,6 @@ export function useLoginForm() {
 		register('email')
 		register('password')
 	}, [register])
-
-	useEffect(() => {
-		return unsubscribe && unsubscribe()
-	}, [])
 
 	return {
 		errors,

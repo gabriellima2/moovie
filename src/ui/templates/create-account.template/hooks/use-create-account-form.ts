@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { Unsubscribe } from 'firebase/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
@@ -11,7 +10,6 @@ import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 import { SignUpDTO } from '@/dtos/sign-up.dto'
 
 const toast = makeToastAdapter()
-let unsubscribe: Unsubscribe
 
 export function useCreateAccountForm() {
 	const {
@@ -23,8 +21,7 @@ export function useCreateAccountForm() {
 	} = useForm<SignUpDTO>({
 		resolver: zodResolver(authenticationSchema),
 	})
-	const { signUp, sendEmailVerification, checkAuthState } =
-		useAuthenticationStore()
+	const { signUp, sendEmailVerification } = useAuthenticationStore()
 
 	async function handleCreateAccount(credentials: SignUpDTO) {
 		try {
@@ -34,7 +31,6 @@ export function useCreateAccountForm() {
 				title: 'Account successfully created',
 				description: 'Enter the email you entered to verify it',
 			})
-			unsubscribe = checkAuthState()
 			reset({})
 			await sendEmailVerification()
 		} catch (err) {
@@ -50,10 +46,6 @@ export function useCreateAccountForm() {
 		register('email')
 		register('password')
 	}, [register])
-
-	useEffect(() => {
-		return unsubscribe && unsubscribe()
-	}, [])
 
 	return {
 		errors,

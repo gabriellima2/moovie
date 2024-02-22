@@ -1,5 +1,11 @@
+import { Stack } from 'expo-router'
 import { LoginTemplate } from '@/ui/templates/login.template'
 
-export function SignIn() {
-	return <LoginTemplate />
+export default function Login() {
+	return (
+		<>
+			<Stack.Screen />
+			<LoginTemplate />
+		</>
+	)
 }

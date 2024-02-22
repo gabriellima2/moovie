@@ -8,6 +8,7 @@ import { TogglePasswordVisibilityButton } from '../../components/toggle-password
 import { Typography } from '../../atoms/typography'
 import { Button } from '../../components/button'
 import { Field } from '../../components/field'
+import { Wrapper } from '@/ui/atoms/wrapper'
 import { Line } from '@/ui/atoms/line'
 
 import { useGuestAuthentication } from './hooks/use-guest-authentication'
@@ -22,12 +23,12 @@ export function CreateAccountTemplate() {
 		useGuestAuthentication()
 
 	return (
-		<View className="bg-white flex-1 p-5 gap-y-6">
+		<Wrapper>
 			<View>
 				<Typography.Title>Create an account</Typography.Title>
 				<View className="flex flex-row items-center gap-x-1 mt-1">
 					<Typography.Paragraph>Already have an account?</Typography.Paragraph>
-					<Link href="/" className="underline text-black">
+					<Link href="/login" className="underline text-black">
 						Login
 					</Link>
 				</View>
@@ -93,6 +94,6 @@ export function CreateAccountTemplate() {
 					Continue as Guest
 				</Button.Label>
 			</Button.Root>
-		</View>
+		</Wrapper>
 	)
 }

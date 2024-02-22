@@ -1,5 +1,5 @@
-import { Typography } from '@/ui/atoms/typography'
+import { ResetPasswordEmailHasBeenSentTemplate } from '@/ui/templates/reset-password-email-has-been-sent.template'
 
 export default function ResetPasswordEmailHasBeenSent() {
-	return <Typography.Title>Welcome</Typography.Title>
+	return <ResetPasswordEmailHasBeenSentTemplate />
 }

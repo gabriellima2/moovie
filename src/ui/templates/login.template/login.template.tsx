@@ -1,35 +1,28 @@
 import { useRef } from 'react'
 import { TextInput, View } from 'react-native'
-import { Feather } from '@expo/vector-icons'
 import { Link } from 'expo-router'
-import colors from 'tailwindcss/colors'
 
 import { TogglePasswordVisibilityButton } from '../../components/toggle-password-visibility-button'
 import { Typography } from '../../atoms/typography'
 import { Button } from '../../components/button'
 import { Field } from '../../components/field'
 import { Wrapper } from '@/ui/atoms/wrapper'
-import { Line } from '@/ui/atoms/line'
 
-import { useGuestAuthentication } from './hooks/use-guest-authentication'
-import { useCreateAccountForm } from './hooks/use-create-account-form'
+import { useLoginForm } from './hooks/use-login-form'
 import { useToggle } from '@/hooks/use-toggle'
 
-export function CreateAccountTemplate() {
-	const { errors, isSubmitting, onSubmit, setValue } = useCreateAccountForm()
+export function LoginTemplate() {
+	const { errors, isSubmitting, onSubmit, setValue } = useLoginForm()
 	const { isActive, toggle } = useToggle({ initialValue: true })
 	const passwordFieldRef = useRef<TextInput | null>(null)
-	const { isAuthenticating, handleGuestAuthentication } =
-		useGuestAuthentication()
-
 	return (
 		<Wrapper>
 			<View>
-				<Typography.Title>Create an account</Typography.Title>
+				<Typography.Title>Welcome back</Typography.Title>
 				<View className="flex flex-row items-center gap-x-1 mt-1">
-					<Typography.Paragraph>Already have an account?</Typography.Paragraph>
+					<Typography.Paragraph>Don`t have an account?</Typography.Paragraph>
 					<Link href="/login" className="underline text-black">
-						Sign In
+						Sign Up
 					</Link>
 				</View>
 			</View>
@@ -39,7 +32,7 @@ export function CreateAccountTemplate() {
 					<Field.Input
 						id="email"
 						autoCapitalize="none"
-						placeholder="Enter your better email"
+						placeholder="Enter your email"
 						returnKeyType="next"
 						keyboardType="email-address"
 						onChangeText={(text) => setValue('email', text)}
@@ -55,7 +48,7 @@ export function CreateAccountTemplate() {
 							id="password"
 							secureTextEntry={isActive}
 							autoCapitalize="none"
-							placeholder="Enter a strong password"
+							placeholder="Enter your password"
 							returnKeyType="send"
 							onChangeText={(text) => setValue('password', text)}
 							onSubmitEditing={onSubmit}
@@ -67,33 +60,24 @@ export function CreateAccountTemplate() {
 					</View>
 					<Field.Error message={errors.password?.message} />
 				</Field.Root>
-				<Button.Root onPress={onSubmit} accessibilityLabel="Sign Up">
-					{isSubmitting ? (
-						<Button.Loading />
-					) : (
-						<Button.Label>Sign Up</Button.Label>
-					)}
-				</Button.Root>
+				<View className="w-full items-end">
+					<Button.Root text>
+						<Button.Label
+							className="text-black mb-6 text-sm"
+							accessibilityLabel="Redefine the password"
+						>
+							Forgot Password
+						</Button.Label>
+					</Button.Root>
+					<Button.Root onPress={onSubmit} accessibilityLabel="Sign In">
+						{isSubmitting ? (
+							<Button.Loading />
+						) : (
+							<Button.Label>Sign In</Button.Label>
+						)}
+					</Button.Root>
+				</View>
 			</View>
-			<View className="flex-row items-center gap-x-3">
-				<Line />
-				<Typography.Small>OR</Typography.Small>
-				<Line />
-			</View>
-			<Button.Root
-				onPress={handleGuestAuthentication}
-				outline
-				accessibilityLabel="Continue as Guest"
-			>
-				{isAuthenticating ? (
-					<Button.Loading color={colors.black} />
-				) : (
-					<Feather name="user" size={20} />
-				)}
-				<Button.Label className="text-black ml-3">
-					Continue as Guest
-				</Button.Label>
-			</Button.Root>
 		</Wrapper>
 	)
 }

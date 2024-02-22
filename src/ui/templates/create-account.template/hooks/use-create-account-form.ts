@@ -14,7 +14,6 @@ const toast = makeToastAdapter()
 let unsubscribe: Unsubscribe
 
 export function useCreateAccountForm() {
-	const { signUp, checkAuthState } = useAuthenticationStore()
 	const {
 		register,
 		setValue,
@@ -24,6 +23,8 @@ export function useCreateAccountForm() {
 	} = useForm<SignUpDTO>({
 		resolver: zodResolver(authenticationSchema),
 	})
+	const { signUp, sendEmailVerification, checkAuthState } =
+		useAuthenticationStore()
 
 	async function handleCreateAccount(credentials: SignUpDTO) {
 		try {
@@ -31,11 +32,11 @@ export function useCreateAccountForm() {
 			toast.show({
 				type: 'success',
 				title: 'Account successfully created',
-				description:
-					'Your account has been created successfully, enter the email provided to activate it',
+				description: 'Enter the email you entered to verify it',
 			})
 			unsubscribe = checkAuthState()
 			reset({})
+			await sendEmailVerification()
 		} catch (err) {
 			toast.show({
 				type: 'error',

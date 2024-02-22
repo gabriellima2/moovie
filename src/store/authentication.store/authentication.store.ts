@@ -2,6 +2,7 @@ import {
 	onAuthStateChanged,
 	createUserWithEmailAndPassword,
 	signInAnonymously,
+	sendEmailVerification,
 } from 'firebase/auth'
 import { create } from 'zustand'
 
@@ -11,7 +12,7 @@ import { AuthenticationStoreProperties } from './@types/authentication.store.pro
 import { SignUpDTO } from '@/dtos/sign-up.dto'
 
 export const useAuthenticationStore = create<AuthenticationStoreProperties>(
-	(set) => ({
+	(set, get) => ({
 		user: null,
 		authStateHasBeenChecked: false,
 		signUp: async (credentials: SignUpDTO) => {
@@ -23,6 +24,11 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 		},
 		anonymously: async () => {
 			await signInAnonymously(auth)
+		},
+		sendEmailVerification: async () => {
+			const { user } = get()
+			if (!user) throw new Error('No user currently authenticated')
+			await sendEmailVerification(user)
 		},
 		checkAuthState: () => {
 			return onAuthStateChanged(auth, (user) => {

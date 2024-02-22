@@ -8,5 +8,6 @@ export interface AuthenticationStoreProperties {
 	authStateHasBeenChecked: boolean
 	signUp: (credentials: SignUpDTO) => Promise<void>
 	anonymously: () => Promise<void>
+	sendEmailVerification: () => Promise<void>
 	checkAuthState: () => Unsubscribe
 }

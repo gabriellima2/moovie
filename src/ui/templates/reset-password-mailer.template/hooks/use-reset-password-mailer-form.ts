@@ -1,33 +1,38 @@
 import { useEffect } from 'react'
 import { useRouter } from 'expo-router'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 import { useForm } from '@/hooks/use-form'
 
-import { authenticationSchema } from '@/schemas/authentication.schema'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
+import { emailSchema } from '@/schemas/authentication.schema'
 
-import { SignInDTO } from '@/dtos/sign-in.dto'
+export type UseResetPasswordMailerFormFields = {
+	email: string
+}
 
 const toast = makeToastAdapter()
 
-export function useLoginForm() {
+export function useResetPasswordMailerForm() {
 	const {
 		register,
 		setValue,
 		handleSubmit,
 		formState: { isSubmitting, errors },
-	} = useForm<SignInDTO>({
-		resolver: zodResolver(authenticationSchema),
+	} = useForm<UseResetPasswordMailerFormFields>({
+		resolver: zodResolver(z.object({ email: emailSchema })),
 	})
-	const { signIn } = useAuthenticationStore()
+	const { sendPasswordReset } = useAuthenticationStore()
 	const { replace } = useRouter()
 
-	async function handleLogin(credentials: SignInDTO) {
+	async function handleResetPassword(
+		credentials: UseResetPasswordMailerFormFields
+	) {
 		try {
-			await signIn(credentials)
-			replace('/(tabs)/')
+			await sendPasswordReset(credentials.email)
+			replace('/reset-password-email-has-been-sent')
 		} catch (err) {
 			toast.show({
 				type: 'error',
@@ -39,13 +44,12 @@ export function useLoginForm() {
 
 	useEffect(() => {
 		register('email')
-		register('password')
 	}, [register])
 
 	return {
 		errors,
 		isSubmitting,
 		setValue,
-		onSubmit: handleSubmit(handleLogin),
+		onSubmit: handleSubmit(handleResetPassword),
 	}
 }

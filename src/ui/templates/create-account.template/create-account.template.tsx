@@ -26,7 +26,7 @@ export function CreateAccountTemplate() {
 		<Wrapper>
 			<View>
 				<Typography.Title>Create an account</Typography.Title>
-				<View className="flex flex-row items-center gap-x-1 mt-1">
+				<View className="flex flex-row items-center gap-x-1 mt-2">
 					<Typography.Paragraph>Already have an account?</Typography.Paragraph>
 					<Link href="/login" className="underline text-black">
 						Sign In

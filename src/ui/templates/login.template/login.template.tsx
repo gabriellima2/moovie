@@ -19,7 +19,7 @@ export function LoginTemplate() {
 		<Wrapper>
 			<View>
 				<Typography.Title>Welcome back</Typography.Title>
-				<View className="flex flex-row items-center gap-x-1 mt-1">
+				<View className="flex flex-row items-center gap-x-1 mt-2">
 					<Typography.Paragraph>Don`t have an account?</Typography.Paragraph>
 					<Link href="/login" className="underline text-black">
 						Sign Up

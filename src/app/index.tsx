@@ -1,5 +1,5 @@
-import { CreateAccountTemplate } from '@/ui/templates/create-account.template'
+import { OnboardingTemplate } from '@/ui/templates/onboarding.template'
 
-export default function HomePage() {
-	return <CreateAccountTemplate />
+export default function Presentation() {
+	return <OnboardingTemplate />
 }

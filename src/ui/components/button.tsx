@@ -29,7 +29,7 @@ const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
 			activeOpacity={0.7}
 			className={cn(
 				className,
-				'w-full p-4 flex-row items-center border-2 border-transparent justify-center rounded-2xl bg-black',
+				'w-full p-4 h-14 flex-row items-center border-2 border-transparent justify-center rounded-2xl bg-black',
 				disabled && 'opacity-70',
 				outline && 'bg-transparent border-black',
 				text &&
@@ -42,7 +42,7 @@ const Root = forwardRef<TouchableOpacity, ButtonProps>((props, ref) => {
 
 function Loading(props: LoadingProps) {
 	const { color = colors.white } = props
-	return <ActivityIndicator color={color} size={24} />
+	return <ActivityIndicator color={color} size={20} />
 }
 
 function Label(props: TextProps) {

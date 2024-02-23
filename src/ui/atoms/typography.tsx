@@ -15,7 +15,7 @@ function Paragraph(props: TextProps) {
 	const { className, ...rest } = props
 	return (
 		<Text
-			className={cn(className, 'font-body text-zinc-600 text-base')}
+			className={cn(className, 'font-body text-zinc-600 text-sm')}
 			{...rest}
 		/>
 	)
@@ -23,7 +23,7 @@ function Paragraph(props: TextProps) {
 
 function Label(props: TextProps) {
 	const { className, ...rest } = props
-	return <Text className={cn(className, 'font-subtitle text-base')} {...rest} />
+	return <Text className={cn(className, 'font-subtitle text-sm')} {...rest} />
 }
 
 function Small(props: TextProps) {

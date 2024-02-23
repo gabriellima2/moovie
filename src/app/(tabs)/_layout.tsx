@@ -6,7 +6,7 @@ import { useAuthenticationStore } from '@/store/authentication.store/authenticat
 
 export default function Layout() {
 	const { user } = useAuthenticationStore()
-	if (user && !user.emailVerified) return <Redirect href="/check-your-email" />
+	if (user && !user.emailVerified) return <Redirect href="/verify-your-email" />
 	return (
 		<Tabs
 			sceneContainerStyle={{

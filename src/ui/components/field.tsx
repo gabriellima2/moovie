@@ -33,7 +33,7 @@ const Input = forwardRef<TextInput, InputProps>((props, ref) => {
 			{...rest}
 			className={cn(
 				className,
-				'w-full p-5 my-3 py-4 text-base flex-row items-center justify-center rounded-2xl bg-zinc-200'
+				'w-full p-5 my-3 py-4 text-sm placeholder:text-sm flex-row items-center justify-center rounded-2xl bg-zinc-200'
 			)}
 		/>
 	)

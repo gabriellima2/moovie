@@ -30,7 +30,7 @@ function Small(props: TextProps) {
 	const { className, ...rest } = props
 	return (
 		<Text
-			className={cn(className, 'font-body text-zinc-600 text-sm')}
+			className={cn(className, 'font-body text-zinc-600 text-xs')}
 			{...rest}
 		/>
 	)

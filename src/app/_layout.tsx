@@ -1,4 +1,5 @@
 import { ActivityIndicator, SafeAreaView, View } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import Toast from 'react-native-toast-message'
 import { Stack } from 'expo-router'
 import {
@@ -32,7 +33,7 @@ export default function Layout() {
 	}
 
 	return (
-		<>
+		<GestureHandlerRootView className="flex-1">
 			<SafeAreaView
 				className="flex-1"
 				style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
@@ -40,6 +41,6 @@ export default function Layout() {
 				<Stack screenOptions={{ headerShown: false }} />
 			</SafeAreaView>
 			<Toast />
-		</>
+		</GestureHandlerRootView>
 	)
 }

@@ -36,6 +36,7 @@ export function useIntroductionForm() {
 			await updateProfile(user, {
 				displayName: credentials.username.trim().toLowerCase(),
 			})
+			await user.reload()
 			toast.show({
 				type: 'success',
 				title: 'Username was saved successfully',

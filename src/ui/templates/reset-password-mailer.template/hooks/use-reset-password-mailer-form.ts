@@ -7,7 +7,7 @@ import { useAuthenticationStore } from '@/store/authentication.store/authenticat
 import { useForm } from '@/hooks/use-form'
 
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
-import { emailSchema } from '@/schemas/authentication.schema'
+import { emailSchema } from '@/schemas/user.schema'
 
 export type UseResetPasswordMailerFormFields = {
 	email: string

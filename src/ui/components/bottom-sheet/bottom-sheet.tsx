@@ -35,7 +35,7 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
 				enablePanDownToClose
 				enableDynamicSizing
 				backdropComponent={BottomSheetOverlay}
-				backgroundStyle={{ backgroundColor: colors.zinc[200] }}
+				backgroundStyle={{ backgroundColor: colors.white }}
 				handleIndicatorStyle={{
 					marginTop: 4,
 					backgroundColor: colors.zinc[400],

@@ -1,7 +1,9 @@
-import { forwardRef, useImperativeHandle } from 'react'
-import { ViewProps } from 'react-native'
+import { PropsWithChildren, forwardRef, useImperativeHandle } from 'react'
 import colors from 'tailwindcss/colors'
-import GorhomBottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import GorhomBottomSheet, {
+	BottomSheetScrollView,
+	BottomSheetProps as GorhomBottomSheetProps,
+} from '@gorhom/bottom-sheet'
 
 import { BottomSheetOverlay } from './components/bottom-sheet-overlay'
 import { useBottomSheetState } from './hooks/use-bottom-sheet-state'
@@ -11,7 +13,7 @@ export type BottomSheetRef = {
 	close: () => void
 }
 
-export type BottomSheetProps = ViewProps
+export type BottomSheetProps = GorhomBottomSheetProps & PropsWithChildren
 
 export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
 	(props, ref) => {

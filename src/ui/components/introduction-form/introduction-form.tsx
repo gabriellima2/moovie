@@ -1,5 +1,3 @@
-import { Redirect } from 'expo-router'
-
 import { Typography } from '../../atoms/typography'
 import { Wrapper } from '../../atoms/wrapper'
 import { BottomSheet } from '../bottom-sheet'
@@ -22,8 +20,7 @@ export function IntroductionForm() {
 		handleSaveEmptyUserInformations,
 		setValue,
 	} = useIntroductionForm()
-	if (!user) return <Redirect href="/login" />
-	if (user.isAnonymous || (user && user.displayName)) return null
+	if (!user || user.isAnonymous || user.displayName) return null
 	return (
 		<BottomSheet onClose={handleSaveEmptyUserInformations}>
 			<Wrapper className="p-0">

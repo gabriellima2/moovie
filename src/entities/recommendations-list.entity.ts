@@ -1,6 +1,7 @@
 import { LikeEntity, LikeType } from './like.entity'
 
 export interface RecommendationsListEntity {
+	id: string
 	title: string
 	description: string
 	movies_id: string[]

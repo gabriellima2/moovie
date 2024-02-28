@@ -1,9 +1,14 @@
-import { SectionList, TouchableOpacity, View } from 'react-native'
+import { SectionList, TouchableOpacity } from 'react-native'
+import { Feather } from '@expo/vector-icons'
+
+import { RecommendationsListPreview } from '../components/recommendations-list-preview'
+import { ReviewPreview } from '../components/review-preview'
+import { MoviePreview } from '../components/movie-preview'
 import { Typography } from '../atoms/typography'
 import { Field } from '../components/field'
-import { Feather } from '@expo/vector-icons'
-import { ReviewEntity } from '@/entities/review.entity'
+
 import { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
+import { ReviewEntity } from '@/entities/review.entity'
 import { MovieEntity } from '@/entities/movie.entity'
 
 type Data = ReviewEntity | RecommendationsListEntity | MovieEntity
@@ -21,9 +26,11 @@ const DATA: Section[] = [
 			{ id: 0, poster_path: 'any_image', title: 'Movie Title' },
 		] as MovieEntity[],
 		renderItem: ({ item }) => (
-			<View>
-				<Typography.Title>{(item as MovieEntity).title}</Typography.Title>
-			</View>
+			<MoviePreview
+				id={(item as MovieEntity).id.toString()}
+				title={(item as MovieEntity).title}
+				banner={(item as MovieEntity).poster_path}
+			/>
 		),
 	},
 	{
@@ -36,11 +43,11 @@ const DATA: Section[] = [
 			},
 		] as RecommendationsListEntity[],
 		renderItem: ({ item }) => (
-			<View>
-				<Typography.Title>
-					{(item as RecommendationsListEntity).title}
-				</Typography.Title>
-			</View>
+			<RecommendationsListPreview
+				id={(item as RecommendationsListEntity).id}
+				title={(item as RecommendationsListEntity).title}
+				userID={(item as RecommendationsListEntity).user_id}
+			/>
 		),
 	},
 	{
@@ -55,14 +62,12 @@ const DATA: Section[] = [
 			},
 		] as ReviewEntity[],
 		renderItem: ({ item }) => (
-			<View>
-				<Typography.Small>
-					Rating: {(item as ReviewEntity).rating}
-				</Typography.Small>
-				<Typography.Paragraph>
-					{(item as ReviewEntity).description}
-				</Typography.Paragraph>
-			</View>
+			<ReviewPreview
+				id={(item as ReviewEntity).id}
+				description={(item as ReviewEntity).description}
+				rating={(item as ReviewEntity).rating}
+				userID={(item as ReviewEntity).user_id}
+			/>
 		),
 	},
 ]

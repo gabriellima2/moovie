@@ -3,7 +3,6 @@ import { Feather } from '@expo/vector-icons'
 
 import { RecommendationsListPreview } from '../components/recommendations-list-preview'
 import { ReviewPreview } from '../components/review-preview'
-import { MoviePreview } from '../components/movie-preview'
 import { Typography } from '../atoms/typography'
 import { Field } from '../components/field'
 
@@ -20,19 +19,6 @@ type Section = {
 }
 
 const DATA: Section[] = [
-	{
-		title: 'Popular Films',
-		data: [
-			{ id: 0, poster_path: 'any_image', title: 'Movie Title' },
-		] as MovieEntity[],
-		renderItem: ({ item }) => (
-			<MoviePreview
-				id={(item as MovieEntity).id.toString()}
-				title={(item as MovieEntity).title}
-				banner={(item as MovieEntity).poster_path}
-			/>
-		),
-	},
 	{
 		title: 'Popular Lists',
 		data: [

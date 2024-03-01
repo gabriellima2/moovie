@@ -1,10 +1,11 @@
-import { SectionList, TouchableOpacity } from 'react-native'
+import { SectionList } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import { Link } from 'expo-router'
 
 import { RecommendationsListPreview } from '../components/recommendations-list-preview'
 import { ReviewPreview } from '../components/review-preview'
 import { Typography } from '../atoms/typography'
-import { Field } from '../components/field'
+import { Header } from '../components/header'
 
 import { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
 import { ReviewEntity } from '@/entities/review.entity'
@@ -62,12 +63,12 @@ export function HomeTemplate() {
 	return (
 		<SectionList
 			ListHeaderComponent={() => (
-				<Field.Root>
-					<Field.Input />
-					<TouchableOpacity>
-						<Feather name="voicemail" size={20} color="000" />
-					</TouchableOpacity>
-				</Field.Root>
+				<Header.Root>
+					<Header.Title>Let&apos;s start exploring</Header.Title>
+					<Link href="/search" asChild>
+						<Feather name="search" size={20} color="#000" />
+					</Link>
+				</Header.Root>
 			)}
 			sections={DATA}
 			keyExtractor={(item) => (item as { id: string }).id}

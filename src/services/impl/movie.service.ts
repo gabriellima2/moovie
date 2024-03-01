@@ -18,5 +18,5 @@ class MovieServiceImpl implements MovieService {
 export const makeMovieService = () =>
 	new MovieServiceImpl(
 		makeHttpAdapter(),
-		`https://www.omdbapi.com/?apikey=${process.env.EXPO_PUBLIC_API_KEY}&flot=full`
+		`https://www.omdbapi.com/?apikey=${process.env.EXPO_PUBLIC_MOVIE_API_KEY}&flot=full`
 	)

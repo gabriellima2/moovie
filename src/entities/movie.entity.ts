@@ -1,8 +1,13 @@
 export interface MovieEntity {
-	id: number
-	title: string
-	overview: string
-	release_date: string
-	popularity: number
-	poster_path: string
+	Title: string
+	Plot: string
+	Released: string
+	Country: string
+	Poster: string
+	Genre: string
+	Runtime: string
+	Actors: string
+	Writer: string
+	Director: string
+	imbdRating: string
 }

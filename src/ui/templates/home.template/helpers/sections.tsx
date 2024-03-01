@@ -1,11 +1,5 @@
-import { SectionList } from 'react-native'
-import { Feather } from '@expo/vector-icons'
-import { Link } from 'expo-router'
-
-import { RecommendationsListPreview } from '../components/recommendations-list-preview'
-import { ReviewPreview } from '../components/review-preview'
-import { Typography } from '../atoms/typography'
-import { Header } from '../components/header'
+import { RecommendationsListPreview } from '@/ui/components/recommendations-list-preview'
+import { ReviewPreview } from '@/ui/components/review-preview'
 
 import { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
 import { ReviewEntity } from '@/entities/review.entity'
@@ -19,7 +13,7 @@ type Section = {
 	renderItem: (params: { item: Data }) => JSX.Element
 }
 
-const DATA: Section[] = [
+export const sections: Section[] = [
 	{
 		title: 'Popular Lists',
 		data: [
@@ -58,24 +52,3 @@ const DATA: Section[] = [
 		),
 	},
 ]
-
-export function HomeTemplate() {
-	return (
-		<SectionList
-			ListHeaderComponent={() => (
-				<Header.Root>
-					<Header.Title>Let&apos;s start exploring</Header.Title>
-					<Link href="/search" asChild>
-						<Feather name="search" size={20} color="#000" />
-					</Link>
-				</Header.Root>
-			)}
-			sections={DATA}
-			keyExtractor={(item) => (item as { id: string }).id}
-			renderItem={({ section: { renderItem }, item }) => renderItem({ item })}
-			renderSectionHeader={({ section: { title } }) => (
-				<Typography.Title>{title}</Typography.Title>
-			)}
-		/>
-	)
-}

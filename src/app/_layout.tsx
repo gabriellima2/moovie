@@ -1,5 +1,6 @@
 import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { QueryClientProvider } from '@tanstack/react-query'
 import Toast from 'react-native-toast-message'
 import { Stack } from 'expo-router'
 import {
@@ -12,7 +13,9 @@ import {
 } from '@expo-google-fonts/inter'
 
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
+
 import { STATUS_BAR_HEIGHT } from '@/constants/status-bar-height'
+import { queryClient } from '@/lib/query-client'
 
 export default function Layout() {
 	const { authStateHasBeenChecked } = useAuthenticationStore()
@@ -34,13 +37,15 @@ export default function Layout() {
 
 	return (
 		<GestureHandlerRootView className="flex-1">
-			<SafeAreaView
-				className="flex-1"
-				style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
-			>
-				<Stack screenOptions={{ headerShown: false }} />
-			</SafeAreaView>
-			<Toast />
+			<QueryClientProvider client={queryClient}>
+				<SafeAreaView
+					className="flex-1"
+					style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
+				>
+					<Stack screenOptions={{ headerShown: false }} />
+				</SafeAreaView>
+				<Toast />
+			</QueryClientProvider>
 		</GestureHandlerRootView>
 	)
 }

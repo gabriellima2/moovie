@@ -1,6 +1,7 @@
-import { cn } from '@/helpers/cn'
 import { View, ViewProps } from 'react-native'
+
 import { Typography } from '../atoms/typography'
+import { cn } from '@/helpers/cn'
 
 export type RootProps = ViewProps
 export type TitleProps = Parameters<typeof Typography.Title>[0]

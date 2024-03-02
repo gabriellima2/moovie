@@ -13,7 +13,13 @@ class ReviewRepositoryImpl implements ReviewRepository {
 	async getAll(): Promise<ReviewEntity[]> {
 		const collectionRef = collection(db, this.collection)
 		const querySnapshot = await getDocs(collectionRef)
-		const reviews = querySnapshot.docs.map((doc) => doc.data() as ReviewEntity)
+		const reviews = querySnapshot.docs.map(
+			(doc) =>
+				({
+					id: doc.id,
+					...doc.data(),
+				}) as ReviewEntity
+		)
 		return reviews
 	}
 }

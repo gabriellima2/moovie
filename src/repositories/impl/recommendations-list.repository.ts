@@ -16,7 +16,11 @@ class RecommendationsListRepositoryImpl
 		const collectionRef = collection(db, this.collection)
 		const querySnapshot = await getDocs(collectionRef)
 		const lists = querySnapshot.docs.map(
-			(doc) => doc.data() as RecommendationsListEntity
+			(doc) =>
+				({
+					id: doc.id,
+					...doc.data(),
+				}) as RecommendationsListEntity
 		)
 		return lists
 	}

@@ -1,3 +1,4 @@
+import { View } from 'react-native'
 import { BottomTabBar } from '@react-navigation/bottom-tabs'
 import { Redirect, Tabs } from 'expo-router'
 import { Feather } from '@expo/vector-icons'
@@ -6,6 +7,8 @@ import { BlurView } from 'expo-blur'
 
 import { IntroductionForm } from '@/ui/components/introduction-form'
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
+
+import { cn } from '@/helpers/cn'
 
 export default function Layout() {
 	const { user } = useAuthenticationStore()
@@ -49,23 +52,29 @@ export default function Layout() {
 							<Feather
 								name="home"
 								size={20}
-								color={focused ? '#000000' : colors.zinc[400]}
+								color={focused ? colors.black : colors.zinc[400]}
 								accessibilityLabel="Home"
 							/>
 						),
 					}}
 				/>
 				<Tabs.Screen
-					name="explore"
+					name="add"
 					options={{
 						headerShown: false,
 						tabBarIcon: ({ focused }) => (
-							<Feather
-								name="film"
-								size={20}
-								color={focused ? '#000000' : colors.zinc[400]}
-								accessibilityLabel="Explore"
-							/>
+							<View
+								className={cn('bg-zinc-400 p-3 rounded-full', {
+									'bg-black': focused,
+								})}
+							>
+								<Feather
+									name="plus"
+									size={20}
+									color={colors.white}
+									accessibilityLabel="Add some data"
+								/>
+							</View>
 						),
 					}}
 				/>
@@ -77,7 +86,7 @@ export default function Layout() {
 							<Feather
 								name="user"
 								size={20}
-								color={focused ? '#000000' : colors.zinc[400]}
+								color={focused ? colors.black : colors.zinc[400]}
 								accessibilityLabel="Profile"
 							/>
 						),

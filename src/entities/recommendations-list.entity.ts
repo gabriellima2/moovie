@@ -1,10 +1,16 @@
-import { LikeEntity, LikeType } from './like.entity'
-
 export interface RecommendationsListEntity {
 	id: string
 	title: string
 	description: string
-	movies_id: string[]
+	movies_name: string[]
 	user_id: string
-	likes: LikeEntity<LikeType.List>[]
+	likes_id: string[]
+	created_at: {
+		nanoseconds: number
+		seconds: number
+	}
+	updated_at: {
+		nanoseconds: number
+		seconds: number
+	}
 }

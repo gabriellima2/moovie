@@ -6,7 +6,7 @@ import { RecommendationsListPreview } from '@/ui/components/recommendations-list
 import { ReviewPreview } from '@/ui/components/review-preview'
 import { ErrorText } from '@/ui/atoms/error-text'
 import { Section } from '@/ui/components/section'
-import { Header } from '../../components/header'
+import { Header } from '../components/header'
 
 import { useGetPreview } from '@/hooks/use-get-preview'
 
@@ -63,7 +63,8 @@ export function HomeTemplate() {
 					reviews.data.map((review) => (
 						<ReviewPreview
 							key={review.id}
-							id={review.id}
+							movieName={review.movie_name}
+							likes={review.likes_id}
 							userID={review.user_id}
 							description={review.description}
 							rating={review.rating}

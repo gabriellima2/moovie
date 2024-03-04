@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth'
 import { create } from 'zustand'
 
-import { makeUserRepositoryImpl } from '@/repositories/impl/user.repository.impl'
+import { makeUserService } from '@/services/impl/user.service'
 import { auth } from '@/lib/firebase'
 
 import { AuthenticationStoreProperties } from './@types/authentication.store.properties'
@@ -17,7 +17,7 @@ import { UpdateProfileDTO } from '@/dtos/update-profile.dto'
 import { SignUpDTO } from '@/dtos/sign-up.dto'
 import { SignInDTO } from '@/dtos/sign-in.dto'
 
-const userRepository = makeUserRepositoryImpl()
+const userService = makeUserService()
 
 export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 	(set, get) => ({
@@ -55,7 +55,7 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 			const { user } = get()
 			if (!user) throw new Error('No user currently authenticated')
 			await updateProfile(user, { displayName: params.name })
-			await userRepository.create({ id: user.uid, name: params.name })
+			await userService.create({ id: user.uid, name: params.name })
 			await user.reload()
 		},
 		checkAuthState: () => {

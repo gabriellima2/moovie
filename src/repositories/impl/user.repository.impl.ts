@@ -24,4 +24,4 @@ class UserRepositoryImpl implements UserRepository {
 	}
 }
 
-export const makeUserRepositoryImpl = () => new UserRepositoryImpl()
+export const makeUserRepository = () => new UserRepositoryImpl()

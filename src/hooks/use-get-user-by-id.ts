@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { makeUserRepositoryImpl } from '@/repositories/impl/user.repository.impl'
+import { makeUserService } from '@/services/impl/user.service'
 
-const repository = makeUserRepositoryImpl()
+const service = makeUserService()
 
 export function useGetUserByID(id: string) {
 	return useQuery({
-		queryFn: () => repository.getByID(id),
+		queryFn: () => service.getByID(id),
 		queryKey: ['user-public-info', id],
 	})
 }

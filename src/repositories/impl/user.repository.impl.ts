@@ -1,8 +1,9 @@
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 import { db } from '@/lib/firebase'
 
 import { CreateUserDTO } from '@/dtos/user.dtos/create-user.dto'
+import { ProfileEntity } from '@/entities/profile.entity'
 import { UserRepository } from '../user.repository'
 
 class UserRepositoryImpl implements UserRepository {
@@ -12,7 +13,14 @@ class UserRepositoryImpl implements UserRepository {
 	}
 	async create(params: CreateUserDTO): Promise<void> {
 		const { id, ...data } = params
-		await setDoc(doc(db, this.collection, id), data)
+		const collectionRef = doc(db, this.collection, id)
+		await setDoc(collectionRef, data)
+	}
+	async getByID(id: string): Promise<ProfileEntity | undefined> {
+		const collectionRef = doc(db, this.collection, id)
+		const docSnap = await getDoc(collectionRef)
+		if (!docSnap.exists()) throw new Error('User Not Found')
+		return { ...docSnap.data(), id: docSnap.id } as ProfileEntity
 	}
 }
 

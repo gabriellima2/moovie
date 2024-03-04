@@ -5,14 +5,19 @@ import {
 	sendEmailVerification,
 	signInWithEmailAndPassword,
 	sendPasswordResetEmail,
+	updateProfile,
 } from 'firebase/auth'
 import { create } from 'zustand'
 
+import { makeUserRepositoryImpl } from '@/repositories/impl/user.repository.impl'
 import { auth } from '@/lib/firebase'
 
 import { AuthenticationStoreProperties } from './@types/authentication.store.properties'
+import { UpdateProfileDTO } from '@/dtos/update-profile.dto'
 import { SignUpDTO } from '@/dtos/sign-up.dto'
 import { SignInDTO } from '@/dtos/sign-in.dto'
+
+const userRepository = makeUserRepositoryImpl()
 
 export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 	(set, get) => ({
@@ -45,6 +50,13 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 		},
 		sendPasswordReset: async (email: string) => {
 			await sendPasswordResetEmail(auth, email)
+		},
+		updateProfile: async (params: UpdateProfileDTO) => {
+			const { user } = get()
+			if (!user) throw new Error('No user currently authenticated')
+			await updateProfile(user, { displayName: params.name })
+			await userRepository.create({ id: user.uid, name: params.name })
+			await user.reload()
 		},
 		checkAuthState: () => {
 			return onAuthStateChanged(auth, (user) => {

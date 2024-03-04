@@ -1,6 +1,4 @@
 import { useEffect } from 'react'
-import { useRouter } from 'expo-router'
-import { updateProfile } from 'firebase/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -17,8 +15,7 @@ export type IntroductionFormFields = {
 const toast = makeToastAdapter()
 
 export function useIntroductionForm() {
-	const { user } = useAuthenticationStore()
-	const { replace } = useRouter()
+	const { updateProfile } = useAuthenticationStore()
 	const {
 		register,
 		setValue,
@@ -31,12 +28,8 @@ export function useIntroductionForm() {
 	async function handleSaveUserInformations(
 		credentials: IntroductionFormFields
 	) {
-		if (!user) return replace('/login')
 		try {
-			await updateProfile(user, {
-				displayName: credentials.username.trim().toLowerCase(),
-			})
-			await user.reload()
+			await updateProfile({ name: credentials.username.trim().toLowerCase() })
 			toast.show({
 				type: 'success',
 				title: 'Username was saved successfully',

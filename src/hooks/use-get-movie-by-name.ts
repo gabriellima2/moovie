@@ -8,6 +8,6 @@ const movieService = makeMovieService()
 export function useGetMovieByName(name: string) {
 	return useQuery<MovieEntity>({
 		queryFn: () => movieService.getByName(name),
-		queryKey: ['movie'],
+		queryKey: ['movie', name],
 	})
 }

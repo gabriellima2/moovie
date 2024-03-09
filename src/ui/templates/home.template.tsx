@@ -44,6 +44,8 @@ export function HomeTemplate() {
 									id={item.id}
 									title={item.title}
 									userID={item.user_id}
+									likes={item.likes_id}
+									moviesName={item.movies_name}
 								/>
 							)}
 						/>

@@ -1,11 +1,10 @@
-import { Image, TouchableWithoutFeedback, View } from 'react-native'
-import { Feather } from '@expo/vector-icons'
-import colors from 'tailwindcss/colors'
+import { Image, View } from 'react-native'
 
 import { Typography } from '../atoms/typography'
+import { LikeButton } from './like-button'
 import { Rating } from './rating'
 
-import { useGetReview } from '@/hooks/use-get-review'
+import { useGetInformationCreatedByUser } from '@/hooks/use-get-information-created-by-user'
 
 export type ReviewPreviewProps = {
 	movieName: string
@@ -17,7 +16,7 @@ export type ReviewPreviewProps = {
 
 export function ReviewPreview(props: ReviewPreviewProps) {
 	const { movieName, userID, rating, description, likes } = props
-	const [user, movie] = useGetReview({ userID, movieName })
+	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
 	return (
 		<>
 			{(user.isLoading || movie.isLoading) && (
@@ -39,12 +38,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 									Review by {user.data.name}
 								</Typography.Paragraph>
 								<Rating value={rating} readonly />
-								<View>
-									<TouchableWithoutFeedback>
-										<Feather name="heart" size={20} color={colors.black} />
-									</TouchableWithoutFeedback>
-								</View>
-								<Typography.Small>{likes.length}</Typography.Small>
+								<LikeButton total={likes.length} />
 							</View>
 						</View>
 						<Typography.Paragraph>{description}</Typography.Paragraph>

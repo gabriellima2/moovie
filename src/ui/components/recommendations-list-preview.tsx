@@ -1,60 +1,39 @@
-import { ActivityIndicator, TouchableWithoutFeedback, View } from 'react-native'
-import { Feather } from '@expo/vector-icons'
-import colors from 'tailwindcss/colors'
+import { Image, View } from 'react-native'
 
-import { MovieImageByName } from './movie-image-by-name'
 import { Typography } from '../atoms/typography'
-import { ErrorText } from '../atoms/error-text'
-
-import { useGetUserByID } from '@/hooks/use-get-user-by-id'
+import { useGetInformationCreatedByUser } from '@/hooks/use-get-information-created-by-user'
 
 type RecommendationsListPreviewProps = {
 	id: string
 	title: string
 	userID: string
-	moviesName: string[]
-	likes: string[]
+	movieName: string
 }
 
 export function RecommendationsListPreview(
 	props: RecommendationsListPreviewProps
 ) {
-	const { title, likes, moviesName, userID } = props
-	const { data, error, isLoading } = useGetUserByID(userID)
+	const { title, movieName, userID } = props
+	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
 	return (
 		<>
-			{!data && isLoading && !error && (
-				<ActivityIndicator className="self-center" />
+			{(user.isLoading || movie.isLoading) && (
+				<Typography.Small>Loading...</Typography.Small>
 			)}
-			{!data && isLoading && error && (
-				<ErrorText text={(error as Error).message} />
+			{!user.data && user.error && (
+				<Typography.Small>{user.error.message}</Typography.Small>
 			)}
-			{data && !isLoading && !error && (
-				<View>
-					<View className="relative h-[170px]">
-						{moviesName.map((name, i) => (
-							<MovieImageByName key={i} position={i} name={name} />
-						))}
-					</View>
-					<View>
-						<Typography.Title>{title}</Typography.Title>
-						<View>
-							<View className="flex-row items-center gap-x-1">
-								<Typography.Small>Created by</Typography.Small>
-								<Typography.Small className="font-subtitle text-black">
-									{data.name}
-								</Typography.Small>
-							</View>
-							<View className="flex-row items-center">
-								<TouchableWithoutFeedback>
-									<Feather name="heart" size={16} color={colors.black} />
-								</TouchableWithoutFeedback>
-								<Typography.Small className="font-heading">
-									{likes.length}
-								</Typography.Small>
-							</View>
-						</View>
-					</View>
+			{!movie.data && movie.error && (
+				<Typography.Small>{movie.error.message}</Typography.Small>
+			)}
+			{user.data && !user.error && movie.data && !movie.error && (
+				<View className="w-[120px] gap-y-2">
+					<Image
+						source={{ uri: movie.data.Poster }}
+						className="w-full h-[170px] rounded-lg"
+					/>
+					<Typography.Title className="text-base">{title}</Typography.Title>
+					<Typography.Small>Created by {user.data.name}</Typography.Small>
 				</View>
 			)}
 		</>

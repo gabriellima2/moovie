@@ -64,6 +64,7 @@ export function HomeTemplate() {
 					reviews.data.map((review) => (
 						<ReviewPreview
 							key={review.id}
+							id={review.id}
 							movieName={review.movie_name}
 							likes={review.likes_id}
 							userID={review.user_id}

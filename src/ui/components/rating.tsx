@@ -12,7 +12,7 @@ export function Rating(props: RatingProps) {
 		<AirbnbRating
 			count={5}
 			defaultRating={value}
-			size={20}
+			size={16}
 			selectedColor="#000000"
 			showRating={false}
 			isDisabled={readonly}

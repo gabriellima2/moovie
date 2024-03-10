@@ -30,7 +30,7 @@ export function LikeButton(props: LikeButtonProps) {
 				{...rest}
 			>
 				<Heart
-					size={16}
+					size={18}
 					color={colors.red[700]}
 					fill={isLiked ? colors.red[700] : 'none'}
 				/>

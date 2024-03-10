@@ -1,4 +1,5 @@
-import { Image, View } from 'react-native'
+import { Image, TouchableOpacity } from 'react-native'
+import { Link } from 'expo-router'
 
 import { Typography } from '../atoms/typography'
 import { useGetInformationCreatedByUser } from '@/hooks/use-get-information-created-by-user'
@@ -13,7 +14,7 @@ type RecommendationsListPreviewProps = {
 export function RecommendationsListPreview(
 	props: RecommendationsListPreviewProps
 ) {
-	const { title, movieName, userID } = props
+	const { id, title, movieName, userID } = props
 	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
 	return (
 		<>
@@ -27,14 +28,16 @@ export function RecommendationsListPreview(
 				<Typography.Small>{movie.error.message}</Typography.Small>
 			)}
 			{user.data && !user.error && movie.data && !movie.error && (
-				<View className="w-[120px] gap-y-2">
-					<Image
-						source={{ uri: movie.data.Poster }}
-						className="w-full h-[170px] rounded-lg"
-					/>
-					<Typography.Title className="text-base">{title}</Typography.Title>
-					<Typography.Small>Created by {user.data.name}</Typography.Small>
-				</View>
+				<Link href={`/recommendations-list/${id}`} asChild>
+					<TouchableOpacity activeOpacity={0.8} className="w-[120px] gap-y-2">
+						<Image
+							source={{ uri: movie.data.Poster }}
+							className="w-full h-[170px] rounded-2xl"
+						/>
+						<Typography.Title className="text-base">{title}</Typography.Title>
+						<Typography.Small>Created by {user.data.name}</Typography.Small>
+					</TouchableOpacity>
+				</Link>
 			)}
 		</>
 	)

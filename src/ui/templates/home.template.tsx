@@ -22,45 +22,33 @@ export function HomeTemplate() {
 			</Header.Root>
 			<Section.Root className="px-0 pl-4 mb-4">
 				<Section.Title>Most Popular Lists</Section.Title>
-				{!recommendations.data &&
-					recommendations.isLoading &&
-					!recommendations.error && (
-						<ActivityIndicator className="self-center" />
-					)}
-				{!recommendations.data &&
-					!recommendations.isLoading &&
-					recommendations.error && (
-						<ErrorText text={recommendations.error.message} />
-					)}
-				{recommendations.data &&
-					!recommendations.isLoading &&
-					!recommendations.error && (
-						<FlatList
-							horizontal
-							data={recommendations.data}
-							keyExtractor={({ id }) => id}
-							renderItem={({ item }) => (
-								<RecommendationsListPreview
-									id={item.id}
-									title={item.title}
-									userID={item.user_id}
-									movieName={item.movies_name[0]}
-								/>
-							)}
-						/>
-					)}
+				{recommendations.isLoading && (
+					<ActivityIndicator className="self-center" />
+				)}
+				{recommendations.error && (
+					<ErrorText text={recommendations.error.message} />
+				)}
+				{recommendations.data && (
+					<FlatList
+						horizontal
+						data={recommendations.data}
+						keyExtractor={({ id }) => id}
+						renderItem={({ item }) => (
+							<RecommendationsListPreview
+								id={item.id}
+								title={item.title}
+								userID={item.user_id}
+								movieName={item.movies_name[0]}
+							/>
+						)}
+					/>
+				)}
 			</Section.Root>
 			<Section.Root>
 				<Section.Title>Last Reviews</Section.Title>
-				{!reviews.data && reviews.isLoading && !reviews.error && (
-					<ActivityIndicator className="self-center" />
-				)}
-				{!reviews.data && !reviews.isLoading && reviews.error && (
-					<ErrorText text={reviews.error.message} />
-				)}
+				{reviews.isLoading && <ActivityIndicator className="self-center" />}
+				{reviews.error && <ErrorText text={reviews.error.message} />}
 				{reviews.data &&
-					!reviews.isLoading &&
-					!reviews.error &&
 					reviews.data.map((review) => (
 						<ReviewPreview
 							key={review.id}

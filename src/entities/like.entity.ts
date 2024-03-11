@@ -3,7 +3,8 @@ export enum LikeType {
 	List = 'list',
 }
 
-export interface LikeEntity<LikeType> {
+export interface LikeEntity {
+	id: string
 	document_id: string
 	user_id: string
 	type: LikeType

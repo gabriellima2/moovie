@@ -34,7 +34,9 @@ export function RecommendationsListPreview(
 							source={{ uri: movie.data.Poster }}
 							className="w-full h-[170px] rounded-2xl"
 						/>
-						<Typography.Title className="text-base">{title}</Typography.Title>
+						<Typography.Title className="text-base" numberOfLines={2}>
+							{title}
+						</Typography.Title>
 						<Typography.Small>Created by {user.data.name}</Typography.Small>
 					</TouchableOpacity>
 				</Link>

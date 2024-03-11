@@ -1,4 +1,5 @@
-import { ActivityIndicator, FlatList, ScrollView } from 'react-native'
+import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native'
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { Feather } from '@expo/vector-icons'
 import { Link } from 'expo-router'
 
@@ -10,18 +11,23 @@ import { Header } from '../components/header'
 
 import { useGetPreview } from '@/hooks/use-get-preview'
 
+import type { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
+
 export function HomeTemplate() {
 	const [reviews, recommendations] = useGetPreview()
+	const bottomTabHeight = useBottomTabBarHeight()
 	return (
-		<ScrollView>
+		<ScrollView
+			contentContainerStyle={{ gap: 16, paddingBottom: bottomTabHeight - 16 }}
+		>
 			<Header.Root>
 				<Header.Title>Let&apos;s start exploring</Header.Title>
 				<Link href="/search" asChild>
 					<Feather name="search" size={20} color="#000" />
 				</Link>
 			</Header.Root>
-			<Section.Root className="px-0 pl-4 mb-4">
-				<Section.Title>Most Popular Lists</Section.Title>
+			<Section.Root className="px-0 mb-4">
+				<Section.Title className="pl-4">Most Popular Lists</Section.Title>
 				{recommendations.isLoading && (
 					<ActivityIndicator className="self-center" />
 				)}
@@ -29,8 +35,10 @@ export function HomeTemplate() {
 					<ErrorText text={recommendations.error.message} />
 				)}
 				{recommendations.data && (
-					<FlatList
+					<FlatList<RecommendationsListEntity>
+						contentContainerStyle={{ gap: 16, paddingHorizontal: 16 }}
 						horizontal
+						showsHorizontalScrollIndicator={false}
 						data={recommendations.data}
 						keyExtractor={({ id }) => id}
 						renderItem={({ item }) => (
@@ -50,15 +58,16 @@ export function HomeTemplate() {
 				{reviews.error && <ErrorText text={reviews.error.message} />}
 				{reviews.data &&
 					reviews.data.map((review) => (
-						<ReviewPreview
-							key={review.id}
-							id={review.id}
-							movieName={review.movie_name}
-							likes={review.likes_id}
-							userID={review.user_id}
-							description={review.description}
-							rating={review.rating}
-						/>
+						<View key={review.id} className="mb-4">
+							<ReviewPreview
+								id={review.id}
+								movieName={review.movie_name}
+								likes={review.likes_id}
+								userID={review.user_id}
+								description={review.description}
+								rating={review.rating}
+							/>
+						</View>
 					))}
 			</Section.Root>
 		</ScrollView>

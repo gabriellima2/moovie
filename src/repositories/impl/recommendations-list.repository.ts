@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 
 import { db } from '@/lib/firebase'
 
@@ -13,16 +13,18 @@ class RecommendationsListRepositoryImpl
 		this.collection = 'recommendations_list'
 	}
 	async getAll(): Promise<RecommendationsListEntity[]> {
-		const collectionRef = collection(db, this.collection)
-		const querySnapshot = await getDocs(collectionRef)
-		const lists = querySnapshot.docs.map(
-			(doc) =>
-				({
-					id: doc.id,
-					...doc.data(),
-				}) as RecommendationsListEntity
+		const ref = collection(db, this.collection)
+		const docSnap = await getDocs(ref)
+		const lists = docSnap.docs.map(
+			(doc) => ({ ...doc.data(), id: doc.id }) as RecommendationsListEntity
 		)
 		return lists
+	}
+	async getByID(id: string): Promise<RecommendationsListEntity | undefined> {
+		const ref = doc(db, this.collection, id)
+		const docSnap = await getDoc(ref)
+		if (!docSnap.exists()) return
+		return { ...(docSnap.data() as RecommendationsListEntity), id: docSnap.id }
 	}
 }
 

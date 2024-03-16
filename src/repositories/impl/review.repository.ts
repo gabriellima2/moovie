@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 
 import { db } from '@/lib/firebase'
 
@@ -11,16 +11,18 @@ class ReviewRepositoryImpl implements ReviewRepository {
 		this.collection = 'review'
 	}
 	async getAll(): Promise<ReviewEntity[]> {
-		const collectionRef = collection(db, this.collection)
-		const querySnapshot = await getDocs(collectionRef)
-		const reviews = querySnapshot.docs.map(
-			(doc) =>
-				({
-					id: doc.id,
-					...doc.data(),
-				}) as ReviewEntity
+		const ref = collection(db, this.collection)
+		const docSnap = await getDocs(ref)
+		const reviews = docSnap.docs.map(
+			(doc) => ({ ...doc.data(), id: doc.id }) as ReviewEntity
 		)
 		return reviews
+	}
+	async getByID(id: string): Promise<ReviewEntity | undefined> {
+		const ref = doc(db, this.collection, id)
+		const docSnap = await getDoc(ref)
+		if (!docSnap.exists()) return
+		return { ...(docSnap.data() as ReviewEntity), id: docSnap.id }
 	}
 }
 

@@ -10,6 +10,9 @@ class ReviewServiceImpl implements ReviewService {
 	async getAll(): Promise<ReviewEntity[]> {
 		return await this.repository.getAll()
 	}
+	async getByID(id: string): Promise<ReviewEntity | undefined> {
+		return await this.repository.getByID(id)
+	}
 }
 
 export const makeReviewService = () =>

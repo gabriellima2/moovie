@@ -6,6 +6,9 @@ import { LikeButton } from './like-button'
 import { Rating } from './rating'
 
 import { useGetInformationCreatedByUser } from '@/hooks/use-get-information-created-by-user'
+import { useLike } from '@/hooks/use-like'
+
+import { makeReviewService } from '@/services/impl/review.service'
 
 export type ReviewPreviewProps = {
 	id: string
@@ -16,9 +19,17 @@ export type ReviewPreviewProps = {
 	likes: string[]
 }
 
+const reviewService = makeReviewService()
+
 export function ReviewPreview(props: ReviewPreviewProps) {
 	const { id, movieName, userID, rating, description, likes } = props
 	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
+	const { handleLike } = useLike({
+		id,
+		create: reviewService.createLike,
+		remove: reviewService.deleteLike,
+	})
+
 	return (
 		<>
 			{(user.isLoading || movie.isLoading) && (
@@ -55,7 +66,11 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 									</View>
 									<Rating value={rating} readonly />
 								</View>
-								<LikeButton total={likes.length} showTotal />
+								<LikeButton
+									total={likes.length}
+									showTotal
+									onPress={handleLike}
+								/>
 							</View>
 						</View>
 						<Typography.Paragraph numberOfLines={4} className="my-4">

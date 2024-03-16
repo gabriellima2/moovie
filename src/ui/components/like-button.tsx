@@ -19,16 +19,25 @@ export type LikeButtonProps = Omit<TouchableWithoutFeedbackProps, 'onPress'> & {
 
 export function LikeButton(props: LikeButtonProps) {
 	const { total, initialValue, showTotal, onPress, className, ...rest } = props
+	const [likeCount, setLikeCount] = useState(total)
 	const [isLiked, setIsLiked] = useState(initialValue)
+
+	async function handlePress() {
+		try {
+			onPress && (await onPress(!!isLiked))
+			setLikeCount((prevState) => {
+				if (isLiked) return --prevState
+				return ++prevState
+			})
+			setIsLiked((prevState) => !prevState)
+		} catch (err) {
+			console.error((err as Error).message)
+		}
+	}
+
 	return (
 		<View className={cn('flex-row items-center', className)}>
-			<TouchableWithoutFeedback
-				onPress={() => {
-					setIsLiked((prevState) => !prevState)
-					onPress && onPress(!isLiked)
-				}}
-				{...rest}
-			>
+			<TouchableWithoutFeedback onPress={handlePress} {...rest}>
 				<Heart
 					size={18}
 					color={colors.red[700]}
@@ -37,7 +46,7 @@ export function LikeButton(props: LikeButtonProps) {
 			</TouchableWithoutFeedback>
 			{showTotal && (
 				<Typography.Small className="ml-1 font-heading">
-					{total}
+					{likeCount}
 				</Typography.Small>
 			)}
 		</View>

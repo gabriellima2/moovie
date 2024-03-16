@@ -6,6 +6,7 @@ import {
 	where,
 	query,
 	getDocs,
+	getDoc,
 } from 'firebase/firestore'
 
 import { db } from '@/lib/firebase'
@@ -20,10 +21,12 @@ class LikeRepositoryImpl implements LikeRepository {
 	constructor() {
 		this.collection = 'like'
 	}
-	async create(params: CreateLikeDTO): Promise<LikeEntity> {
+	async create(params: CreateLikeDTO): Promise<LikeEntity | undefined> {
 		const ref = collection(db, this.collection)
-		const createdLike = await addDoc(ref, params)
-		return { ...createdLike } as unknown as LikeEntity
+		const doc = await addDoc(ref, { ...params, created_at: new Date() })
+		const createdLike = await getDoc(doc)
+		if (!createdLike.exists()) return
+		return { ...(createdLike.data() as LikeEntity), id: createdLike.id }
 	}
 	async delete(id: string): Promise<void> {
 		const ref = doc(db, this.collection, id)

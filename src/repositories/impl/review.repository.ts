@@ -1,4 +1,12 @@
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import {
+	arrayRemove,
+	arrayUnion,
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	updateDoc,
+} from 'firebase/firestore'
 
 import { db } from '@/lib/firebase'
 
@@ -23,6 +31,14 @@ class ReviewRepositoryImpl implements ReviewRepository {
 		const docSnap = await getDoc(ref)
 		if (!docSnap.exists()) return
 		return { ...(docSnap.data() as ReviewEntity), id: docSnap.id }
+	}
+	async addLike(id: string, document: string): Promise<void> {
+		const ref = doc(db, this.collection, document)
+		await updateDoc(ref, { likes_id: arrayUnion(id) })
+	}
+	async deleteLike(id: string, document: string): Promise<void> {
+		const ref = doc(db, this.collection, document)
+		await updateDoc(ref, { likes_id: arrayRemove(id) })
 	}
 }
 

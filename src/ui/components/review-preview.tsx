@@ -69,7 +69,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 								<LikeButton
 									total={likes.length}
 									showTotal
-									onPress={handleLike}
+									onLike={handleLike}
 								/>
 							</View>
 						</View>

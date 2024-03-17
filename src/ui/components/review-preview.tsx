@@ -24,7 +24,7 @@ const reviewService = makeReviewService()
 export function ReviewPreview(props: ReviewPreviewProps) {
 	const { id, movieName, userID, rating, description, likes } = props
 	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
-	const { handleLike } = useLike({
+	const { isLiked, handleLike } = useLike({
 		id,
 		create: reviewService.createLike.bind(reviewService),
 		remove: reviewService.deleteLike.bind(reviewService),
@@ -32,7 +32,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 
 	return (
 		<>
-			{(user.isLoading || movie.isLoading) && (
+			{(user.isLoading || movie.isLoading || isLiked.isLoading) && (
 				<Typography.Small>Loading...</Typography.Small>
 			)}
 			{!user.data && user.error && (
@@ -67,8 +67,9 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 									<Rating value={rating} readonly />
 								</View>
 								<LikeButton
-									total={likes.length}
 									showTotal
+									total={likes.length}
+									defaultLiked={isLiked.value}
 									onLike={handleLike}
 								/>
 							</View>

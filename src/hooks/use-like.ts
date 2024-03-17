@@ -1,4 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
+
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
+
+import { makeLikeService } from '@/services/impl/like.service'
 import { LikeDTO } from '@/dtos/like.dtos/like.dto'
 
 export type UseLikeParams = {
@@ -7,9 +11,16 @@ export type UseLikeParams = {
 	remove: (params: LikeDTO) => Promise<void>
 }
 
+const likeService = makeLikeService()
+
 export function useLike(params: UseLikeParams) {
 	const { id, create, remove } = params
 	const { user } = useAuthenticationStore()
+	const { data, isLoading } = useQuery({
+		queryFn: () =>
+			likeService.get({ document_id: id, user_id: user?.uid ?? '' }),
+		queryKey: ['get-like', id, user?.uid ?? ''],
+	})
 
 	async function handleLike(isLiked: boolean) {
 		if (!user || !user.uid) return
@@ -17,5 +28,8 @@ export function useLike(params: UseLikeParams) {
 		await remove({ document_id: id, user_id: user.uid })
 	}
 
-	return { handleLike }
+	return {
+		isLiked: { value: !!data, isLoading },
+		handleLike,
+	}
 }

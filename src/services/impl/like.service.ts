@@ -1,11 +1,13 @@
 import { LikeService } from '../like.service'
 
 import { makeLikeRepository } from '@/repositories/impl/like.repository'
+import { LikeRepository } from '@/repositories/like.repository'
 
 import { CreateLikeDTO } from '@/dtos/like.dtos/create-like.dto'
-import { LikeRepository } from '@/repositories/like.repository'
-import { LikeEntity } from '@/entities/like.entity'
+import { GetLikeDTO } from '@/dtos/like.dtos/get-like.dto'
 import { LikeDTO } from '@/dtos/like.dtos/like.dto'
+
+import { LikeEntity } from '@/entities/like.entity'
 
 class LikeServiceImpl implements LikeService {
 	constructor(private readonly repository: LikeRepository) {}
@@ -21,6 +23,9 @@ class LikeServiceImpl implements LikeService {
 		if (!like) return
 		await this.repository.delete(like.id)
 		return like
+	}
+	async get(params: GetLikeDTO): Promise<LikeEntity | null> {
+		return (await this.repository.get(params)) ?? null
 	}
 }
 

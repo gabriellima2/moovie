@@ -6,9 +6,9 @@ import { makeLikeService } from './like.service'
 import { ReviewRepository } from '@/repositories/review.repository'
 import { ReviewEntity } from '@/entities/review.entity'
 
+import { LikeDTO } from '@/dtos/like.dtos/like.dto'
 import { LikeType } from '@/entities/like.entity'
 import { LikeService } from '../like.service'
-import { LikeDTO } from '@/dtos/like.dto'
 
 class ReviewServiceImpl implements ReviewService {
 	constructor(

@@ -5,7 +5,7 @@ import { makeLikeRepository } from '@/repositories/impl/like.repository'
 import { CreateLikeDTO } from '@/dtos/like.dtos/create-like.dto'
 import { LikeRepository } from '@/repositories/like.repository'
 import { LikeEntity } from '@/entities/like.entity'
-import { LikeDTO } from '@/dtos/like.dto'
+import { LikeDTO } from '@/dtos/like.dtos/like.dto'
 
 class LikeServiceImpl implements LikeService {
 	constructor(private readonly repository: LikeRepository) {}

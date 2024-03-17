@@ -1,5 +1,5 @@
 import { ReviewEntity } from '@/entities/review.entity'
-import { LikeDTO } from '@/dtos/like.dto'
+import { LikeDTO } from '@/dtos/like.dtos/like.dto'
 
 export interface ReviewService {
 	getAll(): Promise<ReviewEntity[]>

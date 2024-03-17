@@ -1,5 +1,5 @@
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
-import { LikeDTO } from '@/dtos/like.dto'
+import { LikeDTO } from '@/dtos/like.dtos/like.dto'
 
 export type UseLikeParams = {
 	id: string

@@ -26,8 +26,8 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
 	const { handleLike } = useLike({
 		id,
-		create: reviewService.createLike,
-		remove: reviewService.deleteLike,
+		create: reviewService.createLike.bind(reviewService),
+		remove: reviewService.deleteLike.bind(reviewService),
 	})
 
 	return (

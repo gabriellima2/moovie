@@ -12,6 +12,7 @@ import { Header } from '../components/header'
 import { useGetPreview } from '@/hooks/use-get-preview'
 
 import type { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
+import { RecommendationsListPreviewSkeleton } from '../components/recommendations-list-preview-skeleton'
 
 export function HomeTemplate() {
 	const [reviews, recommendations] = useGetPreview()
@@ -29,7 +30,7 @@ export function HomeTemplate() {
 			<Section.Root className="px-0 mb-4">
 				<Section.Title className="pl-4">Most Popular Lists</Section.Title>
 				{recommendations.isLoading && (
-					<ActivityIndicator className="self-center" />
+					<RecommendationsListPreviewSkeleton.List />
 				)}
 				{recommendations.error && (
 					<ErrorText text={recommendations.error.message} />

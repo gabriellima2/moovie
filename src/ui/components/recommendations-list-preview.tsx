@@ -1,7 +1,9 @@
 import { Image, TouchableOpacity } from 'react-native'
 import { Link } from 'expo-router'
 
+import { RecommendationsListPreviewSkeleton } from './recommendations-list-preview-skeleton'
 import { Typography } from '../atoms/typography'
+
 import { useGetInformationCreatedByUser } from '@/hooks/use-get-information-created-by-user'
 
 type RecommendationsListPreviewProps = {
@@ -19,7 +21,7 @@ export function RecommendationsListPreview(
 	return (
 		<>
 			{(user.isLoading || movie.isLoading) && (
-				<Typography.Small>Loading...</Typography.Small>
+				<RecommendationsListPreviewSkeleton.Item />
 			)}
 			{!user.data && user.error && (
 				<Typography.Small>{user.error.message}</Typography.Small>

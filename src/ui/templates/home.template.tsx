@@ -1,9 +1,11 @@
-import { ActivityIndicator, FlatList, ScrollView, View } from 'react-native'
+import { FlatList, ScrollView, View } from 'react-native'
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { Feather } from '@expo/vector-icons'
 import { Link } from 'expo-router'
 
+import { RecommendationsListPreviewSkeleton } from '../components/recommendations-list-preview-skeleton'
 import { RecommendationsListPreview } from '@/ui/components/recommendations-list-preview'
+import { ReviewPreviewSkeleton } from '../components/review-preview-skeleton'
 import { ReviewPreview } from '@/ui/components/review-preview'
 import { ErrorText } from '@/ui/atoms/error-text'
 import { Section } from '@/ui/components/section'
@@ -12,7 +14,6 @@ import { Header } from '../components/header'
 import { useGetPreview } from '@/hooks/use-get-preview'
 
 import type { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
-import { RecommendationsListPreviewSkeleton } from '../components/recommendations-list-preview-skeleton'
 
 export function HomeTemplate() {
 	const [reviews, recommendations] = useGetPreview()
@@ -55,7 +56,7 @@ export function HomeTemplate() {
 			</Section.Root>
 			<Section.Root>
 				<Section.Title>Last Reviews</Section.Title>
-				{reviews.isLoading && <ActivityIndicator className="self-center" />}
+				{reviews.isLoading && <ReviewPreviewSkeleton.List />}
 				{reviews.error && <ErrorText text={reviews.error.message} />}
 				{reviews.data &&
 					reviews.data.map((review) => (

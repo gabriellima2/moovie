@@ -9,6 +9,7 @@ import { useGetInformationCreatedByUser } from '@/hooks/use-get-information-crea
 import { useLike } from '@/hooks/use-like'
 
 import { makeReviewService } from '@/services/impl/review.service'
+import { ReviewPreviewSkeleton } from './review-preview-skeleton'
 
 export type ReviewPreviewProps = {
 	id: string
@@ -33,7 +34,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 	return (
 		<>
 			{(user.isLoading || movie.isLoading || isLiked.isLoading) && (
-				<Typography.Small>Loading...</Typography.Small>
+				<ReviewPreviewSkeleton.Item />
 			)}
 			{!user.data && user.error && (
 				<Typography.Small>{user.error.message}</Typography.Small>

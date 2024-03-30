@@ -56,20 +56,6 @@ export default function Layout() {
 					}}
 				/>
 				<Tabs.Screen
-					name="movies"
-					options={{
-						headerShown: false,
-						tabBarIcon: ({ focused }) => (
-							<Feather
-								name="film"
-								size={20}
-								color={focused ? colors.black : colors.zinc[400]}
-								accessibilityLabel="Filmes"
-							/>
-						),
-					}}
-				/>
-				<Tabs.Screen
 					name="profile"
 					options={{
 						headerShown: false,

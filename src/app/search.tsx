@@ -1,27 +1,43 @@
 import { useState } from 'react'
 import { FlatList, TouchableOpacity, View } from 'react-native'
 import { ArrowLeft, ArrowUpLeft, SearchIcon, Mic } from 'lucide-react-native'
+import { useQuery } from '@tanstack/react-query'
 import { Link, useRouter } from 'expo-router'
 import colors from 'tailwindcss/colors'
 
 import { Typography } from '@/ui/atoms/typography'
 import { Field } from '@/ui/components/field'
 
-const history = [
-	{ id: '1', value: 'scream' },
-	{ id: '2', value: 'supernatural' },
-	{ id: '3', value: 'saw' },
-]
+import { makeStorageAdapter } from '@/adapters/impl/storage.adapter'
+import { queryClient } from '@/lib/query-client'
+
+const storage = makeStorageAdapter()
+
+async function get(): Promise<string[]> {
+	const data = await storage.get('moovie.search-history')
+	if (!data) return []
+	return JSON.parse(data)
+}
 
 export default function Search() {
 	const router = useRouter()
 	const [search, setSearch] = useState('')
+	const { data: history, isLoading } = useQuery<string[]>({
+		queryKey: ['moovie.search-history'],
+		queryFn: () => get(),
+	})
 
 	function handleSearch(value?: string) {
 		if (value) {
 			setSearch(value)
 		}
-		router.push(`/movie/${(value || search).trim().toLowerCase()}`)
+		const searchBy = value || search
+		storage.set(
+			'moovie.search-history',
+			JSON.stringify(history ? [...history, searchBy] : [searchBy])
+		)
+		router.push(`/movie/${(searchBy || search).trim().toLowerCase()}`)
+		queryClient.invalidateQueries({ queryKey: ['moovie.search-history'] })
 	}
 
 	return (
@@ -49,32 +65,35 @@ export default function Search() {
 					</TouchableOpacity>
 				)}
 			</View>
-			<FlatList
-				data={history}
-				keyExtractor={({ id }) => id}
-				contentContainerStyle={{ paddingBottom: 16 }}
-				renderItem={({ item }) => (
-					<TouchableOpacity
-						activeOpacity={0.6}
-						onPress={() => handleSearch(item.value)}
-						className="flex-row items-center justify-between py-3 px-4"
-					>
-						<View className="flex-row items-center gap-x-4">
-							<SearchIcon color={colors.black} size={20} />
-							<Typography.Paragraph className="text-black">
-								{item.value}
-							</Typography.Paragraph>
-						</View>
+			{isLoading && <Typography.Small>Loading...</Typography.Small>}
+			{history && (
+				<FlatList
+					data={history}
+					keyExtractor={(item, index) => `${item}-${index}`}
+					contentContainerStyle={{ paddingBottom: 16 }}
+					renderItem={({ item }) => (
 						<TouchableOpacity
-							hitSlop={12}
 							activeOpacity={0.6}
-							onPress={() => setSearch(item.value)}
+							onPress={() => handleSearch(item)}
+							className="flex-row items-center justify-between py-3 px-4"
 						>
-							<ArrowUpLeft color={colors.black} size={20} />
+							<View className="flex-row items-center gap-x-4">
+								<SearchIcon color={colors.black} size={20} />
+								<Typography.Paragraph className="text-black">
+									{item}
+								</Typography.Paragraph>
+							</View>
+							<TouchableOpacity
+								hitSlop={12}
+								activeOpacity={0.6}
+								onPress={() => setSearch(item)}
+							>
+								<ArrowUpLeft color={colors.black} size={20} />
+							</TouchableOpacity>
 						</TouchableOpacity>
-					</TouchableOpacity>
-				)}
-			/>
+					)}
+				/>
+			)}
 		</View>
 	)
 }

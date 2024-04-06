@@ -11,6 +11,8 @@ import { useLike } from '@/hooks/use-like'
 import { makeReviewService } from '@/services/impl/review.service'
 import { ReviewPreviewSkeleton } from './review-preview-skeleton'
 
+import { cn } from '@/helpers/cn'
+
 export type ReviewPreviewProps = {
 	id: string
 	movieName: string
@@ -18,19 +20,20 @@ export type ReviewPreviewProps = {
 	rating: number
 	description: string
 	likes: string[]
+	highlighted?: boolean
 }
 
 const reviewService = makeReviewService()
 
 export function ReviewPreview(props: ReviewPreviewProps) {
-	const { id, movieName, userID, rating, description, likes } = props
+	const { id, movieName, userID, rating, description, likes, highlighted } =
+		props
 	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
 	const { isLiked, handleLike } = useLike({
 		id,
 		create: reviewService.createLike.bind(reviewService),
 		remove: reviewService.deleteLike.bind(reviewService),
 	})
-
 	return (
 		<>
 			{(user.isLoading || movie.isLoading || isLiked.isLoading) && (
@@ -46,7 +49,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 				<Link href={`/review/${id}`} asChild>
 					<TouchableOpacity
 						activeOpacity={0.8}
-						className="bg-zinc-100 rounded-2xl p-4"
+						className={cn({ 'bg-zinc-100 rounded-2xl p-4': highlighted })}
 					>
 						<View className="flex-row gap-x-4">
 							<Image

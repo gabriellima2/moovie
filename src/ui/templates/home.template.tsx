@@ -68,6 +68,7 @@ export function HomeTemplate() {
 								userID={review.user_id}
 								description={review.description}
 								rating={review.rating}
+								highlighted
 							/>
 						</View>
 					))}

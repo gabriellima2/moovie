@@ -1,7 +1,7 @@
 import { MovieService } from '../movie.service'
+import { HttpAdapter } from '@/adapters/http.adapter'
 
 import { makeHttpAdapter } from '@/adapters/impl/http.adapter'
-import { HttpAdapter } from '@/adapters/http.adapter'
 
 import { MovieEntity } from '@/entities/movie.entity'
 

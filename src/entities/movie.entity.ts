@@ -9,5 +9,5 @@ export interface MovieEntity {
 	Actors: string
 	Writer: string
 	Director: string
-	imbdRating: string
+	imdbRating: string
 }

@@ -21,6 +21,11 @@ class ReviewServiceImpl implements ReviewService {
 	async getByID(id: string): Promise<ReviewEntity | undefined> {
 		return await this.repository.getByID(id)
 	}
+	async getByName(name: string): Promise<ReviewEntity[]> {
+		const reviews = await this.repository.getByName(name)
+		if (!reviews) return []
+		return reviews
+	}
 	async createLike(params: LikeDTO): Promise<void> {
 		const { user_id, document_id } = params
 		const createdLike = await this.likeService.create({

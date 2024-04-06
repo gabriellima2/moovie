@@ -5,7 +5,9 @@ import {
 	doc,
 	getDoc,
 	getDocs,
+	query,
 	updateDoc,
+	where,
 } from 'firebase/firestore'
 
 import { db } from '@/lib/firebase'
@@ -31,6 +33,16 @@ class ReviewRepositoryImpl implements ReviewRepository {
 		const docSnap = await getDoc(ref)
 		if (!docSnap.exists()) return
 		return { ...(docSnap.data() as ReviewEntity), id: docSnap.id }
+	}
+	async getByName(name: string): Promise<ReviewEntity[] | undefined> {
+		const ref = collection(db, this.collection)
+		const q = query(ref, where('movie_name', '==', name))
+		const snapshot = await getDocs(q)
+		const like = snapshot.docs.map((doc) => ({
+			...(doc.data() as ReviewEntity),
+			id: doc.id,
+		}))
+		return like
 	}
 	async addLike(id: string, document: string): Promise<void> {
 		const ref = doc(db, this.collection, document)

@@ -2,6 +2,7 @@ import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { QueryClientProvider } from '@tanstack/react-query'
 import Toast from 'react-native-toast-message'
+import colors from 'tailwindcss/colors'
 import { Stack } from 'expo-router'
 import {
 	useFonts,
@@ -42,7 +43,12 @@ export default function Layout() {
 					className="flex-1"
 					style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
 				>
-					<Stack screenOptions={{ headerShown: false }} />
+					<Stack
+						screenOptions={{
+							headerShown: false,
+							contentStyle: { backgroundColor: colors.white },
+						}}
+					/>
 				</SafeAreaView>
 				<Toast />
 			</QueryClientProvider>

@@ -1,14 +1,15 @@
-import { ActivityIndicator, Image, ScrollView, View } from 'react-native'
+import { Image, ScrollView, View } from 'react-native'
+import { CalendarDays, Clock, Star } from 'lucide-react-native'
+import colors from 'tailwindcss/colors'
 
+import { HighlightedInformationGroup } from './components/highlighted-information-group'
 import { ReviewPreview } from '@/ui/components/review-preview'
 import { Typography } from '@/ui/atoms/typography'
 import { Section } from '@/ui/components/section'
 import { ErrorText } from '@/ui/atoms/error-text'
+import { Skeleton } from './components/skeleton'
 
 import { useGetMovieDetails } from './hooks/use-get-movie-details'
-import { CalendarDays, Clock, Star } from 'lucide-react-native'
-import colors from 'tailwindcss/colors'
-import { HighlightedInformationGroup } from './components/highlighted-information-group'
 
 export type MovieDetailsTemplateProps = {
 	name: string
@@ -19,7 +20,7 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 	const { data, error, isLoading } = useGetMovieDetails(name)
 	return (
 		<ScrollView className="flex-1 mb-4">
-			{isLoading && <ActivityIndicator />}
+			{true && <Skeleton />}
 			{error && <ErrorText text={error.message} />}
 			{data && (
 				<View className="flex-1 mt-4">

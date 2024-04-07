@@ -3,6 +3,7 @@ import { HttpAdapter } from '@/adapters/http.adapter'
 
 import { makeHttpAdapter } from '@/adapters/impl/http.adapter'
 
+import { MovieNotFoundException } from '@/exceptions/movie-not-found.exception'
 import { MovieEntity } from '@/entities/movie.entity'
 
 class MovieServiceImpl implements MovieService {
@@ -11,7 +12,11 @@ class MovieServiceImpl implements MovieService {
 		private readonly baseUrl: string
 	) {}
 	async getByName(name: string): Promise<MovieEntity> {
-		return await this.http.get<MovieEntity>(`${this.baseUrl}&t=${name}`)
+		const response = await this.http.get<MovieEntity & { Error: string }>(
+			`${this.baseUrl}&t=${name}`
+		)
+		if (response && response.Error) throw new MovieNotFoundException()
+		return response as MovieEntity
 	}
 }
 

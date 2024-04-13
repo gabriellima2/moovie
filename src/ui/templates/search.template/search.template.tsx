@@ -1,5 +1,5 @@
 import { TouchableOpacity, View } from 'react-native'
-import { ArrowLeft, Mic } from 'lucide-react-native'
+import { ChevronLeft, Mic } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 import { Link } from 'expo-router'
 
@@ -20,7 +20,7 @@ export function SearchTemplate() {
 			<View className="flex-row items-center px-4">
 				<Link href="/(tabs)/" asChild>
 					<TouchableOpacity activeOpacity={0.6}>
-						<ArrowLeft color={colors.black} />
+						<ChevronLeft size={24} color={colors.black} />
 					</TouchableOpacity>
 				</Link>
 				<Field.Root className="flex-1 ml-4">

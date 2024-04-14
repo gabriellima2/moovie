@@ -22,7 +22,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.gabrielrsl.moovie"
     },
     "web": {
       "bundler": "metro",
@@ -31,10 +32,18 @@
     },
     "plugins": [
       "expo-router",
-			"expo-font"
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "65a87bb2-5579-4025-bcf3-5b04fb53701e"
+      }
     }
   }
 }

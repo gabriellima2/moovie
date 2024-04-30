@@ -1,5 +1,4 @@
 import { Image, TouchableOpacity, View } from 'react-native'
-import { Link } from 'expo-router'
 
 import { Typography } from '../atoms/typography'
 import { LikeButton } from './like-button'
@@ -21,13 +20,22 @@ export type ReviewPreviewProps = {
 	description: string
 	likes: string[]
 	highlighted?: boolean
+	onPress?: (id: string) => void
 }
 
 const reviewService = makeReviewService()
 
 export function ReviewPreview(props: ReviewPreviewProps) {
-	const { id, movieName, userID, rating, description, likes, highlighted } =
-		props
+	const {
+		id,
+		movieName,
+		userID,
+		rating,
+		description,
+		likes,
+		highlighted,
+		onPress,
+	} = props
 	const [user, movie] = useGetInformationCreatedByUser({ userID, movieName })
 	const { isLiked, handleLike } = useLike({
 		id,
@@ -46,49 +54,45 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 				<Typography.Small>{movie.error.message}</Typography.Small>
 			)}
 			{user.data && !user.error && movie.data && !movie.error && (
-				<Link href={`/review/${id}`} asChild>
-					<TouchableOpacity
-						activeOpacity={0.8}
-						className={cn({ 'bg-zinc-100 rounded-2xl p-4': highlighted })}
-					>
-						<View className="flex-row gap-x-4">
-							<Image
-								source={{ uri: movie.data.Poster }}
-								width={80}
-								height={100}
-								className="rounded-xl"
-							/>
-							<View className="flex-row justify-between items-start flex-1">
-								<View>
-									<View className="mb-4">
-										<Typography.Title className="text-base">
-											{movie.data.Title}
-										</Typography.Title>
-										<Typography.Small className="mt-1">
-											Review by {user.data.name}
-										</Typography.Small>
-									</View>
-									<Rating value={rating} readonly />
+				<TouchableOpacity
+					activeOpacity={0.8}
+					className={cn({ 'bg-zinc-100 rounded-2xl p-4': highlighted })}
+					onPress={() => onPress && onPress(id)}
+				>
+					<View className="flex-row gap-x-4">
+						<Image
+							source={{ uri: movie.data.Poster }}
+							width={80}
+							height={100}
+							className="rounded-xl"
+						/>
+						<View className="flex-row justify-between items-start flex-1">
+							<View>
+								<View className="mb-4">
+									<Typography.Title className="text-base">
+										{movie.data.Title}
+									</Typography.Title>
+									<Typography.Small className="mt-1">
+										Review by {user.data.name}
+									</Typography.Small>
 								</View>
-								<LikeButton
-									showTotal
-									total={likes.length}
-									defaultLiked={isLiked.value}
-									onLike={handleLike}
-								/>
+								<Rating value={rating} readonly />
 							</View>
+							<LikeButton
+								showTotal
+								total={likes.length}
+								defaultLiked={isLiked.value}
+								onLike={handleLike}
+							/>
 						</View>
-						<Typography.Paragraph numberOfLines={4} className="my-4">
-							{description}
-						</Typography.Paragraph>
-						<Link
-							href={`/review/${id}`}
-							className="text-black font-medium self-end"
-						>
-							Read More
-						</Link>
-					</TouchableOpacity>
-				</Link>
+					</View>
+					<Typography.Paragraph numberOfLines={4} className="my-4">
+						{description}
+					</Typography.Paragraph>
+					<Typography.Subtitle className="text-sm text-black self-end">
+						Read More
+					</Typography.Subtitle>
+				</TouchableOpacity>
 			)}
 		</>
 	)

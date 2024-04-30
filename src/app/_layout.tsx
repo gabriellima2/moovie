@@ -1,5 +1,6 @@
 import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { QueryClientProvider } from '@tanstack/react-query'
 import Toast from 'react-native-toast-message'
 import colors from 'tailwindcss/colors'
@@ -39,17 +40,19 @@ export default function Layout() {
 	return (
 		<GestureHandlerRootView className="flex-1">
 			<QueryClientProvider client={queryClient}>
-				<SafeAreaView
-					className="flex-1"
-					style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
-				>
-					<Stack
-						screenOptions={{
-							headerShown: false,
-							contentStyle: { backgroundColor: colors.white },
-						}}
-					/>
-				</SafeAreaView>
+				<BottomSheetModalProvider>
+					<SafeAreaView
+						className="flex-1"
+						style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}
+					>
+						<Stack
+							screenOptions={{
+								headerShown: false,
+								contentStyle: { backgroundColor: colors.white },
+							}}
+						/>
+					</SafeAreaView>
+				</BottomSheetModalProvider>
 				<Toast />
 			</QueryClientProvider>
 		</GestureHandlerRootView>

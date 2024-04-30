@@ -11,11 +11,19 @@ import { ErrorText } from '@/ui/atoms/error-text'
 import { Section } from '@/ui/components/section'
 import { Header } from '../components/header'
 
+import { useReviewDetailsBottomSheetControl } from '@/hooks/use-review-details-bottom-sheet-control'
 import { useGetPreview } from '@/hooks/use-get-preview'
 
 import type { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
+import { ReviewReadMoreBottomSheet } from '../components/review-read-more-bottom-sheet'
 
 export function HomeTemplate() {
+	const {
+		reviewId,
+		bottomSheetRef,
+		dismissReviewDetailsBottomSheet,
+		showReviewDetailsBottomSheet,
+	} = useReviewDetailsBottomSheetControl()
 	const [reviews, recommendations] = useGetPreview()
 	const bottomTabHeight = useBottomTabBarHeight()
 	return (
@@ -69,10 +77,16 @@ export function HomeTemplate() {
 								description={review.description}
 								rating={review.rating}
 								highlighted
+								onPress={showReviewDetailsBottomSheet}
 							/>
 						</View>
 					))}
 			</Section.Root>
+			<ReviewReadMoreBottomSheet
+				id={reviewId}
+				ref={bottomSheetRef}
+				onDismiss={dismissReviewDetailsBottomSheet}
+			/>
 		</ScrollView>
 	)
 }

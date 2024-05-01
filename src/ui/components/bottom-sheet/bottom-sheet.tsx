@@ -5,7 +5,7 @@ import GorhomBottomSheet, {
 	BottomSheetProps as GorhomBottomSheetProps,
 } from '@gorhom/bottom-sheet'
 
-import { BottomSheetOverlay } from './components/bottom-sheet-overlay'
+import { BottomSheetOverlay } from '@/ui/atoms/bottom-sheet-overlay'
 import { useBottomSheetState } from './hooks/use-bottom-sheet-state'
 
 export type BottomSheetRef = {

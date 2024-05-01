@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useMemo } from 'react'
 import { BottomSheetModal as BaseBottomSheetModal } from '@gorhom/bottom-sheet'
 import colors from 'tailwindcss/colors'
 
-import { BottomSheetOverlay } from '../bottom-sheet/components/bottom-sheet-overlay'
+import { BottomSheetOverlay } from '@/ui/atoms/bottom-sheet-overlay'
 import { useBottomSheetModalState } from './hooks/use-bottom-sheet-modal-state'
 
 export type BottomSheetModalRef = {

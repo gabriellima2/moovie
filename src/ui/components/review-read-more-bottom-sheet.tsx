@@ -1,7 +1,6 @@
 import { forwardRef, useMemo } from 'react'
 import { Image, View } from 'react-native'
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet'
-import { useQuery } from '@tanstack/react-query'
 import { User } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 
@@ -17,44 +16,27 @@ import { Rating } from './rating'
 import { useLike } from '@/hooks/use-like'
 
 import { makeReviewService } from '@/services/impl/review.service'
-import { makeMovieService } from '@/services/impl/movie.service'
-import { makeUserService } from '@/services/impl/user.service'
+import { useGetReviewByID } from '@/hooks/use-get-review-by-id'
 
 type ReviewReadMoreBottomSheetProps = {
 	id: string | null
 	onDismiss: () => void
 }
 
-const services = {
-	review: makeReviewService(),
-	movie: makeMovieService(),
-	user: makeUserService(),
-}
+const reviewService = makeReviewService()
 
 export const ReviewReadMoreBottomSheet = forwardRef<
 	BottomSheetModalRef,
 	ReviewReadMoreBottomSheetProps
 >((props, ref) => {
 	const { id, onDismiss } = props
-	const { data, isLoading, error } = useQuery({
-		queryFn: async () => {
-			const review = await services.review.getByID(id!)
-			if (review) {
-				const movie = await services.movie.getByName(review.movie_name)
-				const user = await services.user.getByID(review.user_id)
-				return { ...review, movie_image: movie.Poster, user_name: user.name }
-			}
-		},
-		queryKey: ['review', id],
-		enabled: !!id,
-	})
+	const { data, isLoading, error } = useGetReviewByID(id)
 	const { isLiked, handleLike } = useLike({
 		id,
-		create: services.review.createLike.bind(services.review),
-		remove: services.review.deleteLike.bind(services.review),
+		create: reviewService.createLike.bind(reviewService),
+		remove: reviewService.deleteLike.bind(reviewService),
 	})
 	const snapPoints = useMemo(() => ['50%', '90%'], [])
-
 	return (
 		<BottomSheetModal ref={ref} onDismiss={onDismiss} snapPoints={snapPoints}>
 			{isLoading && <Typography.Subtitle>Loading...</Typography.Subtitle>}

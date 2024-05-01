@@ -8,6 +8,7 @@ import {
 	BottomSheetModal,
 	type BottomSheetModalRef,
 } from './bottom-sheet-modal'
+import { ReviewReadMoreSkeleton } from './review-read-more-skeleton'
 import { Typography } from '../atoms/typography'
 import { LikeButton } from './like-button'
 import { Section } from './section'
@@ -39,7 +40,7 @@ export const ReviewReadMoreBottomSheet = forwardRef<
 	const snapPoints = useMemo(() => ['50%', '90%'], [])
 	return (
 		<BottomSheetModal ref={ref} onDismiss={onDismiss} snapPoints={snapPoints}>
-			{isLoading && <Typography.Subtitle>Loading...</Typography.Subtitle>}
+			{isLoading && <ReviewReadMoreSkeleton />}
 			{error && <Typography.Subtitle>{error.message}</Typography.Subtitle>}
 			{data && (
 				<BottomSheetScrollView className="flex-1 mb-4">

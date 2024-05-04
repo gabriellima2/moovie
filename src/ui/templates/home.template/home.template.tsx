@@ -3,19 +3,19 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { Feather } from '@expo/vector-icons'
 import { Link } from 'expo-router'
 
-import { RecommendationsListPreviewSkeleton } from '../components/recommendations-list-preview-skeleton'
+import { RecommendationsListPreviewSkeleton } from '@/ui/components/recommendations-list-preview-skeleton'
 import { RecommendationsListPreview } from '@/ui/components/recommendations-list-preview'
-import { ReviewPreviewSkeleton } from '../components/review-preview-skeleton'
+import { ReviewReadMoreBottomSheet } from '@/ui/components/review-read-more-bottom-sheet'
+import { ReviewPreviewSkeleton } from '@/ui/components/review-preview-skeleton'
 import { ReviewPreview } from '@/ui/components/review-preview'
 import { ErrorText } from '@/ui/atoms/error-text'
 import { Section } from '@/ui/components/section'
-import { Header } from '../components/header'
+import { Header } from '@/ui/components/header'
 
 import { useReviewDetailsBottomSheetControl } from '@/hooks/use-review-details-bottom-sheet-control'
-import { useGetPreview } from '@/hooks/use-get-preview'
+import { useHomeContext } from './contexts/home.context'
 
 import type { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
-import { ReviewReadMoreBottomSheet } from '../components/review-read-more-bottom-sheet'
 
 export function HomeTemplate() {
 	const {
@@ -24,8 +24,8 @@ export function HomeTemplate() {
 		dismissReviewDetailsBottomSheet,
 		showReviewDetailsBottomSheet,
 	} = useReviewDetailsBottomSheetControl()
-	const [reviews, recommendations] = useGetPreview()
 	const bottomTabHeight = useBottomTabBarHeight()
+	const { reviews, recommendations } = useHomeContext()
 	return (
 		<ScrollView
 			contentContainerStyle={{ gap: 16, paddingBottom: bottomTabHeight - 16 }}
@@ -86,7 +86,7 @@ export function HomeTemplate() {
 				id={reviewId}
 				ref={bottomSheetRef}
 				onDismiss={dismissReviewDetailsBottomSheet}
-				refetch={reviews.refetch}
+				onLike={reviews.refetch}
 			/>
 		</ScrollView>
 	)

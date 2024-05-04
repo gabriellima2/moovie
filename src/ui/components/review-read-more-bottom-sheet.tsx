@@ -22,7 +22,7 @@ import { useGetReviewByID } from '@/hooks/use-get-review-by-id'
 type ReviewReadMoreBottomSheetProps = {
 	id: string | null
 	onDismiss: () => void
-	refetch: () => Promise<unknown>
+	onLike?: () => unknown
 }
 
 const reviewService = makeReviewService()
@@ -31,7 +31,7 @@ export const ReviewReadMoreBottomSheet = forwardRef<
 	BottomSheetModalRef,
 	ReviewReadMoreBottomSheetProps
 >((props, ref) => {
-	const { id, onDismiss, refetch } = props
+	const { id, onDismiss, onLike } = props
 	const { data, isLoading, error } = useGetReviewByID(id)
 	const { isLiked, handleLike } = useLike({
 		id,
@@ -69,7 +69,7 @@ export const ReviewReadMoreBottomSheet = forwardRef<
 										defaultLiked={isLiked.value}
 										onLike={async (isLiked) => {
 											await handleLike(isLiked)
-											await refetch()
+											onLike && (await onLike())
 										}}
 									/>
 								</View>

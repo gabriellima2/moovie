@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 
 export type UseLikeButtonParams = {
@@ -11,7 +11,7 @@ const toast = makeToastAdapter()
 
 export function useLikeButton(params: UseLikeButtonParams) {
 	const { initialLikeCount, defaultLiked, onLike } = params
-	const [likeCount, setLikeCount] = useState(initialLikeCount ?? 0)
+	const [likeCount, setLikeCount] = useState(initialLikeCount || 0)
 	const [isLiked, setIsLiked] = useState(!!defaultLiked)
 
 	function updateLikeCount() {
@@ -41,6 +41,14 @@ export function useLikeButton(params: UseLikeButtonParams) {
 			})
 		}
 	}
+
+	useEffect(() => {
+		setIsLiked(!!defaultLiked)
+	}, [defaultLiked])
+
+	useEffect(() => {
+		setLikeCount(initialLikeCount || 0)
+	}, [initialLikeCount])
 
 	return { likeCount, isLiked, handleLike }
 }

@@ -86,6 +86,7 @@ export function HomeTemplate() {
 				id={reviewId}
 				ref={bottomSheetRef}
 				onDismiss={dismissReviewDetailsBottomSheet}
+				refetch={reviews.refetch}
 			/>
 		</ScrollView>
 	)

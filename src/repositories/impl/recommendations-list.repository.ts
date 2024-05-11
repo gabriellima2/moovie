@@ -1,4 +1,11 @@
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import {
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	query,
+	where,
+} from 'firebase/firestore'
 
 import { db } from '@/lib/firebase'
 
@@ -25,6 +32,18 @@ class RecommendationsListRepositoryImpl
 		const docSnap = await getDoc(ref)
 		if (!docSnap.exists()) return
 		return { ...(docSnap.data() as RecommendationsListEntity), id: docSnap.id }
+	}
+	async getByUser(
+		userID: string
+	): Promise<RecommendationsListEntity[] | undefined> {
+		const ref = collection(db, this.collection)
+		const q = query(ref, where('user_id', '==', userID))
+		const snapshot = await getDocs(q)
+		const reviews = snapshot.docs.map((doc) => ({
+			...(doc.data() as RecommendationsListEntity),
+			id: doc.id,
+		}))
+		return reviews
 	}
 }
 

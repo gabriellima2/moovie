@@ -10,6 +10,7 @@ export interface AuthenticationStoreProperties {
 	authStateHasBeenChecked: boolean
 	signUp: (credentials: SignUpDTO) => Promise<void>
 	signIn: (credentials: SignInDTO) => Promise<void>
+	logout: () => Promise<void>
 	anonymously: () => Promise<void>
 	sendEmailVerification: () => Promise<void>
 	sendPasswordReset: (email: string) => Promise<void>

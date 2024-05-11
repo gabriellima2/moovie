@@ -6,6 +6,7 @@ import {
 	signInWithEmailAndPassword,
 	sendPasswordResetEmail,
 	updateProfile,
+	signOut,
 } from 'firebase/auth'
 import { create } from 'zustand'
 
@@ -38,6 +39,10 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 				credentials.password
 			)
 			set((state) => ({ ...state, user, authStateHasBeenChecked: true }))
+		},
+		logout: async () => {
+			await signOut(auth)
+			set((state) => ({ ...state, user: null, authStateHasBeenChecked: true }))
 		},
 		anonymously: async () => {
 			const { user } = await signInAnonymously(auth)

@@ -16,7 +16,7 @@ export function HighlightedInformationGroup(
 			<Typography.Paragraph>{label}:</Typography.Paragraph>
 			{isAnArrayOfValues ? (
 				values.map((value) => (
-					<Typography.Label key={value} className="bg-zinc-200 p-2 rounded-lg">
+					<Typography.Label key={value} className="bg-zinc-100 p-2 rounded-lg">
 						{value.trim()}
 					</Typography.Label>
 				))

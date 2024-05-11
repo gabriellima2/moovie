@@ -13,6 +13,11 @@ class RecommendationsListServiceImpl implements RecommendationsListService {
 	async getByID(id: string): Promise<RecommendationsListEntity | undefined> {
 		return await this.repository.getByID(id)
 	}
+	async getByUser(userID: string): Promise<RecommendationsListEntity[]> {
+		const recommendations = await this.repository.getByUser(userID)
+		if (!recommendations) return []
+		return recommendations
+	}
 }
 
 export const makeRecommendationsListService = () =>

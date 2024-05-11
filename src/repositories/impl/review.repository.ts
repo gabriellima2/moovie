@@ -38,11 +38,21 @@ class ReviewRepositoryImpl implements ReviewRepository {
 		const ref = collection(db, this.collection)
 		const q = query(ref, where('movie_name', '==', name))
 		const snapshot = await getDocs(q)
-		const like = snapshot.docs.map((doc) => ({
+		const reviews = snapshot.docs.map((doc) => ({
 			...(doc.data() as ReviewEntity),
 			id: doc.id,
 		}))
-		return like
+		return reviews
+	}
+	async getByUser(userID: string): Promise<ReviewEntity[] | undefined> {
+		const ref = collection(db, this.collection)
+		const q = query(ref, where('user_id', '==', userID))
+		const snapshot = await getDocs(q)
+		const reviews = snapshot.docs.map((doc) => ({
+			...(doc.data() as ReviewEntity),
+			id: doc.id,
+		}))
+		return reviews
 	}
 	async addLike(id: string, document: string): Promise<void> {
 		const ref = doc(db, this.collection, document)

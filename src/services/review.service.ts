@@ -5,6 +5,7 @@ export interface ReviewService {
 	getAll(): Promise<ReviewEntity[]>
 	getByID(id: string): Promise<ReviewEntity | undefined>
 	getByName(name: string): Promise<ReviewEntity[]>
+	getByUser(userID: string): Promise<ReviewEntity[]>
 	createLike(params: LikeDTO): Promise<void>
 	deleteLike(params: LikeDTO): Promise<void>
 }

@@ -101,9 +101,10 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 										<View key={review.id} className="mb-4">
 											<ReviewPreview
 												id={review.id}
-												movieName={review.movie_name}
+												title={data.Title}
+												reviewBy={review.user.name}
+												imageUrl={data.Poster}
 												likes={review.likes_id}
-												userID={review.user_id}
 												description={review.description}
 												rating={review.rating}
 											/>

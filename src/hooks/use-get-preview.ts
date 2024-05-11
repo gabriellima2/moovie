@@ -23,19 +23,25 @@ export function useGetPreview() {
 				queryFn: async () => {
 					const reviews = await services.review.getAll()
 					if (reviews && reviews.length) {
-						const data: ReviewDTO[] = await Promise.all(
-							reviews.map(async (review) => {
-								const { user_id, movie_name, ...rest } = review
-								const user = services.user.getByID(user_id)
-								const movie = services.movie.getByName(movie_name)
-								const response = await Promise.all([user, movie])
-								return {
-									user: { ...response[0] },
-									movie: { ...response[1] },
-									...rest,
-								}
-							})
+						const userIds = reviews.map((review) => review.user_id)
+						const movieNames = reviews.map((review) => review.movie_name)
+
+						const users = await Promise.all(
+							userIds.map((id) => services.user.getByID(id))
 						)
+						const movies = await Promise.all(
+							movieNames.map((name) => services.movie.getByName(name))
+						)
+
+						const data: ReviewDTO[] = reviews.map((review, index) => {
+							// eslint-disable-next-line @typescript-eslint/no-unused-vars
+							const { user_id, movie_name, ...rest } = review
+							return {
+								user: { ...users[index] },
+								movie: { ...movies[index] },
+								...rest,
+							}
+						})
 						return data
 					}
 				},
@@ -45,18 +51,28 @@ export function useGetPreview() {
 				queryFn: async () => {
 					const recommendations = await services.recommendationList.getAll()
 					if (recommendations && recommendations.length) {
-						const data: RecommendationListDTO[] = await Promise.all(
-							recommendations.map(async (recommendation) => {
-								const { user_id, movies_name, ...rest } = recommendation
-								const user = services.user.getByID(user_id)
-								const movie = services.movie.getByName(movies_name[0])
-								const response = await Promise.all([user, movie])
+						const userIds = recommendations.map((review) => review.user_id)
+						const movieNames = recommendations.map(
+							(review) => review.movies_name[0]
+						)
+
+						const users = await Promise.all(
+							userIds.map((id) => services.user.getByID(id))
+						)
+						const movies = await Promise.all(
+							movieNames.map((name) => services.movie.getByName(name))
+						)
+
+						const data: RecommendationListDTO[] = recommendations.map(
+							(review, index) => {
+								// eslint-disable-next-line @typescript-eslint/no-unused-vars
+								const { user_id, movies_name, ...rest } = review
 								return {
-									user: { ...response[0] },
-									movie: { ...response[1] },
+									user: { ...users[index] },
+									movie: { ...movies[index] },
 									...rest,
 								}
-							})
+							}
 						)
 						return data
 					}

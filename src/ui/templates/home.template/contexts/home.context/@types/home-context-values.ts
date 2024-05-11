@@ -1,9 +1,9 @@
 import type { UseQueryResult } from '@tanstack/react-query'
 
-import type { RecommendationsListDTO } from '@/dtos/recommendation-list.dto'
-import type { ReviewEntity } from '@/entities/review.entity'
+import type { RecommendationListDTO } from '@/dtos/recommendation-list.dto'
+import type { ReviewDTO } from '@/dtos/review.dto'
 
 export type HomeContextValues = {
-	reviews: UseQueryResult<ReviewEntity[], Error>
-	recommendations: UseQueryResult<RecommendationsListDTO[], Error>
+	reviews: UseQueryResult<ReviewDTO[], Error>
+	recommendations: UseQueryResult<RecommendationListDTO[], Error>
 }

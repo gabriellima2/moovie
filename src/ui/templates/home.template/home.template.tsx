@@ -15,7 +15,7 @@ import { Header } from '@/ui/components/header'
 import { useReviewDetailsBottomSheetControl } from '@/hooks/use-review-details-bottom-sheet-control'
 import { useHomeContext } from './contexts/home.context'
 
-import type { RecommendationsListDTO } from '@/dtos/recommendations-list.dto'
+import type { RecommendationListDTO } from '@/dtos/recommendation-list.dto'
 
 export function HomeTemplate() {
 	const {
@@ -45,7 +45,7 @@ export function HomeTemplate() {
 					<ErrorText text={recommendations.error.message} />
 				)}
 				{recommendations.data && (
-					<FlatList<RecommendationsListDTO>
+					<FlatList<RecommendationListDTO>
 						contentContainerStyle={{ gap: 16, paddingHorizontal: 16 }}
 						horizontal
 						showsHorizontalScrollIndicator={false}
@@ -71,13 +71,14 @@ export function HomeTemplate() {
 						<View key={review.id} className="mb-4">
 							<ReviewPreview
 								id={review.id}
-								movieName={review.movie_name}
+								title={review.movie.Title}
+								imageUrl={review.movie.Poster}
 								likes={review.likes_id}
-								userID={review.user_id}
+								reviewBy={review.user.name}
 								description={review.description}
 								rating={review.rating}
-								highlighted
 								onPress={showReviewDetailsBottomSheet}
+								highlighted
 							/>
 						</View>
 					))}

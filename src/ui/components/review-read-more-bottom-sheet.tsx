@@ -84,7 +84,7 @@ export const ReviewReadMoreBottomSheet = forwardRef<
 										<User color={colors.black} size={20} />
 									</View>
 									<Typography.Paragraph>
-										Created by {data.user_name}
+										Review by {data.user_name}
 									</Typography.Paragraph>
 								</View>
 							</View>

@@ -18,7 +18,7 @@ export default function Layout() {
 					<BlurView
 						intensity={80}
 						tint="light"
-						className="w-[95%] max-w-[400px] h-16 rounded-2xl self-center bg-zinc-300 opacity-90 bottom-4"
+						className="w-[94%] h-16 rounded-2xl self-center bg-zinc-300 opacity-90 bottom-4"
 					>
 						<BottomTabBar {...props} />
 					</BlurView>

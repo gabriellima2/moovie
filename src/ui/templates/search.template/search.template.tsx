@@ -1,5 +1,5 @@
 import { TouchableOpacity, View } from 'react-native'
-import { ChevronLeft, Mic } from 'lucide-react-native'
+import { ChevronLeft } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 import { Link } from 'expo-router'
 
@@ -34,11 +34,6 @@ export function SearchTemplate() {
 						keyboardType="web-search"
 					/>
 				</Field.Root>
-				{!search && (
-					<TouchableOpacity activeOpacity={0.6} className="ml-4">
-						<Mic color={colors.black} />
-					</TouchableOpacity>
-				)}
 			</View>
 			{isLoading && <Typography.Small>Loading...</Typography.Small>}
 			{history && (

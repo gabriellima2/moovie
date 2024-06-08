@@ -21,7 +21,7 @@ export function HighlightedInformationGroup(
 					</Typography.Label>
 				))
 			) : (
-				<Typography.Label className="bg-zinc-200 p-2 rounded-lg">
+				<Typography.Label className="bg-zinc-100 p-2 rounded-lg">
 					{values.trim()}
 				</Typography.Label>
 			)}

@@ -18,6 +18,7 @@ import { useAuthenticationStore } from '@/store/authentication.store/authenticat
 
 import { STATUS_BAR_HEIGHT } from '@/constants/status-bar-height'
 import { queryClient } from '@/lib/query-client'
+import { StatusBar } from 'expo-status-bar'
 
 export default function Layout() {
 	const { authStateHasBeenChecked } = useAuthenticationStore()
@@ -41,6 +42,7 @@ export default function Layout() {
 		<GestureHandlerRootView className="flex-1">
 			<QueryClientProvider client={queryClient}>
 				<BottomSheetModalProvider>
+					<StatusBar style="dark" translucent />
 					<SafeAreaView
 						className="flex-1"
 						style={{ paddingTop: Number(STATUS_BAR_HEIGHT ?? 44) }}

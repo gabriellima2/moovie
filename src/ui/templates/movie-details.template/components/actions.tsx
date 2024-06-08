@@ -34,7 +34,7 @@ function Menu(props: MenuProps) {
 				{props.name}
 			</Typography.Title>
 			<TouchableOpacity
-				onPress={() => router.push('/create-review')}
+				onPress={() => router.push(`/recommendations-list/${props.name}`)}
 				className="flex-row py-3"
 				activeOpacity={0.6}
 			>

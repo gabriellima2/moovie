@@ -1,40 +1,71 @@
-import { useQuery } from '@tanstack/react-query'
-
-import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
-
-import { makeLikeService } from '@/services/impl/like.service'
-import { LikeDTO } from '@/dtos/like.dtos/like.dto'
+import { useEffect, useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 
 export type UseLikeParams = {
-	id: string | null
-	create: (params: LikeDTO) => Promise<void>
-	remove: (params: LikeDTO) => Promise<void>
+	initialValue?: boolean
+	initialTotal?: number
+	createLike: () => unknown
+	deleteLike: () => unknown
 }
 
-const likeService = makeLikeService()
-
 export function useLike(params: UseLikeParams) {
-	const { id, create, remove } = params
-	const { user } = useAuthenticationStore()
-	const { data, isLoading, refetch } = useQuery({
-		queryFn: () => likeService.get({ document_id: id!, user_id: user!.uid }),
-		queryKey: ['get-like', id, user?.uid ?? ''],
-		enabled: !!id && !!user,
-	})
+	const { initialValue, initialTotal, ...services } = params
+	const [totalLikes, setTotalLikes] = useState(initialTotal || 0)
+	const [isLiked, setIsLiked] = useState(!!initialValue)
 
-	async function handleLike(isLiked: boolean) {
-		if (!user || !user.uid || !id) return
-		if (!isLiked) {
-			await create({ document_id: id, user_id: user.uid })
-			await refetch()
-			return
-		}
-		await remove({ document_id: id, user_id: user.uid })
-		await refetch()
+	function handleLike() {
+		setIsLiked(true)
+		setTotalLikes((prevState) => ++prevState)
 	}
 
+	function handleDislike() {
+		setIsLiked(false)
+		if (totalLikes > 0) {
+			setTotalLikes((prevState) => --prevState)
+		}
+	}
+
+	const handleLikeMutation = useMutation({
+		mutationFn: async (liked: boolean) => {
+			if (!liked) {
+				await services.createLike()
+				return
+			}
+			await services.deleteLike()
+		},
+		onMutate: (liked) => {
+			if (!liked) {
+				handleLike()
+				return
+			}
+			if (liked) {
+				handleDislike()
+				return
+			}
+		},
+		onError: (_, liked) => {
+			if (!liked) {
+				handleDislike()
+				return
+			}
+			if (liked) {
+				handleLike()
+				return
+			}
+		},
+	})
+
+	useEffect(() => {
+		setIsLiked(!!initialValue)
+	}, [initialValue])
+
+	useEffect(() => {
+		setTotalLikes(initialTotal || 0)
+	}, [initialTotal])
+
 	return {
-		isLiked: { value: !!data, isLoading },
-		handleLike,
+		handleLike: handleLikeMutation.mutate,
+		likesCount: totalLikes,
+		isLiked,
 	}
 }

@@ -1,9 +1,11 @@
-import { Image, TouchableOpacity, View } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 
 import { Typography } from '../atoms/typography'
 import { LikeButton } from './like-button'
 import { Rating } from './rating'
 
+import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
+import { useGetDocumentLikeByUser } from '@/hooks/use-get-document-like-by-user'
 import { useLike } from '@/hooks/use-like'
 
 import { makeReviewService } from '@/services/impl/review.service'
@@ -26,10 +28,15 @@ const reviewService = makeReviewService()
 
 export function ReviewPreview(props: ReviewPreviewProps) {
 	const { id, likes, highlighted, onPress, ...rest } = props
-	const { isLiked, handleLike } = useLike({
-		id,
-		create: reviewService.createLike.bind(reviewService),
-		remove: reviewService.deleteLike.bind(reviewService),
+	const { user } = useAuthenticationStore()
+	const { like } = useGetDocumentLikeByUser({ documentId: id })
+	const { isLiked, likesCount, handleLike } = useLike({
+		initialValue: !!like,
+		initialTotal: likes.length,
+		createLike: () =>
+			reviewService.createLike({ document_id: id, user_id: user!.uid }),
+		deleteLike: () =>
+			reviewService.deleteLike({ document_id: id, user_id: user!.uid }),
 	})
 	return (
 		<TouchableOpacity
@@ -57,10 +64,9 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 						<Rating value={rest.rating} readonly />
 					</View>
 					<LikeButton
-						showTotal
-						total={likes.length}
-						defaultLiked={isLiked.value}
-						onLike={handleLike}
+						isLiked={isLiked}
+						likesCount={likesCount}
+						onPress={() => handleLike(!!isLiked)}
 					/>
 				</View>
 			</View>

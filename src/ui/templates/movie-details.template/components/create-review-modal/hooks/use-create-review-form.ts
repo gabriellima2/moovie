@@ -11,6 +11,7 @@ import {
 	createReviewSchema,
 	type CreateReviewFields,
 } from '@/schemas/review.schema'
+import { useCreateReview } from './use-create-review'
 
 const toast = makeToastAdapter()
 
@@ -27,11 +28,12 @@ export function useCreateReviewForm() {
 		defaultValues,
 		resolver: zodResolver(createReviewSchema),
 	})
+	const { handleCreate } = useCreateReview()
 	const values = useWatch({ control })
 
-	async function handleCreateReview(credentials: CreateReviewFields) {
+	async function handleCreateReview(values: CreateReviewFields) {
 		try {
-			console.log(credentials)
+			await handleCreate(values)
 			toast.show({
 				type: 'success',
 				title: 'Review successfully created',
@@ -40,7 +42,7 @@ export function useCreateReviewForm() {
 		} catch (err) {
 			toast.show({
 				type: 'error',
-				title: 'An error has occurred',
+				title: (err as Error)?.message || 'An error has occurred',
 				description: (err as Error).message,
 			})
 		}

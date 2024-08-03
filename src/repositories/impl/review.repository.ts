@@ -1,4 +1,5 @@
 import {
+	addDoc,
 	arrayRemove,
 	arrayUnion,
 	collection,
@@ -10,15 +11,27 @@ import {
 	where,
 } from 'firebase/firestore'
 
+import { CreateReviewMapper } from '../mappers/firebase/create-review.mapper'
 import { db } from '@/lib/firebase'
 
 import { ReviewEntity } from '@/entities/review.entity'
 import { ReviewRepository } from '../review.repository'
 
+import type { CreateReviewFields } from '@/schemas/review.schema'
+
 class ReviewRepositoryImpl implements ReviewRepository {
 	private readonly collection: string
 	constructor() {
 		this.collection = 'review'
+	}
+	async create(
+		userId: string,
+		movieName: string,
+		values: CreateReviewFields
+	): Promise<void> {
+		const raw = CreateReviewMapper.toFirebase(userId, movieName, values)
+		const ref = collection(db, this.collection)
+		await addDoc(ref, raw)
 	}
 	async getAll(): Promise<ReviewEntity[]> {
 		const ref = collection(db, this.collection)

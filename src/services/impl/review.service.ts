@@ -10,11 +10,20 @@ import { LikeDTO } from '@/dtos/like.dtos/like.dto'
 import { LikeType } from '@/entities/like.entity'
 import { LikeService } from '../like.service'
 
+import type { CreateReviewFields } from '@/schemas/review.schema'
+
 class ReviewServiceImpl implements ReviewService {
 	constructor(
 		private readonly repository: ReviewRepository,
 		private readonly likeService: LikeService
 	) {}
+	async create(
+		userId: string,
+		movieName: string,
+		values: CreateReviewFields
+	): Promise<void> {
+		return await this.repository.create(userId, movieName, values)
+	}
 	async getAll(): Promise<ReviewEntity[]> {
 		return await this.repository.getAll()
 	}

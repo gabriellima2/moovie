@@ -1,6 +1,5 @@
 import { TouchableOpacity } from 'react-native'
 import { EllipsisVertical, ListPlus, Plus } from 'lucide-react-native'
-import { useRouter } from 'expo-router'
 import colors from 'tailwindcss/colors'
 
 import { useMovieDetailsContext } from '../contexts/movie-details.context'
@@ -26,8 +25,7 @@ function Trigger() {
 }
 
 function Menu(props: MenuProps) {
-	const router = useRouter()
-	const { movieName, isOpenActionsMenu, closeActionsMenu } =
+	const { isOpenActionsMenu, closeActionsMenu, openCreateReviewModal } =
 		useMovieDetailsContext()
 	if (!isOpenActionsMenu) return null
 	return (
@@ -36,7 +34,7 @@ function Menu(props: MenuProps) {
 				{props.title}
 			</Typography.Title>
 			<TouchableOpacity
-				onPress={() => router.push(`/create-review/${movieName}`)}
+				onPress={openCreateReviewModal}
 				className="flex-row py-3"
 				activeOpacity={0.6}
 			>

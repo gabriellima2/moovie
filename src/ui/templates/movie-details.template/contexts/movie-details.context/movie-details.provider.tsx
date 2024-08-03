@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react'
 
 import { MovieDetailsContext } from './movie-details.context'
 import { useBoolean } from '@/hooks/use-boolean'
+import { CreateReviewModal } from '../../components/create-review-modal'
 
 type MovieDetailsProviderProps = PropsWithChildren & {
 	movieName: string
@@ -38,6 +39,7 @@ export function MovieDetailsProvider(props: MovieDetailsProviderProps) {
 			}}
 		>
 			{children}
+			<CreateReviewModal />
 		</MovieDetailsContext.Provider>
 	)
 }

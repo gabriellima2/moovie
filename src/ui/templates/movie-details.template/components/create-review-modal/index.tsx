@@ -7,10 +7,12 @@ import { Field } from '@/ui/components/field'
 
 import { useMovieDetailsContext } from '../../contexts/movie-details.context'
 import { useCreateReviewForm } from './hooks/use-create-review-form'
+import { Rating } from '@/ui/components/rating'
 
 export function CreateReviewModal() {
 	const { closeCreateReviewModal } = useMovieDetailsContext()
-	const { errors, isSubmitting, setValue, onSubmit } = useCreateReviewForm()
+	const { values, errors, isSubmitting, setValue, onSubmit } =
+		useCreateReviewForm()
 	return (
 		<BottomSheet onClose={closeCreateReviewModal}>
 			<Typography.Title className="mb-4 text-base text-center">
@@ -28,10 +30,18 @@ export function CreateReviewModal() {
 						autoCapitalize="none"
 						numberOfLines={10}
 						multiline
+						value={values.description}
 						placeholder="Tell us what you thought of the movie..."
 						onChangeText={(text) => setValue('description', text)}
 					/>
 					<Field.Error message={errors.description?.message} />
+				</Field.Root>
+				<Field.Root>
+					<Rating
+						value={values.rating}
+						onFinishRating={(rating) => setValue('rating', rating)}
+					/>
+					<Field.Error message={errors.rating?.message} />
 				</Field.Root>
 				<Button.Root
 					onPress={onSubmit}

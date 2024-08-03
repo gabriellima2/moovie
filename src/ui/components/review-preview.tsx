@@ -1,14 +1,9 @@
 import { View, Image, TouchableOpacity } from 'react-native'
+import colors from 'tailwindcss/colors'
+import { Heart } from 'lucide-react-native'
 
 import { Typography } from '../atoms/typography'
-import { LikeButton } from './like-button'
 import { Rating } from './rating'
-
-import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
-import { useGetDocumentLikeByUser } from '@/hooks/use-get-document-like-by-user'
-import { useLike } from '@/hooks/use-like'
-
-import { makeReviewService } from '@/services/impl/review.service'
 
 import { cn } from '@/helpers/cn'
 
@@ -24,20 +19,8 @@ export type ReviewPreviewProps = {
 	onPress?: (id: string) => void
 }
 
-const reviewService = makeReviewService()
-
 export function ReviewPreview(props: ReviewPreviewProps) {
 	const { id, likes, highlighted, onPress, ...rest } = props
-	const { user } = useAuthenticationStore()
-	const { like } = useGetDocumentLikeByUser({ documentId: id })
-	const { isLiked, likesCount, handleLike } = useLike({
-		initialValue: !!like,
-		initialTotal: likes.length,
-		createLike: () =>
-			reviewService.createLike({ document_id: id, user_id: user!.uid }),
-		deleteLike: () =>
-			reviewService.deleteLike({ document_id: id, user_id: user!.uid }),
-	})
 	return (
 		<TouchableOpacity
 			activeOpacity={0.8}
@@ -52,7 +35,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 					className="rounded-xl"
 				/>
 				<View className="flex-row justify-between items-start flex-1">
-					<View>
+					<View className="flex-col items-start">
 						<View className="mb-4">
 							<Typography.Title className="text-base">
 								{rest.title}
@@ -63,11 +46,12 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 						</View>
 						<Rating value={rest.rating} readonly />
 					</View>
-					<LikeButton
-						isLiked={isLiked}
-						likesCount={likesCount}
-						onPress={() => handleLike(!!isLiked)}
-					/>
+					<View className="flex-row items-center">
+						<Heart size={18} color={colors.red[700]} />
+						<Typography.Small className="ml-1 font-heading">
+							{likes.length}
+						</Typography.Small>
+					</View>
 				</View>
 			</View>
 			<Typography.Paragraph numberOfLines={4} className="my-4">

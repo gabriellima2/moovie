@@ -9,6 +9,7 @@ import { useRouter } from 'expo-router'
 import { CalendarDays, ChevronLeft, Clock, Star } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 
+import { ReviewReadMoreBottomSheet } from '@/ui/components/review-read-more-bottom-sheet'
 import { HighlightedInformationGroup } from './components/highlighted-information-group'
 import { MovieDetailsProvider } from './contexts/movie-details.context'
 import { ReviewPreview } from '@/ui/components/review-preview'
@@ -18,6 +19,7 @@ import { Section } from '@/ui/components/section'
 import { Header } from '@/ui/components/header'
 import { Actions } from './components/actions'
 
+import { useReviewDetailsBottomSheetControl } from '@/hooks/use-review-details-bottom-sheet-control'
 import { useGetMovieDetails } from './hooks/use-get-movie-details'
 
 export type MovieDetailsTemplateProps = {
@@ -27,7 +29,13 @@ export type MovieDetailsTemplateProps = {
 export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 	const { name } = props
 	const router = useRouter()
-	const { data, error, isLoading } = useGetMovieDetails(name)
+	const {
+		reviewId,
+		bottomSheetRef,
+		dismissReviewDetailsBottomSheet,
+		showReviewDetailsBottomSheet,
+	} = useReviewDetailsBottomSheetControl()
+	const { data, error, isLoading, refetch } = useGetMovieDetails(name)
 	return (
 		<MovieDetailsProvider movieName={name}>
 			{isLoading && <ActivityIndicator />}
@@ -106,6 +114,8 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 												likes={review.likes_id}
 												description={review.description}
 												rating={review.rating}
+												onPress={showReviewDetailsBottomSheet}
+												highlighted
 											/>
 										</View>
 									))
@@ -114,6 +124,12 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 						</View>
 					</ScrollView>
 					<Actions.Menu title={data.Title} />
+					<ReviewReadMoreBottomSheet
+						id={reviewId}
+						ref={bottomSheetRef}
+						onDismiss={dismissReviewDetailsBottomSheet}
+						onLike={refetch}
+					/>
 				</>
 			)}
 		</MovieDetailsProvider>

@@ -13,8 +13,9 @@ import { db } from '@/lib/firebase'
 
 import { CreateLikeDTO } from '@/dtos/like.dtos/create-like.dto'
 import { GetLikeDTO } from '@/dtos/like.dtos/get-like.dto'
+
+import { LikeRepository } from '../../like.repository'
 import { LikeEntity } from '@/entities/like.entity'
-import { LikeRepository } from '../like.repository'
 
 class LikeRepositoryImpl implements LikeRepository {
 	private readonly collection: string

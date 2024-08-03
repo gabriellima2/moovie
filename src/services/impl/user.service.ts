@@ -1,6 +1,6 @@
 import { UserService } from '../user.service'
 
-import { makeUserRepository } from '@/repositories/impl/user.repository'
+import { makeUserRepository } from '@/repositories/impl/firebase/user.repository'
 
 import { CreateUserDTO } from '@/dtos/user.dtos/create-user.dto'
 import { UserRepository } from '@/repositories/user.repository'

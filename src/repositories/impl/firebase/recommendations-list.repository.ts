@@ -9,7 +9,7 @@ import {
 
 import { db } from '@/lib/firebase'
 
-import { RecommendationsListRepository } from '../recommendations-list.repository'
+import { RecommendationsListRepository } from '../../recommendations-list.repository'
 import { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
 
 class RecommendationsListRepositoryImpl

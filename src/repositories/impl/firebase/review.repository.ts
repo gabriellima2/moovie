@@ -11,25 +11,21 @@ import {
 	where,
 } from 'firebase/firestore'
 
-import { CreateReviewMapper } from '../mappers/firebase/create-review.mapper'
+import { CreateReviewMapper } from '../../../mappers/create-review.mapper'
 import { db } from '@/lib/firebase'
 
+import { ReviewRepository } from '../../review.repository'
 import { ReviewEntity } from '@/entities/review.entity'
-import { ReviewRepository } from '../review.repository'
 
-import type { CreateReviewFields } from '@/schemas/review.schema'
+import { CreateReviewDTO } from '@/dtos/review.dto'
 
 class ReviewRepositoryImpl implements ReviewRepository {
 	private readonly collection: string
 	constructor() {
 		this.collection = 'review'
 	}
-	async create(
-		userId: string,
-		movieName: string,
-		values: CreateReviewFields
-	): Promise<void> {
-		const raw = CreateReviewMapper.toFirebase(userId, movieName, values)
+	async create(data: CreateReviewDTO): Promise<void> {
+		const raw = CreateReviewMapper.toFirebase(data)
 		const ref = collection(db, this.collection)
 		await addDoc(ref, raw)
 	}

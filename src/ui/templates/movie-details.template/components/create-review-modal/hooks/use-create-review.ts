@@ -2,6 +2,7 @@ import { useAuthenticationStore } from '@/store/authentication.store/authenticat
 import { useMovieDetailsContext } from '../../../contexts/movie-details.context'
 
 import { makeReviewService } from '@/services/impl/review.service'
+import { CreateReviewMapper } from '@/mappers/create-review.mapper'
 
 import type { CreateReviewFields } from '@/schemas/review.schema'
 
@@ -15,7 +16,9 @@ export function useCreateReview() {
 		if (!user) {
 			throw new Error('Error while creating review, user not authenticated')
 		}
-		await reviewService.create(user.uid, movieName, values)
+		await reviewService.create(
+			CreateReviewMapper.toService(user.uid, movieName, values)
+		)
 	}
 
 	return {

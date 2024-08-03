@@ -10,8 +10,6 @@ export interface ReviewDTO
 export interface CreateReviewDTO {
 	rating: number
 	description: string
-	movie_name: string
-	user_id: string
-	likes_id: string[]
-	created_at: Date
+	movieName: string
+	userId: string
 }

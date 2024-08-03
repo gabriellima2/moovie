@@ -1,6 +1,6 @@
 import { LikeService } from '../like.service'
 
-import { makeLikeRepository } from '@/repositories/impl/like.repository'
+import { makeLikeRepository } from '@/repositories/impl/firebase/like.repository'
 import { LikeRepository } from '@/repositories/like.repository'
 
 import { CreateLikeDTO } from '@/dtos/like.dtos/create-like.dto'

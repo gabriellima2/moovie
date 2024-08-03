@@ -1,28 +1,21 @@
-import { ReviewService } from '../review.service'
-
-import { makeReviewRepository } from '@/repositories/impl/review.repository'
-import { makeLikeService } from './like.service'
-
+import { makeReviewRepository } from '@/repositories/impl/firebase/review.repository'
 import { ReviewRepository } from '@/repositories/review.repository'
 import { ReviewEntity } from '@/entities/review.entity'
+import { CreateReviewDTO } from '@/dtos/review.dto'
+import { ReviewService } from '../review.service'
 
 import { LikeDTO } from '@/dtos/like.dtos/like.dto'
 import { LikeType } from '@/entities/like.entity'
+import { makeLikeService } from './like.service'
 import { LikeService } from '../like.service'
-
-import type { CreateReviewFields } from '@/schemas/review.schema'
 
 class ReviewServiceImpl implements ReviewService {
 	constructor(
 		private readonly repository: ReviewRepository,
 		private readonly likeService: LikeService
 	) {}
-	async create(
-		userId: string,
-		movieName: string,
-		values: CreateReviewFields
-	): Promise<void> {
-		return await this.repository.create(userId, movieName, values)
+	async create(data: CreateReviewDTO): Promise<void> {
+		return await this.repository.create(data)
 	}
 	async getAll(): Promise<ReviewEntity[]> {
 		return await this.repository.getAll()

@@ -4,7 +4,7 @@ import { db } from '@/lib/firebase'
 
 import { CreateUserDTO } from '@/dtos/user.dtos/create-user.dto'
 import { ProfileEntity } from '@/entities/profile.entity'
-import { UserRepository } from '../user.repository'
+import { UserRepository } from '../../user.repository'
 
 class UserRepositoryImpl implements UserRepository {
 	private readonly collection: string

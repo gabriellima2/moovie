@@ -1,12 +1,8 @@
+import { CreateReviewDTO } from '@/dtos/review.dto'
 import { ReviewEntity } from '@/entities/review.entity'
-import { CreateReviewFields } from '@/schemas/review.schema'
 
 export interface ReviewRepository {
-	create(
-		userId: string,
-		movieName: string,
-		values: CreateReviewFields
-	): Promise<void>
+	create(data: CreateReviewDTO): Promise<void>
 	getAll(): Promise<ReviewEntity[]>
 	getByID(id: string): Promise<ReviewEntity | undefined>
 	getByName(name: string): Promise<ReviewEntity[] | undefined>

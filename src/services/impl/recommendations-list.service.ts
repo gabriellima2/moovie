@@ -1,6 +1,6 @@
 import { RecommendationsListService } from '../recommendations-list.service'
 
-import { makeRecommendationsListRepository } from '@/repositories/impl/recommendations-list.repository'
+import { makeRecommendationsListRepository } from '@/repositories/impl/firebase/recommendations-list.repository'
 
 import { RecommendationsListRepository } from '@/repositories/recommendations-list.repository'
 import { RecommendationsListEntity } from '@/entities/recommendations-list.entity'

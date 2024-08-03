@@ -1,26 +1,25 @@
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { EllipsisVertical, ListPlus, Plus } from 'lucide-react-native'
 import { useRouter } from 'expo-router'
 import colors from 'tailwindcss/colors'
 
-import {
-	BottomSheet,
-	type BottomSheetProps,
-} from '@/ui/components/bottom-sheet'
+import { useMovieDetailsContext } from '../contexts/movie-details.context'
+
+import { BottomSheet } from '@/ui/components/bottom-sheet'
 import { Typography } from '@/ui/atoms/typography'
 
-export type TriggerProps = Omit<
-	TouchableOpacityProps,
-	'children' | 'accessibilityLabel'
->
-
-export type MenuProps = Omit<BottomSheetProps, 'children'> & {
-	name: string
+export type MenuProps = {
+	title: string
 }
 
-function Trigger(props: TriggerProps) {
+function Trigger() {
+	const { openActionsMenu } = useMovieDetailsContext()
 	return (
-		<TouchableOpacity accessibilityLabel="Menu" activeOpacity={0.6} {...props}>
+		<TouchableOpacity
+			onPress={openActionsMenu}
+			accessibilityLabel="Menu"
+			activeOpacity={0.6}
+		>
 			<EllipsisVertical size={20} color={colors.black} />
 		</TouchableOpacity>
 	)
@@ -28,13 +27,16 @@ function Trigger(props: TriggerProps) {
 
 function Menu(props: MenuProps) {
 	const router = useRouter()
+	const { movieName, isOpenActionsMenu, closeActionsMenu } =
+		useMovieDetailsContext()
+	if (!isOpenActionsMenu) return null
 	return (
-		<BottomSheet {...props}>
+		<BottomSheet onClose={closeActionsMenu}>
 			<Typography.Title className="mb-4 text-base text-center">
-				{props.name}
+				{props.title}
 			</Typography.Title>
 			<TouchableOpacity
-				onPress={() => router.push(`/recommendations-list/${props.name}`)}
+				onPress={() => router.push(`/create-review/${movieName}`)}
 				className="flex-row py-3"
 				activeOpacity={0.6}
 			>

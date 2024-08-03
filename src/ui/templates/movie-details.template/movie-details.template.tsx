@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {
 	View,
 	Image,
@@ -11,6 +10,7 @@ import { CalendarDays, ChevronLeft, Clock, Star } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 
 import { HighlightedInformationGroup } from './components/highlighted-information-group'
+import { MovieDetailsProvider } from './contexts/movie-details.context'
 import { ReviewPreview } from '@/ui/components/review-preview'
 import { ErrorScreen } from '@/ui/components/error-screen'
 import { Typography } from '@/ui/atoms/typography'
@@ -28,9 +28,8 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 	const { name } = props
 	const router = useRouter()
 	const { data, error, isLoading } = useGetMovieDetails(name)
-	const [isOpenMenu, setIsOpenMenu] = useState(false)
 	return (
-		<>
+		<MovieDetailsProvider movieName={name}>
 			{isLoading && <ActivityIndicator />}
 			{error && <ErrorScreen message={error.message} />}
 			{data && (
@@ -39,7 +38,7 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 						<TouchableOpacity accessibilityLabel="Voltar" onPress={router.back}>
 							<ChevronLeft size={24} color={colors.black} />
 						</TouchableOpacity>
-						<Actions.Trigger onPress={() => setIsOpenMenu(true)} />
+						<Actions.Trigger />
 					</Header.Root>
 					<ScrollView className="flex-1 mb-4">
 						<View className="flex-1 mt-4">
@@ -114,14 +113,9 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 							</Section.Root>
 						</View>
 					</ScrollView>
-					{isOpenMenu && (
-						<Actions.Menu
-							name={data.Title}
-							onClose={() => setIsOpenMenu(false)}
-						/>
-					)}
+					<Actions.Menu title={data.Title} />
 				</>
 			)}
-		</>
+		</MovieDetailsProvider>
 	)
 }

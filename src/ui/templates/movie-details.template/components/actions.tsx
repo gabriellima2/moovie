@@ -39,11 +39,11 @@ function Menu(props: MenuProps) {
 				activeOpacity={0.6}
 			>
 				<Plus size={20} color={colors.black} className="mr-4" />
-				<Typography.Label>Criar Review</Typography.Label>
+				<Typography.Label>Create Review</Typography.Label>
 			</TouchableOpacity>
 			<TouchableOpacity className="flex-row py-3" activeOpacity={0.6}>
 				<ListPlus size={20} color={colors.black} className="mr-4" />
-				<Typography.Label>Adicionar à lista</Typography.Label>
+				<Typography.Label>Add to list</Typography.Label>
 			</TouchableOpacity>
 		</BottomSheet>
 	)

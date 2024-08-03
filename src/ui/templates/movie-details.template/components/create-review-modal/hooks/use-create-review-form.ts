@@ -1,7 +1,10 @@
 import { useEffect, useMemo } from 'react'
 import { useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useQueryClient } from '@tanstack/react-query'
 
+import { useMovieDetailsContext } from '../../../contexts/movie-details.context'
+import { useCreateReview } from './use-create-review'
 import { useForm } from '@/hooks/use-form'
 
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
@@ -11,7 +14,6 @@ import {
 	createReviewSchema,
 	type CreateReviewFields,
 } from '@/schemas/review.schema'
-import { useCreateReview } from './use-create-review'
 
 const toast = makeToastAdapter()
 
@@ -28,10 +30,12 @@ export function useCreateReviewForm() {
 		defaultValues,
 		resolver: zodResolver(createReviewSchema),
 	})
+	const { closeCreateReviewModal } = useMovieDetailsContext()
 	const { handleCreate } = useCreateReview()
+	const queryClient = useQueryClient()
 	const values = useWatch({ control })
 
-	async function handleCreateReview(values: CreateReviewFields) {
+	async function onSubmit(values: CreateReviewFields) {
 		try {
 			await handleCreate(values)
 			toast.show({
@@ -39,6 +43,8 @@ export function useCreateReviewForm() {
 				title: 'Review successfully created',
 			})
 			reset(defaultValues)
+			closeCreateReviewModal()
+			queryClient.invalidateQueries()
 		} catch (err) {
 			toast.show({
 				type: 'error',
@@ -61,6 +67,6 @@ export function useCreateReviewForm() {
 		errors,
 		isSubmitting,
 		setValue,
-		onSubmit: handleSubmit(handleCreateReview),
+		onSubmit: handleSubmit(onSubmit),
 	}
 }

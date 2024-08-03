@@ -19,6 +19,7 @@ export function useGetDocumentLikeByUser(
 			likeService.get({ document_id: documentId!, user_id: user!.uid }),
 		queryKey: ['get-like', documentId, user?.uid ?? ''],
 		enabled: !!documentId && !!user,
+		throwOnError: true,
 	})
 	return { like, isLoading }
 }

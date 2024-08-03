@@ -20,10 +20,12 @@ export function useGetInformationCreatedByUser(
 			{
 				queryFn: () => userService.getByID(userID),
 				queryKey: ['profile.review', userID],
+				throwOnError: true,
 			},
 			{
 				queryFn: () => movieService.getByName(movieName),
 				queryKey: ['movie.review', movieName],
+				throwOnError: true,
 			},
 		],
 	})

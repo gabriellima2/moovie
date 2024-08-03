@@ -1,5 +1,4 @@
 import { View, Image, TouchableOpacity } from 'react-native'
-import colors from 'tailwindcss/colors'
 import { Heart } from 'lucide-react-native'
 
 import { Typography } from '../atoms/typography'
@@ -47,7 +46,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 						<Rating value={rest.rating} readonly />
 					</View>
 					<View className="flex-row items-center">
-						<Heart size={18} color={colors.red[700]} />
+						<Heart size={18} color="#000000" fill="#000000" />
 						<Typography.Small className="ml-1 font-heading">
 							{likes.length}
 						</Typography.Small>

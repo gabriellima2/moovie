@@ -13,7 +13,6 @@ import { ReviewReadMoreBottomSheet } from '@/ui/components/review-read-more-bott
 import { HighlightedInformationGroup } from './components/highlighted-information-group'
 import { MovieDetailsProvider } from './contexts/movie-details.context'
 import { ReviewPreview } from '@/ui/components/review-preview'
-import { ErrorScreen } from '@/ui/components/error-screen'
 import { Typography } from '@/ui/atoms/typography'
 import { Section } from '@/ui/components/section'
 import { Header } from '@/ui/components/header'
@@ -35,11 +34,10 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 		dismissReviewDetailsBottomSheet,
 		showReviewDetailsBottomSheet,
 	} = useReviewDetailsBottomSheetControl()
-	const { data, error, isLoading, refetch } = useGetMovieDetails(name)
+	const { data, isLoading, refetch } = useGetMovieDetails(name)
 	return (
 		<MovieDetailsProvider movieName={name}>
 			{isLoading && <ActivityIndicator />}
-			{error && <ErrorScreen message={error.message} />}
 			{data && (
 				<>
 					<Header.Root>

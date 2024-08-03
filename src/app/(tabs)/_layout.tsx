@@ -1,11 +1,17 @@
 import { BottomTabBar } from '@react-navigation/bottom-tabs'
-import { Redirect, Tabs } from 'expo-router'
+import { Redirect, Tabs, type ErrorBoundaryProps } from 'expo-router'
 import { Feather } from '@expo/vector-icons'
 import colors from 'tailwindcss/colors'
 import { BlurView } from 'expo-blur'
 
 import { IntroductionForm } from '@/ui/components/introduction-form'
+import { ErrorScreen } from '@/ui/components/error-screen'
+
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
+
+export function ErrorBoundary({ error }: ErrorBoundaryProps) {
+	return <ErrorScreen message={error.message} />
+}
 
 export default function Layout() {
 	const { user } = useAuthenticationStore()

@@ -45,6 +45,7 @@ export function useGetPreview() {
 						return data
 					}
 				},
+				throwOnError: true,
 			},
 			{
 				queryKey: ['recommendations_list_preview'],
@@ -77,6 +78,7 @@ export function useGetPreview() {
 						return data
 					}
 				},
+				throwOnError: true,
 			},
 		],
 	})

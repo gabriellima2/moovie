@@ -7,5 +7,6 @@ export function useGetUserByID(id: string) {
 	return useQuery({
 		queryFn: () => service.getByID(id),
 		queryKey: ['user-public-info', id],
+		throwOnError: true,
 	})
 }

@@ -22,5 +22,6 @@ export function useGetReviewByID(id: string | null) {
 		},
 		queryKey: ['review', id],
 		enabled: !!id,
+		throwOnError: true,
 	})
 }

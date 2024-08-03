@@ -8,7 +8,6 @@ import { RecommendationsListPreview } from '@/ui/components/recommendations-list
 import { ReviewReadMoreBottomSheet } from '@/ui/components/review-read-more-bottom-sheet'
 import { ReviewPreviewSkeleton } from '@/ui/components/review-preview-skeleton'
 import { ReviewPreview } from '@/ui/components/review-preview'
-import { ErrorText } from '@/ui/atoms/error-text'
 import { Section } from '@/ui/components/section'
 import { Header } from '@/ui/components/header'
 
@@ -41,9 +40,6 @@ export function HomeTemplate() {
 				{recommendations.isLoading && (
 					<RecommendationsListPreviewSkeleton.List />
 				)}
-				{recommendations.error && (
-					<ErrorText text={recommendations.error.message} />
-				)}
 				{recommendations.data && (
 					<FlatList<RecommendationListDTO>
 						contentContainerStyle={{ gap: 16, paddingHorizontal: 16 }}
@@ -65,7 +61,6 @@ export function HomeTemplate() {
 			<Section.Root>
 				<Section.Title>Last Reviews</Section.Title>
 				{reviews.isLoading && <ReviewPreviewSkeleton.List />}
-				{reviews.error && <ErrorText text={reviews.error.message} />}
 				{reviews.data &&
 					reviews.data.map((review) => (
 						<View key={review.id} className="mb-4">

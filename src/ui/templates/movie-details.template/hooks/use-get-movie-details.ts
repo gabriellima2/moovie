@@ -36,5 +36,6 @@ export function useGetMovieDetails(name: string) {
 			}))
 			return { ...movie, reviews: reviewsWithUsers }
 		},
+		throwOnError: true,
 	})
 }

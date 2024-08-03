@@ -2,9 +2,10 @@ import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { QueryClientProvider } from '@tanstack/react-query'
+import { ErrorBoundaryProps, Stack } from 'expo-router'
 import Toast from 'react-native-toast-message'
+import { StatusBar } from 'expo-status-bar'
 import colors from 'tailwindcss/colors'
-import { Stack } from 'expo-router'
 import {
 	useFonts,
 	Inter_300Light,
@@ -14,11 +15,16 @@ import {
 	Inter_700Bold,
 } from '@expo-google-fonts/inter'
 
+import { ErrorScreen } from '@/ui/components/error-screen'
+
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 
 import { STATUS_BAR_HEIGHT } from '@/constants/status-bar-height'
 import { queryClient } from '@/lib/query-client'
-import { StatusBar } from 'expo-status-bar'
+
+export function ErrorBoundary({ error }: ErrorBoundaryProps) {
+	return <ErrorScreen message={error.message} />
+}
 
 export default function Layout() {
 	const { authStateHasBeenChecked } = useAuthenticationStore()

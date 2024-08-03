@@ -9,5 +9,6 @@ export function useGetMovieByName(name: string) {
 	return useQuery<MovieEntity>({
 		queryFn: () => movieService.getByName(name),
 		queryKey: ['movie', name],
+		throwOnError: true,
 	})
 }

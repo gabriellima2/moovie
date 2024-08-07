@@ -19,30 +19,38 @@ export function CreateReviewModal() {
 				Create Review
 			</Typography.Title>
 			<View className="flex-col items-center gap-y-3">
-				<Field.Root>
-					<Field.Label id="description">
-						What did you think of the movie?
-					</Field.Label>
-					<Field.Input
-						className="items-start max-h-[256px]"
-						textAlignVertical="top"
-						id="description"
-						autoCapitalize="none"
-						numberOfLines={10}
-						multiline
-						value={values.description}
-						placeholder="Tell us what you thought of the movie..."
-						onChangeText={(text) => setValue('description', text)}
-					/>
-					<Field.Error message={errors.description?.message} />
-				</Field.Root>
-				<Field.Root>
-					<Rating
-						value={values.rating}
-						onFinishRating={(rating) => setValue('rating', rating)}
-					/>
-					<Field.Error message={errors.rating?.message} />
-				</Field.Root>
+				<View className="w-full mb-4">
+					<Field.Root>
+						<Field.Label id="description">
+							What did you think of the movie?
+						</Field.Label>
+						<Field.Input
+							className="items-start max-h-[256px]"
+							textAlignVertical="top"
+							id="description"
+							autoCapitalize="none"
+							numberOfLines={10}
+							multiline
+							value={values.description}
+							placeholder="Tell us what you thought of the movie..."
+							onChangeText={(text) => setValue('description', text)}
+						/>
+						<Field.Error message={errors.description?.message} />
+					</Field.Root>
+					<Field.Root className="items-start">
+						<Field.Label id="rating">
+							How much did you like this movie?
+						</Field.Label>
+						<View id="rating" className="mt-2">
+							<Rating
+								value={values.rating}
+								onFinishRating={(rating) => setValue('rating', rating)}
+							/>
+						</View>
+						<Field.Error message={errors.rating?.message} />
+					</Field.Root>
+				</View>
+
 				<Button.Root
 					onPress={onSubmit}
 					disabled={isSubmitting}

@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 
 import { CreateReviewModal } from '../../components/create-review-modal'
+import { AddToListModal } from '../../components/add-to-list-modal'
 import { MovieDetailsContext } from './movie-details.context'
 
 import { useBoolean } from '@/hooks/use-boolean'
@@ -23,6 +24,12 @@ export function MovieDetailsProvider(props: MovieDetailsProviderProps) {
 		setFalse: closeActionsMenu,
 		setTrue: openActionsMenu,
 	} = useBoolean()
+	const {
+		value: isOpenAddToListModal,
+		setValue: setIsOpenAddToListModal,
+		setFalse: closeAddToListModal,
+		setTrue: openAddToListModal,
+	} = useBoolean()
 	return (
 		<MovieDetailsContext.Provider
 			value={{
@@ -33,6 +40,11 @@ export function MovieDetailsProvider(props: MovieDetailsProviderProps) {
 				closeCreateReviewModal,
 				openCreateReviewModal,
 
+				isOpenAddToListModal,
+				setIsOpenAddToListModal,
+				closeAddToListModal,
+				openAddToListModal,
+
 				isOpenActionsMenu,
 				setIsOpenActionsMenu,
 				closeActionsMenu,
@@ -41,6 +53,7 @@ export function MovieDetailsProvider(props: MovieDetailsProviderProps) {
 		>
 			{children}
 			{isOpenCreateReviewModal && <CreateReviewModal />}
+			{isOpenAddToListModal && <AddToListModal />}
 		</MovieDetailsContext.Provider>
 	)
 }

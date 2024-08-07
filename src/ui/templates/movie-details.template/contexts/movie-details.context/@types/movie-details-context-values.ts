@@ -6,6 +6,11 @@ export type MovieDetailsContextValues = {
 	closeCreateReviewModal: () => void
 	openCreateReviewModal: () => void
 
+	isOpenAddToListModal: boolean
+	setIsOpenAddToListModal: (value: boolean) => void
+	closeAddToListModal: () => void
+	openAddToListModal: () => void
+
 	isOpenActionsMenu: boolean
 	setIsOpenActionsMenu: (value: boolean) => void
 	closeActionsMenu: () => void

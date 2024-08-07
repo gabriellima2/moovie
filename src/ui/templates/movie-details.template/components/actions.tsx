@@ -25,8 +25,12 @@ function Trigger() {
 }
 
 function Menu(props: MenuProps) {
-	const { isOpenActionsMenu, closeActionsMenu, openCreateReviewModal } =
-		useMovieDetailsContext()
+	const {
+		isOpenActionsMenu,
+		closeActionsMenu,
+		openCreateReviewModal,
+		openAddToListModal,
+	} = useMovieDetailsContext()
 	if (!isOpenActionsMenu) return null
 	return (
 		<BottomSheet onClose={closeActionsMenu}>
@@ -41,7 +45,11 @@ function Menu(props: MenuProps) {
 				<Plus size={20} color={colors.black} className="mr-4" />
 				<Typography.Label>Create Review</Typography.Label>
 			</TouchableOpacity>
-			<TouchableOpacity className="flex-row py-3" activeOpacity={0.6}>
+			<TouchableOpacity
+				onPress={openAddToListModal}
+				className="flex-row py-3"
+				activeOpacity={0.6}
+			>
 				<ListPlus size={20} color={colors.black} className="mr-4" />
 				<Typography.Label>Add to list</Typography.Label>
 			</TouchableOpacity>

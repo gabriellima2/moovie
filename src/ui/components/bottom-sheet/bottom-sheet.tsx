@@ -2,6 +2,7 @@ import { PropsWithChildren, forwardRef, useImperativeHandle } from 'react'
 import colors from 'tailwindcss/colors'
 import GorhomBottomSheet, {
 	BottomSheetScrollView,
+	BottomSheetView,
 	BottomSheetProps as GorhomBottomSheetProps,
 } from '@gorhom/bottom-sheet'
 
@@ -13,11 +14,14 @@ export type BottomSheetRef = {
 	close: () => void
 }
 
-export type BottomSheetProps = GorhomBottomSheetProps & PropsWithChildren
+export type BottomSheetProps = GorhomBottomSheetProps &
+	PropsWithChildren & {
+		withoutScrollView?: boolean
+	}
 
 export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
 	(props, ref) => {
-		const { children } = props
+		const { children, withoutScrollView } = props
 		const { bottomSheetRef, handleClose, handleExpand } = useBottomSheetState()
 
 		useImperativeHandle(
@@ -43,9 +47,13 @@ export const BottomSheet = forwardRef<BottomSheetRef, BottomSheetProps>(
 					backgroundColor: colors.zinc[400],
 				}}
 			>
-				<BottomSheetScrollView contentContainerStyle={{ padding: 20 }}>
-					{children}
-				</BottomSheetScrollView>
+				{withoutScrollView ? (
+					<BottomSheetView>{children}</BottomSheetView>
+				) : (
+					<BottomSheetScrollView contentContainerStyle={{ padding: 20 }}>
+						{children}
+					</BottomSheetScrollView>
+				)}
 			</GorhomBottomSheet>
 		)
 	}

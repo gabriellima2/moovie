@@ -12,6 +12,7 @@ import { useAuthenticationStore } from '@/store/authentication.store/authenticat
 import { makeRecommendationsListService } from '@/services/impl/recommendations-list.service'
 import { makeReviewService } from '@/services/impl/review.service'
 
+// Refatorar
 export default function Profile() {
 	const { user, logout } = useAuthenticationStore()
 	const { data, isLoading } = useQuery({

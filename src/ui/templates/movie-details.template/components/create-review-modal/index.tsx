@@ -50,7 +50,6 @@ export function CreateReviewModal() {
 						<Field.Error message={errors.rating?.message} />
 					</Field.Root>
 				</View>
-
 				<Button.Root
 					onPress={onSubmit}
 					disabled={isSubmitting}

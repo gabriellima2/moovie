@@ -14,6 +14,7 @@ export function useBoolean(initialValue?: boolean) {
 	}
 	function toggle() {
 		setState((prevState) => !prevState)
+		return !state
 	}
 
 	return {

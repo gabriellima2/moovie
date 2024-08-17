@@ -3,6 +3,7 @@ import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import { Plus } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 
+import { MoviesListOptionSkeleton } from './components/movies-list-option-skeleton'
 import { MoviesListOption } from './components/movies-list-option'
 import { BottomSheet } from '@/ui/components/bottom-sheet'
 import { Typography } from '@/ui/atoms/typography'
@@ -18,7 +19,8 @@ export function AddToListModal() {
 	const { movieName, closeAddToListModal } = useMovieDetailsContext()
 	const user = useAuthenticationStore((state) => state.user)
 	const { handleAddMovieToList, isSubmitting } = useAddMovieToList(movieName)
-	const { recommendationsList } = useGetRecommendationsListByUserId(user!.uid)
+	const { recommendationsList, isLoading, isFetching } =
+		useGetRecommendationsListByUserId(user!.uid)
 	const { selectedListOptions, handleSelectedListOptionsChange } =
 		useSelectedListOptions()
 	return (
@@ -32,6 +34,19 @@ export function AddToListModal() {
 						title={item.title}
 						onCheckedChange={handleSelectedListOptionsChange}
 					/>
+				)}
+				ListEmptyComponent={() => (
+					<>
+						{isLoading || isFetching ? (
+							<MoviesListOptionSkeleton />
+						) : (
+							<View className="px-4">
+								<Typography.Paragraph>
+									Create your first list to recommend your favorite movies
+								</Typography.Paragraph>
+							</View>
+						)}
+					</>
 				)}
 				contentContainerStyle={{ paddingVertical: 20 }}
 				ListHeaderComponent={() => (

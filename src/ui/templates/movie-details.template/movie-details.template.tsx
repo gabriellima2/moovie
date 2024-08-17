@@ -29,7 +29,7 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 		dismissReviewDetailsBottomSheet,
 		showReviewDetailsBottomSheet,
 	} = useReviewDetailsBottomSheetControl()
-	const { data, isLoading, refetch } = useGetMovieDetails(name)
+	const { data, isLoading, isFetching, refetch } = useGetMovieDetails(name)
 	const hasData = !!data
 	return (
 		<MovieDetailsProvider movieName={name}>
@@ -40,7 +40,7 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 				<Actions.Trigger />
 			</Header.Root>
 			<ScrollView className="flex-1">
-				{isLoading && <MovieDetailsSkeleton />}
+				{(isLoading || isFetching) && <MovieDetailsSkeleton />}
 				{hasData && (
 					<>
 						<ScrollView className="flex-1">

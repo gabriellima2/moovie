@@ -1,16 +1,36 @@
+import { useMovieDetailsContext } from '../../../contexts/movie-details.context'
 import { useBoolean } from '@/hooks/use-boolean'
 
-export function useAddMovieToList() {
-	const { value: isSubmitting, setValue: setIsSubmitting } = useBoolean(false)
+import { makeRecommendationsListService } from '@/services/impl/recommendations-list.service'
+import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 
-	async function handleAddMovieToList(list: string[]) {
+const service = makeRecommendationsListService()
+const toast = makeToastAdapter()
+
+export function useAddMovieToList(movieName: string) {
+	const { value: isSubmitting, setValue: setIsSubmitting } = useBoolean(false)
+	const { closeActionsMenu, closeAddToListModal } = useMovieDetailsContext()
+
+	async function handleAddMovieToList(listIds: string[]) {
 		setIsSubmitting(true)
 		try {
-			if (!list.length) return
-			console.log(list)
-			await new Promise((resolve) => setTimeout(resolve, 1500))
+			if (!listIds.length) return
+			const promises = listIds.map((listId) =>
+				service.append(listId, movieName)
+			)
+			await Promise.all(promises)
+			toast.show({
+				type: 'success',
+				title: 'Movie successfully added to the list',
+			})
+			closeAddToListModal()
+			closeActionsMenu()
 		} catch (err) {
-			console.log(err)
+			toast.show({
+				type: 'error',
+				title: (err as Error)?.message || 'An error has occurred',
+				description: (err as Error).message,
+			})
 		} finally {
 			setIsSubmitting(false)
 		}

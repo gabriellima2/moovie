@@ -18,6 +18,12 @@ class RecommendationsListServiceImpl implements RecommendationsListService {
 		if (!recommendations) return []
 		return recommendations
 	}
+	async append(id: string, movieName: string): Promise<void> {
+		return await this.repository.append(id, movieName)
+	}
+	async remove(id: string, movieName: string): Promise<void> {
+		return await this.repository.remove(id, movieName)
+	}
 }
 
 export const makeRecommendationsListService = () =>

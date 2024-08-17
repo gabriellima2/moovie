@@ -1,9 +1,12 @@
 import {
+	arrayRemove,
+	arrayUnion,
 	collection,
 	doc,
 	getDoc,
 	getDocs,
 	query,
+	updateDoc,
 	where,
 } from 'firebase/firestore'
 
@@ -44,6 +47,14 @@ class RecommendationsListRepositoryImpl
 			id: doc.id,
 		}))
 		return reviews
+	}
+	async append(document: string, movieName: string): Promise<void> {
+		const ref = doc(db, this.collection, document)
+		await updateDoc(ref, { movies_name: arrayUnion(movieName) })
+	}
+	async remove(document: string, movieName: string): Promise<void> {
+		const ref = doc(db, this.collection, document)
+		await updateDoc(ref, { movies_name: arrayRemove(movieName) })
 	}
 }
 

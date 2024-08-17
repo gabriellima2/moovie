@@ -15,9 +15,9 @@ import { useSelectedListOptions } from './hooks/use-selected-list-options'
 import { useAddMovieToList } from './hooks/use-add-movie-to-list'
 
 export function AddToListModal() {
-	const { closeAddToListModal } = useMovieDetailsContext()
+	const { movieName, closeAddToListModal } = useMovieDetailsContext()
 	const user = useAuthenticationStore((state) => state.user)
-	const { handleAddMovieToList, isSubmitting } = useAddMovieToList()
+	const { handleAddMovieToList, isSubmitting } = useAddMovieToList(movieName)
 	const { recommendationsList } = useGetRecommendationsListByUserId(user!.uid)
 	const { selectedListOptions, handleSelectedListOptionsChange } =
 		useSelectedListOptions()

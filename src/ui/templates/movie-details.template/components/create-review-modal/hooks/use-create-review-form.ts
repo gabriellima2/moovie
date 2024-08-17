@@ -30,7 +30,7 @@ export function useCreateReviewForm() {
 		defaultValues,
 		resolver: zodResolver(createReviewSchema),
 	})
-	const { closeCreateReviewModal } = useMovieDetailsContext()
+	const { closeActionsMenu, closeCreateReviewModal } = useMovieDetailsContext()
 	const { handleCreate } = useCreateReview()
 	const queryClient = useQueryClient()
 	const values = useWatch({ control })
@@ -44,6 +44,7 @@ export function useCreateReviewForm() {
 			})
 			reset(defaultValues)
 			closeCreateReviewModal()
+			closeActionsMenu()
 			queryClient.invalidateQueries()
 		} catch (err) {
 			toast.show({

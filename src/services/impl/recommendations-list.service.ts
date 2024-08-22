@@ -4,9 +4,13 @@ import { makeRecommendationsListRepository } from '@/repositories/impl/firebase/
 
 import { RecommendationsListRepository } from '@/repositories/recommendations-list.repository'
 import { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
+import { CreateRecommendationListDTO } from '@/dtos/recommendation-list.dto'
 
 class RecommendationsListServiceImpl implements RecommendationsListService {
 	constructor(private readonly repository: RecommendationsListRepository) {}
+	async create(data: CreateRecommendationListDTO): Promise<void> {
+		return await this.repository.create(data)
+	}
 	async getAll(): Promise<RecommendationsListEntity[]> {
 		return await this.repository.getAll()
 	}

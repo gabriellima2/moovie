@@ -6,3 +6,9 @@ export interface RecommendationListDTO
 	movie: MovieEntity
 	user: { id: string; name: string }
 }
+
+export interface CreateRecommendationListDTO {
+	description: string
+	title: string
+	userId: string
+}

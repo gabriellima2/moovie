@@ -1,4 +1,5 @@
 import {
+	addDoc,
 	arrayRemove,
 	arrayUnion,
 	collection,
@@ -10,10 +11,13 @@ import {
 	where,
 } from 'firebase/firestore'
 
+import { CreateRecommendationsListMapper } from '@/mappers/create-recommendations-list.mapper'
 import { db } from '@/lib/firebase'
 
 import { RecommendationsListRepository } from '../../recommendations-list.repository'
 import { RecommendationsListEntity } from '@/entities/recommendations-list.entity'
+
+import { CreateRecommendationListDTO } from '@/dtos/recommendation-list.dto'
 
 class RecommendationsListRepositoryImpl
 	implements RecommendationsListRepository
@@ -21,6 +25,11 @@ class RecommendationsListRepositoryImpl
 	private readonly collection: string
 	constructor() {
 		this.collection = 'recommendations_list'
+	}
+	async create(data: CreateRecommendationListDTO): Promise<void> {
+		const raw = CreateRecommendationsListMapper.toFirebase(data)
+		const ref = collection(db, this.collection)
+		await addDoc(ref, raw)
 	}
 	async getAll(): Promise<RecommendationsListEntity[]> {
 		const ref = collection(db, this.collection)

@@ -16,7 +16,8 @@ import { useSelectedListOptions } from './hooks/use-selected-list-options'
 import { useAddMovieToList } from './hooks/use-add-movie-to-list'
 
 export function AddToListModal() {
-	const { movieName, closeAddToListModal } = useMovieDetailsContext()
+	const { movieName, closeAddToListModal, openCreateListModal } =
+		useMovieDetailsContext()
 	const user = useAuthenticationStore((state) => state.user)
 	const { handleAddMovieToList, isSubmitting } = useAddMovieToList(movieName)
 	const { recommendationsList, isLoading, isFetching } =
@@ -57,6 +58,7 @@ export function AddToListModal() {
 						<TouchableOpacity
 							activeOpacity={0.8}
 							className="flex-row items-center"
+							onPress={openCreateListModal}
 						>
 							<Plus size={20} color={colors.black} />
 							<Typography.Label className="ml-2">New list</Typography.Label>

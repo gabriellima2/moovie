@@ -12,7 +12,7 @@ export function useGetRecommendationsListByUserId(
 	options?: QueryOptions<RecommendationsListEntity[]>
 ) {
 	const { data: recommendationsList, ...rest } = useQuery({
-		queryKey: ['recommendations-list-of-user', userId],
+		queryKey: ['recommendations-list-of-user', { userId }],
 		queryFn: () => service.getByUser(userId),
 		throwOnError: true,
 		...options,

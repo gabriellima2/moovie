@@ -17,7 +17,7 @@ export class CreateRecommendationsListMapper {
 		data: CreateRecommendationsListFields
 	): CreateRecommendationListDTO {
 		return {
-			description: data.description,
+			description: data.description || null,
 			title: data.title,
 			userId,
 		}

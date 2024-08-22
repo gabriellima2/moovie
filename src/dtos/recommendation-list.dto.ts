@@ -8,7 +8,7 @@ export interface RecommendationListDTO
 }
 
 export interface CreateRecommendationListDTO {
-	description: string
+	description: string | null
 	title: string
 	userId: string
 }

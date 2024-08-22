@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 
 import { CreateReviewModal } from '../../components/create-review-modal'
+import { CreateListModal } from '../../components/create-list-modal'
 import { AddToListModal } from '../../components/add-to-list-modal'
 import { MovieDetailsContext } from './movie-details.context'
 
@@ -17,6 +18,12 @@ export function MovieDetailsProvider(props: MovieDetailsProviderProps) {
 		setValue: setIsOpenCreateReviewModal,
 		setFalse: closeCreateReviewModal,
 		setTrue: openCreateReviewModal,
+	} = useBoolean()
+	const {
+		value: isOpenCreateListModal,
+		setValue: setIsOpenCreateListModal,
+		setFalse: closeCreateListModal,
+		setTrue: openCreateListModal,
 	} = useBoolean()
 	const {
 		value: isOpenActionsMenu,
@@ -40,6 +47,11 @@ export function MovieDetailsProvider(props: MovieDetailsProviderProps) {
 				closeCreateReviewModal,
 				openCreateReviewModal,
 
+				isOpenCreateListModal,
+				setIsOpenCreateListModal,
+				closeCreateListModal,
+				openCreateListModal,
+
 				isOpenAddToListModal,
 				setIsOpenAddToListModal,
 				closeAddToListModal,
@@ -54,6 +66,7 @@ export function MovieDetailsProvider(props: MovieDetailsProviderProps) {
 			{children}
 			{isOpenCreateReviewModal && <CreateReviewModal />}
 			{isOpenAddToListModal && <AddToListModal />}
+			{isOpenCreateListModal && <CreateListModal />}
 		</MovieDetailsContext.Provider>
 	)
 }

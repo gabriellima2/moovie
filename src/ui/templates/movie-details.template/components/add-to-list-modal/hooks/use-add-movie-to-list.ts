@@ -1,8 +1,12 @@
 import { useMovieDetailsContext } from '../../../contexts/movie-details.context'
 import { useBoolean } from '@/hooks/use-boolean'
 
+import { FEEDBACK } from '@/constants/feedback'
+
 import { makeRecommendationsListService } from '@/services/impl/recommendations-list.service'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
+
+import { ERROR_MESSAGES } from '@/constants/error-messages'
 
 const service = makeRecommendationsListService()
 const toast = makeToastAdapter()
@@ -21,15 +25,16 @@ export function useAddMovieToList(movieName: string) {
 			await Promise.all(promises)
 			toast.show({
 				type: 'success',
-				title: 'Movie successfully added to the list',
+				title: FEEDBACK.ADD_MOVIE_TO_LIST.SUCCESS.TITLE,
 			})
 			closeAddToListModal()
 			closeActionsMenu()
 		} catch (err) {
+			const _error = (err as Error)?.message || ERROR_MESSAGES.UNEXPECTED
 			toast.show({
 				type: 'error',
-				title: (err as Error)?.message || 'An error has occurred',
-				description: (err as Error).message,
+				title: _error,
+				description: _error,
 			})
 		} finally {
 			setIsSubmitting(false)

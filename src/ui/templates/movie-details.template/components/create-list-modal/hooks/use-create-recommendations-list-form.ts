@@ -10,7 +10,10 @@ import { useForm } from '@/hooks/use-form'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 import { getDefaultValues } from '../utils/get-default-values'
 
+import { ERROR_MESSAGES } from '@/constants/error-messages'
+import { FEEDBACK } from '@/constants/feedback'
 import { QUERY_KEYS } from '@/constants/keys'
+
 import {
 	createRecommendationsListSchema,
 	type CreateRecommendationsListFields,
@@ -41,7 +44,7 @@ export function useCreateRecommendationsListForm() {
 			await handleCreate(values)
 			toast.show({
 				type: 'success',
-				title: 'List successfully created',
+				title: FEEDBACK.CREATE_RECOMMENDATIONS_LIST.SUCCESS.TITLE,
 			})
 			reset(defaultValues)
 			closeCreateListModal()
@@ -50,10 +53,11 @@ export function useCreateRecommendationsListForm() {
 				queryKey: QUERY_KEYS.GET_USER_RECOMMENDATIONS_LIST(),
 			})
 		} catch (err) {
+			const _error = (err as Error)?.message || ERROR_MESSAGES.UNEXPECTED
 			toast.show({
 				type: 'error',
-				title: (err as Error)?.message || 'An error has occurred',
-				description: (err as Error).message,
+				title: _error,
+				description: _error,
 			})
 		}
 	}

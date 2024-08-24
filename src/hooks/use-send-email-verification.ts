@@ -3,6 +3,9 @@ import { useState } from 'react'
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 
+import { ERROR_MESSAGES } from '@/constants/error-messages'
+import { FEEDBACK } from '@/constants/feedback'
+
 const toast = makeToastAdapter()
 
 export function useSendEmailVerification() {
@@ -15,14 +18,15 @@ export function useSendEmailVerification() {
 			await sendEmailVerification()
 			toast.show({
 				type: 'success',
-				title: 'Email sent successfully',
-				description: `An email has been sent to ${user!.email} with a link to verify your
-					account`,
+				title: FEEDBACK.SEND_EMAIL_VERIFICATION.SUCCESS.TITLE,
+				description: FEEDBACK.SEND_EMAIL_VERIFICATION.SUCCESS.DESCRIPTION(
+					user!.email!
+				),
 			})
 		} catch (err) {
 			toast.show({
 				type: 'error',
-				title: 'An error has occurred',
+				title: ERROR_MESSAGES.UNEXPECTED,
 				description: (err as Error).message,
 			})
 		} finally {

@@ -4,6 +4,8 @@ import { useRouter } from 'expo-router'
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 
+import { ERROR_MESSAGES } from '@/constants/error-messages'
+
 const toast = makeToastAdapter()
 
 export function useGuestAuthentication() {
@@ -19,7 +21,7 @@ export function useGuestAuthentication() {
 		} catch (err) {
 			toast.show({
 				type: 'error',
-				title: 'An error has occurred',
+				title: ERROR_MESSAGES.UNEXPECTED,
 				description: (err as Error).message,
 			})
 		} finally {

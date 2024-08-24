@@ -8,6 +8,9 @@ import { useForm } from '@/hooks/use-form'
 import { nameSchema } from '@/schemas/user.schema'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 
+import { ERROR_MESSAGES } from '@/constants/error-messages'
+import { FEEDBACK } from '@/constants/feedback'
+
 export type IntroductionFormFields = {
 	username: string
 }
@@ -32,14 +35,13 @@ export function useIntroductionForm() {
 			await updateProfile({ name: credentials.username.trim().toLowerCase() })
 			toast.show({
 				type: 'success',
-				title: 'Username was saved successfully',
-				description:
-					'The name has been saved successfully. You can change it at any time',
+				title: FEEDBACK.DEFINE_USERNAME.SUCCESS.TITLE,
+				description: FEEDBACK.DEFINE_USERNAME.SUCCESS.DESCRIPTION,
 			})
 		} catch (err) {
 			toast.show({
 				type: 'error',
-				title: 'An error has occurred',
+				title: ERROR_MESSAGES.UNEXPECTED,
 				description: (err as Error).message,
 			})
 		}

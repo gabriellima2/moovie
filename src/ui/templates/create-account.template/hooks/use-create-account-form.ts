@@ -4,10 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 import { useForm } from '@/hooks/use-form'
 
-import { authenticationSchema } from '@/schemas/authentication.schema'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 
-import { SignUpDTO } from '@/dtos/sign-up.dto'
+import { authenticationSchema } from '@/schemas/authentication.schema'
+import { FEEDBACK } from '@/constants/feedback'
+
+import { ERROR_MESSAGES } from '@/constants/error-messages'
+import type { SignUpDTO } from '@/dtos/sign-up.dto'
 
 const toast = makeToastAdapter()
 
@@ -28,15 +31,15 @@ export function useCreateAccountForm() {
 			await signUp(credentials)
 			toast.show({
 				type: 'success',
-				title: 'Account successfully created',
-				description: 'Enter the email you entered to verify it',
+				title: FEEDBACK.CREATE_ACCOUNT.SUCCESS.TITLE,
+				description: FEEDBACK.CREATE_ACCOUNT.SUCCESS.DESCRIPTION,
 			})
 			reset({})
 			await sendEmailVerification()
 		} catch (err) {
 			toast.show({
 				type: 'error',
-				title: 'An error has occurred',
+				title: ERROR_MESSAGES.UNEXPECTED,
 				description: (err as Error).message,
 			})
 		}

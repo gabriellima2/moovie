@@ -9,6 +9,7 @@ import { authenticationSchema } from '@/schemas/authentication.schema'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 
 import { SignInDTO } from '@/dtos/sign-in.dto'
+import { ERROR_MESSAGES } from '@/constants/error-messages'
 
 const toast = makeToastAdapter()
 
@@ -31,7 +32,7 @@ export function useLoginForm() {
 		} catch (err) {
 			toast.show({
 				type: 'error',
-				title: 'An error has occurred',
+				title: ERROR_MESSAGES.UNEXPECTED,
 				description: (err as Error).message,
 			})
 		}

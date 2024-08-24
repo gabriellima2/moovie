@@ -10,6 +10,9 @@ import { useForm } from '@/hooks/use-form'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 import { getDefaultValues } from '../utils/get-default-values'
 
+import { ERROR_MESSAGES } from '@/constants/error-messages'
+import { FEEDBACK } from '@/constants/feedback'
+
 import {
 	createReviewSchema,
 	type CreateReviewFields,
@@ -40,17 +43,18 @@ export function useCreateReviewForm() {
 			await handleCreate(values)
 			toast.show({
 				type: 'success',
-				title: 'Review successfully created',
+				title: FEEDBACK.CREATE_REVIEW.SUCCESS.TITLE,
 			})
 			reset(defaultValues)
 			closeCreateReviewModal()
 			closeActionsMenu()
 			queryClient.invalidateQueries()
 		} catch (err) {
+			const _error = (err as Error)?.message || ERROR_MESSAGES.UNEXPECTED
 			toast.show({
 				type: 'error',
-				title: (err as Error)?.message || 'An error has occurred',
-				description: (err as Error).message,
+				title: _error,
+				description: _error,
 			})
 		}
 	}

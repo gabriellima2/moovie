@@ -6,6 +6,8 @@ import { z } from 'zod'
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 import { useForm } from '@/hooks/use-form'
 
+import { ERROR_MESSAGES } from '@/constants/error-messages'
+
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 import { emailSchema } from '@/schemas/user.schema'
 
@@ -36,7 +38,7 @@ export function useResetPasswordMailerForm() {
 		} catch (err) {
 			toast.show({
 				type: 'error',
-				title: 'An error has occurred',
+				title: ERROR_MESSAGES.UNEXPECTED,
 				description: (err as Error).message,
 			})
 		}

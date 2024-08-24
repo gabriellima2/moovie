@@ -10,6 +10,7 @@ import { useForm } from '@/hooks/use-form'
 import { makeToastAdapter } from '@/adapters/impl/toast.adapter'
 import { getDefaultValues } from '../utils/get-default-values'
 
+import { QUERY_KEYS } from '@/constants/keys'
 import {
 	createRecommendationsListSchema,
 	type CreateRecommendationsListFields,
@@ -46,7 +47,7 @@ export function useCreateRecommendationsListForm() {
 			closeCreateListModal()
 			closeActionsMenu()
 			queryClient.invalidateQueries({
-				queryKey: ['recommendations-list-of-user'],
+				queryKey: QUERY_KEYS.GET_USER_RECOMMENDATIONS_LIST(),
 			})
 		} catch (err) {
 			toast.show({

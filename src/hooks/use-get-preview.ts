@@ -5,6 +5,8 @@ import { makeReviewService } from '@/services/impl/review.service'
 import { makeMovieService } from '@/services/impl/movie.service'
 import { makeUserService } from '@/services/impl/user.service'
 
+import { QUERY_KEYS } from '@/constants/keys'
+
 import type { RecommendationListDTO } from '@/dtos/recommendation-list.dto'
 import type { ReviewDTO } from '@/dtos/review.dto'
 
@@ -19,7 +21,7 @@ export function useGetPreview() {
 	return useQueries({
 		queries: [
 			{
-				queryKey: ['review_preview'],
+				queryKey: QUERY_KEYS.GET_REVIEW_PREVIEW,
 				queryFn: async () => {
 					const reviews = await services.review.getAll()
 					if (reviews && reviews.length) {
@@ -48,7 +50,7 @@ export function useGetPreview() {
 				throwOnError: true,
 			},
 			{
-				queryKey: ['recommendations_list_preview'],
+				queryKey: QUERY_KEYS.GET_RECOMMENDATIONS_LIST_PREVIEW,
 				queryFn: async () => {
 					const recommendations = await services.recommendationList.getAll()
 					if (recommendations && recommendations.length) {

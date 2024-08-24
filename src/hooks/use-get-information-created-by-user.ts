@@ -3,6 +3,8 @@ import { useQueries } from '@tanstack/react-query'
 import { makeMovieService } from '@/services/impl/movie.service'
 import { makeUserService } from '@/services/impl/user.service'
 
+import { QUERY_KEYS } from '@/constants/keys'
+
 export interface useGetInformationCreatedByUserParams {
 	userID: string
 	movieName: string
@@ -19,12 +21,12 @@ export function useGetInformationCreatedByUser(
 		queries: [
 			{
 				queryFn: () => userService.getByID(userID),
-				queryKey: ['profile.review', userID],
+				queryKey: QUERY_KEYS.GET_USER_PROFILE_INFORMATIONS(userID),
 				throwOnError: true,
 			},
 			{
 				queryFn: () => movieService.getByName(movieName),
-				queryKey: ['movie.review', movieName],
+				queryKey: QUERY_KEYS.GET_MOVIE_REVIEWS(movieName),
 				throwOnError: true,
 			},
 		],

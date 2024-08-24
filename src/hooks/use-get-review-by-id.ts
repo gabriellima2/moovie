@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { makeReviewService } from '@/services/impl/review.service'
 import { makeMovieService } from '@/services/impl/movie.service'
 import { makeUserService } from '@/services/impl/user.service'
+import { QUERY_KEYS } from '@/constants/keys'
 
 const services = {
 	review: makeReviewService(),
@@ -10,7 +11,7 @@ const services = {
 	user: makeUserService(),
 }
 
-export function useGetReviewByID(id: string | null) {
+export function useGetReviewByID(id?: string | null) {
 	return useQuery({
 		queryFn: async () => {
 			const review = await services.review.getByID(id!)
@@ -20,7 +21,7 @@ export function useGetReviewByID(id: string | null) {
 				return { ...review, movie_image: movie.Poster, user_name: user.name }
 			}
 		},
-		queryKey: ['review', id],
+		queryKey: QUERY_KEYS.GET_REVIEW_BY_ID(id || undefined),
 		enabled: !!id,
 		throwOnError: true,
 	})

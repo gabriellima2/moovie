@@ -8,6 +8,7 @@ import { ReviewEntity } from '@/entities/review.entity'
 import { MovieEntity } from '@/entities/movie.entity'
 
 import { makeUserService } from '@/services/impl/user.service'
+import { QUERY_KEYS } from '@/constants/keys'
 
 type MovieDetails = MovieEntity & {
 	reviews: (Omit<ReviewEntity, 'user_id' | 'movie_name'> & {
@@ -23,7 +24,7 @@ const services = {
 
 export function useGetMovieDetails(name: string) {
 	return useQuery<MovieDetails>({
-		queryKey: ['movie-details'],
+		queryKey: QUERY_KEYS.MOVIE_DETAILS,
 		queryFn: async () => {
 			const movie = await services.movie.getByName(name)
 			const reviews = await services.review.getByName(name)

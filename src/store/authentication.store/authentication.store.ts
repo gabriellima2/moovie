@@ -13,10 +13,12 @@ import { create } from 'zustand'
 import { makeUserService } from '@/services/impl/user.service'
 import { auth } from '@/lib/firebase'
 
-import { AuthenticationStoreProperties } from './@types/authentication.store.properties'
-import { UpdateProfileDTO } from '@/dtos/update-profile.dto'
-import { SignUpDTO } from '@/dtos/sign-up.dto'
-import { SignInDTO } from '@/dtos/sign-in.dto'
+import { UserNotAuthenticatedException } from '@/exceptions/user-not-authenticated.exception'
+
+import type { AuthenticationStoreProperties } from './@types/authentication.store.properties'
+import type { UpdateProfileDTO } from '@/dtos/update-profile.dto'
+import type { SignUpDTO } from '@/dtos/sign-up.dto'
+import type { SignInDTO } from '@/dtos/sign-in.dto'
 
 const userService = makeUserService()
 
@@ -50,7 +52,7 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 		},
 		sendEmailVerification: async () => {
 			const { user } = get()
-			if (!user) throw new Error('No user currently authenticated')
+			if (!user) throw new UserNotAuthenticatedException()
 			await sendEmailVerification(user)
 		},
 		sendPasswordReset: async (email: string) => {
@@ -58,7 +60,7 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 		},
 		updateProfile: async (params: UpdateProfileDTO) => {
 			const { user } = get()
-			if (!user) throw new Error('No user currently authenticated')
+			if (!user) throw new UserNotAuthenticatedException()
 			await updateProfile(user, { displayName: params.name })
 			await userService.create({ id: user.uid, name: params.name })
 			await user.reload()

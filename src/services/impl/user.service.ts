@@ -2,6 +2,8 @@ import { UserService } from '../user.service'
 
 import { makeUserRepository } from '@/repositories/impl/firebase/user.repository'
 
+import { UserNotFoundException } from '@/exceptions/user-not-found.exception'
+
 import { CreateUserDTO } from '@/dtos/user.dtos/create-user.dto'
 import { UserRepository } from '@/repositories/user.repository'
 import { ProfileEntity } from '@/entities/profile.entity'
@@ -14,7 +16,7 @@ class UserServiceImpl implements UserService {
 	}
 	async getByID(id: string): Promise<ProfileEntity> {
 		const user = await this.repository.getByID(id)
-		if (!user) throw new Error(`User with ${id} not found`)
+		if (!user) throw new UserNotFoundException()
 		return user
 	}
 }

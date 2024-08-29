@@ -16,7 +16,9 @@ export function ErrorBoundary({ error }: ErrorBoundaryProps) {
 export default function Layout() {
 	const { user } = useAuthenticationStore()
 	if (!user) return <Redirect href="/login" />
-	if (user && !user.emailVerified) return <Redirect href="/verify-your-email" />
+	if (user && !user.emailVerified && !user.isAnonymous) {
+		return <Redirect href="/verify-your-email" />
+	}
 	return (
 		<>
 			<Tabs

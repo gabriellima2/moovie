@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { useRouter } from 'expo-router'
 
-export type UseSearchParams = {
-	updateSearchHistoryStorage: (value: string) => Promise<void>
-}
+import { useSearchHistory } from './use-search-history'
 
-export function useSearch(params: UseSearchParams) {
-	const { updateSearchHistoryStorage } = params
+export function useSearch() {
+	const { history, isLoading, update } = useSearchHistory()
 	const router = useRouter()
 	const [search, setSearch] = useState('')
 
@@ -16,11 +14,13 @@ export function useSearch(params: UseSearchParams) {
 		}
 		const searchBy = value || search
 		if (!searchBy) return
-		await updateSearchHistoryStorage(searchBy)
+		await update(searchBy)
 		router.push(`/movie/${searchBy.trim().toLowerCase()}`)
 	}
 
 	return {
+		history,
+		isLoading,
 		search,
 		fillSearch: setSearch,
 		handleSearch,

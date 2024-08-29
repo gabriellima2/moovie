@@ -1,20 +1,15 @@
-import { TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { ChevronLeft } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 import { Link } from 'expo-router'
 
 import { SearchHistory } from '@/ui/components/search-history'
-import { Typography } from '@/ui/atoms/typography'
 import { Field } from '@/ui/components/field'
 
-import { useSearchHistory } from './hooks/use-search-history'
 import { useSearch } from './hooks/use-search'
 
 export function SearchTemplate() {
-	const { history, isLoading, update } = useSearchHistory()
-	const { search, fillSearch, handleSearch } = useSearch({
-		updateSearchHistoryStorage: update,
-	})
+	const { history, isLoading, search, fillSearch, handleSearch } = useSearch()
 	return (
 		<View className="flex-1">
 			<View className="flex-row items-center px-4">
@@ -35,7 +30,11 @@ export function SearchTemplate() {
 					/>
 				</Field.Root>
 			</View>
-			{isLoading && <Typography.Small>Loading...</Typography.Small>}
+			{isLoading && (
+				<View>
+					<ActivityIndicator />
+				</View>
+			)}
 			{history && (
 				<SearchHistory
 					data={history}

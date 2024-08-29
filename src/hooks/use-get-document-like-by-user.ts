@@ -19,7 +19,7 @@ export function useGetDocumentLikeByUser(
 	const { data: like, isLoading } = useQuery({
 		queryFn: () =>
 			likeService.get({ document_id: documentId!, user_id: user!.uid }),
-		queryKey: QUERY_KEYS.GET_USER_LIKES(documentId, user?.uid ?? ''),
+		queryKey: [QUERY_KEYS.GET_USER_LIKES, documentId, user?.uid ?? ''],
 		enabled: !!documentId && !!user,
 		throwOnError: true,
 	})

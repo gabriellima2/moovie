@@ -21,12 +21,12 @@ export function useGetInformationCreatedByUser(
 		queries: [
 			{
 				queryFn: () => userService.getByID(userID),
-				queryKey: QUERY_KEYS.GET_USER_PROFILE_INFORMATIONS(userID),
+				queryKey: [QUERY_KEYS.GET_USER_PROFILE_INFORMATIONS, userID],
 				throwOnError: true,
 			},
 			{
 				queryFn: () => movieService.getByName(movieName),
-				queryKey: QUERY_KEYS.GET_MOVIE_REVIEWS(movieName),
+				queryKey: [QUERY_KEYS.GET_MOVIE_REVIEWS, movieName],
 				throwOnError: true,
 			},
 		],

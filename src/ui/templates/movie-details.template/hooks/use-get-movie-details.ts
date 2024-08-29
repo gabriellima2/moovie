@@ -24,7 +24,7 @@ const services = {
 
 export function useGetMovieDetails(name: string) {
 	return useQuery<MovieDetails>({
-		queryKey: QUERY_KEYS.MOVIE_DETAILS,
+		queryKey: [QUERY_KEYS.MOVIE_DETAILS],
 		queryFn: async () => {
 			const movie = await services.movie.getByName(name)
 			const reviews = await services.review.getByName(name)

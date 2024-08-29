@@ -21,7 +21,7 @@ export function useGetPreview() {
 	return useQueries({
 		queries: [
 			{
-				queryKey: QUERY_KEYS.GET_REVIEW_PREVIEW,
+				queryKey: [QUERY_KEYS.GET_REVIEW_PREVIEW],
 				queryFn: async () => {
 					const reviews = await services.review.getAll()
 					if (reviews && reviews.length) {
@@ -50,7 +50,7 @@ export function useGetPreview() {
 				throwOnError: true,
 			},
 			{
-				queryKey: QUERY_KEYS.GET_RECOMMENDATIONS_LIST_PREVIEW,
+				queryKey: [QUERY_KEYS.GET_RECOMMENDATIONS_LIST_PREVIEW],
 				queryFn: async () => {
 					const recommendations = await services.recommendationList.getAll()
 					if (recommendations && recommendations.length) {

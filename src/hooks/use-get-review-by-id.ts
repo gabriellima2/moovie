@@ -21,7 +21,7 @@ export function useGetReviewByID(id?: string | null) {
 				return { ...review, movie_image: movie.Poster, user_name: user.name }
 			}
 		},
-		queryKey: QUERY_KEYS.GET_REVIEW_BY_ID(id || undefined),
+		queryKey: [QUERY_KEYS.GET_REVIEW_BY_ID, id],
 		enabled: !!id,
 		throwOnError: true,
 	})

@@ -7,7 +7,7 @@ const service = makeUserService()
 export function useGetUserByID(id: string) {
 	return useQuery({
 		queryFn: () => service.getByID(id),
-		queryKey: QUERY_KEYS.GET_USER_BY_ID(id),
+		queryKey: [QUERY_KEYS.GET_USER_BY_ID, id],
 		throwOnError: true,
 	})
 }

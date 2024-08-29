@@ -50,7 +50,7 @@ export function useCreateRecommendationsListForm() {
 			closeCreateListModal()
 			closeActionsMenu()
 			queryClient.invalidateQueries({
-				queryKey: QUERY_KEYS.GET_USER_RECOMMENDATIONS_LIST(),
+				queryKey: [QUERY_KEYS.GET_USER_RECOMMENDATIONS_LIST],
 			})
 		} catch (err) {
 			const _error = (err as Error)?.message || ERROR_MESSAGES.UNEXPECTED

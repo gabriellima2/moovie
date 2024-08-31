@@ -3,7 +3,7 @@ import { useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
 
-import { useMovieDetailsContext } from '../../../contexts/movie-details.context'
+import { useMovieDetailsContext } from '../../../contexts/movie-details.context/hooks/use-movie-details-context'
 import { useCreateRecommendationsList } from './use-create-recommendations-list'
 import { useForm } from '@/hooks/use-form'
 

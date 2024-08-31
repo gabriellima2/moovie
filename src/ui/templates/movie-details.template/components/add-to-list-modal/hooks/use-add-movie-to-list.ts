@@ -1,4 +1,4 @@
-import { useMovieDetailsContext } from '../../../contexts/movie-details.context'
+import { useMovieDetailsContext } from '../../../contexts/movie-details.context/hooks/use-movie-details-context'
 import { useBoolean } from '@/hooks/use-boolean'
 
 import { FEEDBACK } from '@/constants/feedback'

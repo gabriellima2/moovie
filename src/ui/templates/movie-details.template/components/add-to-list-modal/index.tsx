@@ -10,8 +10,8 @@ import { Typography } from '@/ui/atoms/typography'
 import { Button } from '@/ui/components/button'
 
 import { useGetRecommendationsListByUserId } from '@/hooks/use-get-recommendations-list-by-user-id'
+import { useMovieDetailsContext } from '../../contexts/movie-details.context/hooks/use-movie-details-context'
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
-import { useMovieDetailsContext } from '../../contexts/movie-details.context'
 import { useSelectedListOptions } from './hooks/use-selected-list-options'
 import { useAddMovieToList } from './hooks/use-add-movie-to-list'
 

@@ -6,7 +6,7 @@ import { Button } from '@/ui/components/button'
 import { Field } from '@/ui/components/field'
 
 import { useCreateRecommendationsListForm } from './hooks/use-create-recommendations-list-form'
-import { useMovieDetailsContext } from '../../contexts/movie-details.context'
+import { useMovieDetailsContext } from '../../contexts/movie-details.context/hooks/use-movie-details-context'
 
 export function CreateListModal() {
 	const { closeCreateListModal } = useMovieDetailsContext()

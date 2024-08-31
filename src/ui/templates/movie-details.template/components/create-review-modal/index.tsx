@@ -5,7 +5,7 @@ import { Typography } from '@/ui/atoms/typography'
 import { Button } from '@/ui/components/button'
 import { Field } from '@/ui/components/field'
 
-import { useMovieDetailsContext } from '../../contexts/movie-details.context'
+import { useMovieDetailsContext } from '../../contexts/movie-details.context/hooks/use-movie-details-context'
 import { useCreateReviewForm } from './hooks/use-create-review-form'
 import { Rating } from '@/ui/components/rating'
 

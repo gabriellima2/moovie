@@ -28,15 +28,13 @@ export function useGetRecommendationsListById(id: string) {
 						services.movie.getByName(movieName)
 					)
 				)
-
-				const a: GetRecommendationListDTO = {
+				const raw: GetRecommendationListDTO = {
 					...recommendationsList,
 					user,
 					movies,
 				}
-				return a
+				return raw
 			}
 		},
-		throwOnError: true,
 	})
 }

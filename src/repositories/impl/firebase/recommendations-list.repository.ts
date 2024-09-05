@@ -65,6 +65,14 @@ class RecommendationsListRepositoryImpl
 		const ref = doc(db, this.collection, document)
 		await updateDoc(ref, { movies_name: arrayRemove(movieName) })
 	}
+	async addLike(id: string, document: string): Promise<void> {
+		const ref = doc(db, this.collection, document)
+		await updateDoc(ref, { likes_id: arrayUnion(id) })
+	}
+	async deleteLike(id: string, document: string): Promise<void> {
+		const ref = doc(db, this.collection, document)
+		await updateDoc(ref, { likes_id: arrayRemove(id) })
+	}
 }
 
 export const makeRecommendationsListRepository = () =>

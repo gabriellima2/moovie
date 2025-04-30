@@ -5,8 +5,8 @@ import {
 	TouchableOpacity,
 	ActivityIndicator,
 } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { CalendarDays, ChevronLeft, User } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 import { format } from 'date-fns'
 
@@ -30,7 +30,7 @@ export default function RecommendationsListTemplate(
 		<>
 			<Header.Root className="justify-start">
 				<TouchableOpacity accessibilityLabel="Voltar" onPress={router.back}>
-					<ChevronLeft size={24} color={colors.black} />
+					<Feather name="chevron-left" size={24} color={colors.black} />
 				</TouchableOpacity>
 				{!!data && (
 					<Typography.Title className="ml-4">{data.title}</Typography.Title>
@@ -82,7 +82,11 @@ export default function RecommendationsListTemplate(
 													</View>
 													<View className="flex-row justify-between">
 														<View className="flex-row gap-x-2 items-center">
-															<CalendarDays color={colors.black} size={20} />
+															<Feather
+																name="calendar"
+																color={colors.black}
+																size={20}
+															/>
 															<Typography.Paragraph>
 																{movie.Released}
 															</Typography.Paragraph>
@@ -104,7 +108,7 @@ export default function RecommendationsListTemplate(
 						<View className="flex-row items-center justify-between mb-4 mt-8">
 							<View className="flex-row gap-x-2 items-center">
 								<View className="items-center justify-center bg-zinc-200 rounded-full w-8 h-8">
-									<User color={colors.black} size={20} />
+									<Feather name="user" color={colors.black} size={20} />
 								</View>
 								<Typography.Paragraph>
 									Created by {data.user.name}

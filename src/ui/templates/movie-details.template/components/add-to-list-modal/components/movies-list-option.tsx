@@ -1,5 +1,5 @@
 import { TouchableHighlight, View } from 'react-native'
-import { Check } from 'lucide-react-native'
+import { Feather } from '@expo/vector-icons'
 import colors from 'tailwindcss/colors'
 
 import { Typography } from '@/ui/atoms/typography'
@@ -35,7 +35,7 @@ export function MoviesListOption(props: MoviesListOptionProps) {
 						{ 'bg-black border-0': isChecked }
 					)}
 				>
-					{isChecked && <Check color={colors.white} size={16} />}
+					{isChecked && <Feather name="check" color={colors.white} size={16} />}
 				</View>
 				<Typography.Subtitle className="text-base ml-3">
 					{title}

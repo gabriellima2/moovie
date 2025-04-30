@@ -1,5 +1,5 @@
 import { TouchableOpacity } from 'react-native'
-import { EllipsisVertical, ListPlus, Plus } from 'lucide-react-native'
+import { Feather } from '@expo/vector-icons'
 import colors from 'tailwindcss/colors'
 
 import { useMovieDetailsContext } from '../contexts/movie-details.context'
@@ -19,7 +19,7 @@ function Trigger() {
 			accessibilityLabel="Menu"
 			activeOpacity={0.6}
 		>
-			<EllipsisVertical size={20} color={colors.black} />
+			<Feather name="more-vertical" size={20} color={colors.black} />
 		</TouchableOpacity>
 	)
 }
@@ -42,7 +42,7 @@ function Menu(props: MenuProps) {
 				className="flex-row py-3"
 				activeOpacity={0.6}
 			>
-				<Plus size={20} color={colors.black} className="mr-4" />
+				<Feather name="plus" size={20} color={colors.black} className="mr-4" />
 				<Typography.Label>Create Review</Typography.Label>
 			</TouchableOpacity>
 			<TouchableOpacity
@@ -50,7 +50,7 @@ function Menu(props: MenuProps) {
 				className="flex-row py-3"
 				activeOpacity={0.6}
 			>
-				<ListPlus size={20} color={colors.black} className="mr-4" />
+				<Feather name="list" size={20} color={colors.black} className="mr-4" />
 				<Typography.Label>Add to list</Typography.Label>
 			</TouchableOpacity>
 		</BottomSheet>

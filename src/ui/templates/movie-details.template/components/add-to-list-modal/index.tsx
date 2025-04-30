@@ -1,6 +1,5 @@
 import { TouchableOpacity, View } from 'react-native'
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
-import { Plus } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 
 import { MoviesListOptionSkeleton } from './components/movies-list-option-skeleton'
@@ -14,6 +13,7 @@ import { useMovieDetailsContext } from '../../contexts/movie-details.context/hoo
 import { useAuthenticationStore } from '@/store/authentication.store/authentication.store'
 import { useSelectedListOptions } from './hooks/use-selected-list-options'
 import { useAddMovieToList } from './hooks/use-add-movie-to-list'
+import { Feather } from '@expo/vector-icons'
 
 export function AddToListModal() {
 	const { movieName, closeAddToListModal, openCreateListModal } =
@@ -60,7 +60,7 @@ export function AddToListModal() {
 							className="flex-row items-center"
 							onPress={openCreateListModal}
 						>
-							<Plus size={20} color={colors.black} />
+							<Feather name="plus" size={20} color={colors.black} />
 							<Typography.Label className="ml-2">New list</Typography.Label>
 						</TouchableOpacity>
 					</View>

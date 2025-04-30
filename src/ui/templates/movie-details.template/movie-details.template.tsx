@@ -1,5 +1,5 @@
 import { View, Image, ScrollView, TouchableOpacity } from 'react-native'
-import { CalendarDays, ChevronLeft, Clock, Star } from 'lucide-react-native'
+import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import colors from 'tailwindcss/colors'
 
@@ -35,7 +35,7 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 		<MovieDetailsProvider movieName={name}>
 			<Header.Root>
 				<TouchableOpacity accessibilityLabel="Voltar" onPress={router.back}>
-					<ChevronLeft size={24} color={colors.black} />
+					<Feather name="chevron-left" size={24} color={colors.black} />
 				</TouchableOpacity>
 				<Actions.Trigger />
 			</Header.Root>
@@ -61,20 +61,21 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 									<Typography.Paragraph>{data.Plot}</Typography.Paragraph>
 									<View className="flex-row justify-between flex-wrap py-2">
 										<View className="flex-row gap-x-2 items-center">
-											<Clock color={colors.black} size={20} />
+											<Feather name="clock" color={colors.black} size={20} />
 											<Typography.Paragraph>
 												{data.Runtime}
 											</Typography.Paragraph>
 										</View>
 										<View className="flex-row gap-x-2 items-center">
-											<CalendarDays color={colors.black} size={20} />
+											<Feather name="calendar" color={colors.black} size={20} />
 											<Typography.Paragraph>
 												{data.Released}
 											</Typography.Paragraph>
 										</View>
 										<View className="flex-row items-center">
-											<Star
-												fill={colors.black}
+											<Feather
+												name="star"
+												// fill={colors.black}
 												color={colors.black}
 												size={20}
 												className="mr-2"

@@ -1,7 +1,6 @@
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
 import { Redirect, Link } from 'expo-router'
-import { LogOut, Settings } from 'lucide-react-native'
 import colors from 'tailwindcss/colors'
 
 import { Typography } from '@/ui/atoms/typography'
@@ -11,6 +10,7 @@ import { useAuthenticationStore } from '@/store/authentication.store/authenticat
 
 import { makeRecommendationsListService } from '@/services/impl/recommendations-list.service'
 import { makeReviewService } from '@/services/impl/review.service'
+import { Feather } from '@expo/vector-icons'
 
 // Refatorar
 export default function Profile() {
@@ -61,7 +61,12 @@ export default function Profile() {
 			<View>
 				<Link href="/search" className="p-4">
 					<View className="flex-row items-center">
-						<Settings size={24} color={colors.black} className="mr-4" />
+						<Feather
+							name="settings"
+							size={24}
+							color={colors.black}
+							className="mr-4"
+						/>
 						<Typography.Label>Settings</Typography.Label>
 					</View>
 				</Link>
@@ -70,7 +75,12 @@ export default function Profile() {
 					onPress={logout}
 					className="p-4 flex-row items-center"
 				>
-					<LogOut size={24} color={colors.black} className="mr-4" />
+					<Feather
+						name="log-out"
+						size={24}
+						color={colors.black}
+						className="mr-4"
+					/>
 					<Typography.Label>Logout</Typography.Label>
 				</TouchableOpacity>
 			</View>

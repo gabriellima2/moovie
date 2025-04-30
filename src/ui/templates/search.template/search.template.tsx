@@ -1,5 +1,5 @@
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
-import { ChevronLeft } from 'lucide-react-native'
+import { Feather } from '@expo/vector-icons'
 import colors from 'tailwindcss/colors'
 import { Link } from 'expo-router'
 
@@ -15,7 +15,7 @@ export function SearchTemplate() {
 			<View className="flex-row items-center px-4">
 				<Link href="/(tabs)/" asChild>
 					<TouchableOpacity activeOpacity={0.6}>
-						<ChevronLeft size={24} color={colors.black} />
+						<Feather name="chevron-left" size={24} color={colors.black} />
 					</TouchableOpacity>
 				</Link>
 				<Field.Root className="flex-1 ml-4">

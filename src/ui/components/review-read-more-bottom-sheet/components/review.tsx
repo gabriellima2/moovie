@@ -1,5 +1,5 @@
 import { Image, View } from 'react-native'
-import { User } from 'lucide-react-native'
+import { Feather } from '@expo/vector-icons'
 import colors from 'tailwindcss/colors'
 
 import { Typography } from '@/ui/atoms/typography'
@@ -69,7 +69,7 @@ export function Review(props: ReviewProps) {
 				<View className="flex-row justify-between flex-wrap py-2">
 					<View className="flex-row gap-x-2 items-center">
 						<View className="items-center justify-center bg-zinc-200 rounded-full w-8 h-8">
-							<User color={colors.black} size={20} />
+							<Feather name="user" color={colors.black} size={20} />
 						</View>
 						<Typography.Paragraph>
 							Review by {props.createdBy}

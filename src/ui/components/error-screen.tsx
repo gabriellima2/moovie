@@ -1,7 +1,5 @@
 import { TouchableOpacity, View } from 'react-native'
 import { useRouter } from 'expo-router'
-import colors from 'tailwindcss/colors'
-import { ArrowLeft } from 'lucide-react-native'
 
 import { Typography } from '../atoms/typography'
 
@@ -24,7 +22,7 @@ export function ErrorScreen(props: ErrorScreenProps) {
 				accessibilityLabel="Go Back"
 				className="flex-row items-center"
 			>
-				<ArrowLeft color={colors.black} size={20} className="mr-1" />
+				{/*<ArrowLeft color={colors.black} size={20} className="mr-1" />*/}
 				<Typography.Label>Go Back</Typography.Label>
 			</TouchableOpacity>
 		</View>

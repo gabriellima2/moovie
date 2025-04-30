@@ -1,5 +1,5 @@
-import { ArrowUpLeft, SearchIcon } from 'lucide-react-native'
 import { TouchableOpacity, View } from 'react-native'
+import { Feather } from '@expo/vector-icons'
 import colors from 'tailwindcss/colors'
 
 import { Typography } from '@/ui/atoms/typography'
@@ -19,7 +19,7 @@ export function SearchHistoryItem(props: SearchHistoryItemProps) {
 			className="flex-row items-center justify-between py-3 px-4"
 		>
 			<View className="flex-row items-center gap-x-4">
-				<SearchIcon color={colors.black} size={20} />
+				<Feather name="search" color={colors.black} size={20} />
 				<Typography.Paragraph className="text-black">
 					{value}
 				</Typography.Paragraph>
@@ -29,7 +29,7 @@ export function SearchHistoryItem(props: SearchHistoryItemProps) {
 				activeOpacity={0.6}
 				onPress={() => onFillPress(value)}
 			>
-				<ArrowUpLeft color={colors.black} size={20} />
+				<Feather name="arrow-up-left" color={colors.black} size={20} />
 			</TouchableOpacity>
 		</TouchableOpacity>
 	)

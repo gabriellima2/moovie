@@ -18,7 +18,7 @@ const services = {
 
 export function useGetRecommendationsListById(id: string) {
 	return useQuery({
-		queryKey: [QUERY_KEYS.GET_RECOMMENDATIONS_LIST_PREVIEW],
+		queryKey: [QUERY_KEYS.GET_RECOMMENDATIONS_LIST_PREVIEW, id],
 		queryFn: async () => {
 			const recommendationsList = await services.recommendationList.getByID(id)
 			if (recommendationsList) {

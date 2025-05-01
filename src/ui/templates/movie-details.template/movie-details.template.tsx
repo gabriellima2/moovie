@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
@@ -40,8 +41,9 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 				<Actions.Trigger />
 			</Header.Root>
 			<ScrollView className="flex-1">
-				{(isLoading || isFetching) && <MovieDetailsSkeleton />}
-				{hasData && (
+				{isLoading || isFetching ? (
+					<MovieDetailsSkeleton />
+				) : hasData ? (
 					<>
 						<ScrollView className="flex-1">
 							<View className="flex-1 mt-4">
@@ -124,6 +126,13 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 							onLike={refetch}
 						/>
 					</>
+				) : (
+					<View className="flex-1 items-center justify-center">
+						<Typography.Paragraph className="text-center">
+							Unfortunately we couldn't find the movie you're looking for, try
+							another one
+						</Typography.Paragraph>
+					</View>
 				)}
 			</ScrollView>
 			{hasData && <Actions.Menu title={data.Title} />}

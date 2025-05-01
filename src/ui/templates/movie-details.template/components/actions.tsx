@@ -39,18 +39,18 @@ function Menu(props: MenuProps) {
 			</Typography.Title>
 			<TouchableOpacity
 				onPress={openCreateReviewModal}
-				className="flex-row py-3"
+				className="flex-row py-3 gap-x-4"
 				activeOpacity={0.6}
 			>
-				<Feather name="plus" size={20} color={colors.black} className="mr-4" />
-				<Typography.Label>Create Review</Typography.Label>
+				<Feather name="plus" size={20} color={colors.black} />
+				<Typography.Label>Create review</Typography.Label>
 			</TouchableOpacity>
 			<TouchableOpacity
 				onPress={openAddToListModal}
-				className="flex-row py-3"
+				className="flex-row py-3 gap-x-4"
 				activeOpacity={0.6}
 			>
-				<Feather name="list" size={20} color={colors.black} className="mr-4" />
+				<Feather name="list" size={20} color={colors.black} />
 				<Typography.Label>Add to list</Typography.Label>
 			</TouchableOpacity>
 		</BottomSheet>

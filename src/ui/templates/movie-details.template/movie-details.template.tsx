@@ -72,14 +72,8 @@ export function MovieDetailsTemplate(props: MovieDetailsTemplateProps) {
 												{data.Released}
 											</Typography.Paragraph>
 										</View>
-										<View className="flex-row items-center">
-											<Feather
-												name="star"
-												// fill={colors.black}
-												color={colors.black}
-												size={20}
-												className="mr-2"
-											/>
+										<View className="flex-row gap-x-2 items-center">
+											<Feather name="star" color={colors.black} size={20} />
 											<Typography.Paragraph>
 												{data.imdbRating}/
 											</Typography.Paragraph>

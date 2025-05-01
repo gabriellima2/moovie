@@ -1,5 +1,5 @@
 import { View, Image, TouchableOpacity } from 'react-native'
-import { Feather } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
 
 import { Typography } from '../atoms/typography'
 import { Rating } from './rating'
@@ -46,12 +46,7 @@ export function ReviewPreview(props: ReviewPreviewProps) {
 						<Rating value={rest.rating} readonly />
 					</View>
 					<View className="flex-row items-center">
-						<Feather
-							name="heart"
-							size={18}
-							color="#000000"
-							/*fill="#000000"*/
-						/>
+						<FontAwesome name="heart" size={18} color="#000000" />
 						<Typography.Small className="ml-1 font-heading">
 							{likes.length}
 						</Typography.Small>

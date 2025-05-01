@@ -61,13 +61,8 @@ export default function Profile() {
 			<View>
 				<Link href="/search" className="p-4">
 					<View className="flex-row items-center">
-						<Feather
-							name="settings"
-							size={24}
-							color={colors.black}
-							className="mr-4"
-						/>
-						<Typography.Label>Settings</Typography.Label>
+						<Feather name="settings" size={24} color={colors.black} />
+						<Typography.Label className="ml-4">Settings</Typography.Label>
 					</View>
 				</Link>
 				<TouchableOpacity
@@ -75,13 +70,8 @@ export default function Profile() {
 					onPress={logout}
 					className="p-4 flex-row items-center"
 				>
-					<Feather
-						name="log-out"
-						size={24}
-						color={colors.black}
-						className="mr-4"
-					/>
-					<Typography.Label>Logout</Typography.Label>
+					<Feather name="log-out" size={24} color={colors.black} />
+					<Typography.Label className="ml-4">Logout</Typography.Label>
 				</TouchableOpacity>
 			</View>
 		</Wrapper>

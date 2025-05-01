@@ -1,6 +1,7 @@
 import { ActivityIndicator, TouchableOpacity, View } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
-import { Redirect, Link } from 'expo-router'
+import { Feather } from '@expo/vector-icons'
+import { Redirect } from 'expo-router'
 import colors from 'tailwindcss/colors'
 
 import { Typography } from '@/ui/atoms/typography'
@@ -10,7 +11,6 @@ import { useAuthenticationStore } from '@/store/authentication.store/authenticat
 
 import { makeRecommendationsListService } from '@/services/impl/recommendations-list.service'
 import { makeReviewService } from '@/services/impl/review.service'
-import { Feather } from '@expo/vector-icons'
 
 // Refatorar
 export default function Profile() {
@@ -29,10 +29,16 @@ export default function Profile() {
 	if (!user) return <Redirect href="/login" />
 	return (
 		<Wrapper>
-			<View>
-				<Typography.Title className="mb-1">{user.displayName}</Typography.Title>
-				<Typography.Paragraph>{user.email}</Typography.Paragraph>
-			</View>
+			{user.isAnonymous ? (
+				<Typography.Title className="mb-1">Guest</Typography.Title>
+			) : (
+				<View>
+					<Typography.Title className="mb-1">
+						{user.displayName}
+					</Typography.Title>
+					<Typography.Paragraph>{user.email}</Typography.Paragraph>
+				</View>
+			)}
 			<View className="flex-row bg-zinc-100 rounded-xl py-4">
 				<TouchableOpacity
 					activeOpacity={0.8}
@@ -59,12 +65,6 @@ export default function Profile() {
 				</TouchableOpacity>
 			</View>
 			<View>
-				<Link href="/search" className="p-4">
-					<View className="flex-row items-center">
-						<Feather name="settings" size={24} color={colors.black} />
-						<Typography.Label className="ml-4">Settings</Typography.Label>
-					</View>
-				</Link>
 				<TouchableOpacity
 					activeOpacity={0.8}
 					onPress={logout}

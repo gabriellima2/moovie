@@ -91,7 +91,7 @@ export default function RecommendationsListTemplate(
 																{movie.Released}
 															</Typography.Paragraph>
 														</View>
-														<Typography.Paragraph>
+														<Typography.Paragraph className="ml-2">
 															IMDb {movie.imdbRating}/10
 														</Typography.Paragraph>
 													</View>

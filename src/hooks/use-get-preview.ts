@@ -46,6 +46,7 @@ export function useGetPreview() {
 						})
 						return data
 					}
+					return []
 				},
 				throwOnError: true,
 			},
@@ -79,6 +80,7 @@ export function useGetPreview() {
 						)
 						return data
 					}
+					return []
 				},
 				throwOnError: true,
 			},

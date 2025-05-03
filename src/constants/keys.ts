@@ -13,4 +13,5 @@ export const QUERY_KEYS = {
 	GET_RECOMMENDATIONS_LIST_PREVIEW: 'recommendations_list_preview',
 	GET_REVIEW_BY_ID: 'review',
 	GET_USER_BY_ID: 'user-public-info',
+	GET_USER_OVERVIEW: 'user-overview',
 }

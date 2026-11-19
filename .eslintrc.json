@@ -16,13 +16,19 @@
 				"jsx": true
 			},
 			"ecmaVersion": "latest",
-			"sourceType": "module"
+			"sourceType": "module",
+			"project": "./tsconfig.json"
     },
     "plugins": [
 			"react",
 			"prettier",
 			"@typescript-eslint"
     ],
+    "settings": {
+			"react": {
+				"version": "detect"
+			}
+    },
     "rules": {
 			"linebreak-style": [
 				"error",

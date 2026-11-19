@@ -11,7 +11,7 @@ import {
 import { create } from 'zustand'
 
 import { makeUserService } from '@/services/impl/user.service'
-import { auth } from '@/lib/firebase'
+import { auth, requireAuth } from '@/lib/firebase'
 
 import { UserNotAuthenticatedException } from '@/exceptions/user-not-authenticated.exception'
 
@@ -28,7 +28,7 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 		authStateHasBeenChecked: false,
 		signUp: async (credentials: SignUpDTO) => {
 			const { user } = await createUserWithEmailAndPassword(
-				auth,
+				requireAuth(),
 				credentials.email,
 				credentials.password
 			)
@@ -36,18 +36,18 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 		},
 		signIn: async (credentials: SignInDTO) => {
 			const { user } = await signInWithEmailAndPassword(
-				auth,
+				requireAuth(),
 				credentials.email,
 				credentials.password
 			)
 			set((state) => ({ ...state, user, authStateHasBeenChecked: true }))
 		},
 		logout: async () => {
-			await signOut(auth)
+			await signOut(requireAuth())
 			set((state) => ({ ...state, user: null, authStateHasBeenChecked: true }))
 		},
 		anonymously: async () => {
-			const { user } = await signInAnonymously(auth)
+			const { user } = await signInAnonymously(requireAuth())
 			set((state) => ({ ...state, user, authStateHasBeenChecked: true }))
 		},
 		sendEmailVerification: async () => {
@@ -56,7 +56,7 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 			await sendEmailVerification(user)
 		},
 		sendPasswordReset: async (email: string) => {
-			await sendPasswordResetEmail(auth, email)
+			await sendPasswordResetEmail(requireAuth(), email)
 		},
 		updateProfile: async (params: UpdateProfileDTO) => {
 			const { user } = get()
@@ -66,6 +66,14 @@ export const useAuthenticationStore = create<AuthenticationStoreProperties>(
 			await user.reload()
 		},
 		checkAuthState: () => {
+			if (!auth) {
+				set((state) => ({
+					...state,
+					user: null,
+					authStateHasBeenChecked: true,
+				}))
+				return () => {}
+			}
 			return onAuthStateChanged(auth, (user) => {
 				set((state) => ({ ...state, user, authStateHasBeenChecked: true }))
 			})

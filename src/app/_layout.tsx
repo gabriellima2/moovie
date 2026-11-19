@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { ActivityIndicator, SafeAreaView, View } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
@@ -27,7 +28,7 @@ export function ErrorBoundary({ error }: ErrorBoundaryProps) {
 }
 
 export default function Layout() {
-	const { authStateHasBeenChecked } = useAuthenticationStore()
+	const { authStateHasBeenChecked, checkAuthState } = useAuthenticationStore()
 	const [fontsLoaded] = useFonts({
 		Inter_600SemiBold,
 		Inter_500Medium,
@@ -36,7 +37,9 @@ export default function Layout() {
 		Inter_700Bold,
 	})
 
-	if (!fontsLoaded && !authStateHasBeenChecked) {
+	useEffect(() => checkAuthState(), [checkAuthState])
+
+	if (!fontsLoaded || !authStateHasBeenChecked) {
 		return (
 			<View className="flex-1 items-center justify-center">
 				<ActivityIndicator />
